@@ -1,49 +1,42 @@
 #include "graph.h"
 
 
-template<class T>
-Graph<T>::Graph(int Vertexs) {
+Graph::Graph(int Vertexs) {
     vertexSet.resize(Vertexs);
 }
 
-template <class T>
+
 int Graph::getNumVertex() const {
     return vertexSet.size();
 }
 
-template <class T>
-vector<Vertex<T> * > Graph<T>::getVertexSet() const {
+vector<Vertex*> Graph::getVertexSet() const {
     return vertexSet;
 }
 
 /*
  * Auxiliary function to find a vertex with a given content.
  */
-template <class T>
-Vertex<T> * Graph<T>::findVertex(const T &in) const {
+Vertex * Graph::findVertex(const Airport &in) const {
     for (auto v : vertexSet)
-        if (v->info == in)
+        if (v->getAirport() == in.getName())
             return v;
     return NULL;
 }
 
-template <class T>
-bool Vertex<T>::isVisited() const {
+bool Vertex::isVisited() const {
     return visited;
 }
 
-template <class T>
-void Vertex<T>::setVisited(bool v) {
+void Vertex::setVisited(bool v) {
     Vertex::visited = v;
 }
 
-template<class T>
-const vector<Edge<T>> &Vertex<T>::getAdj() const {
+const vector<Edge> &Vertex::getAdj() const {
     return adj;
 }
 
-template <class T>
-void Vertex<T>::setAdj(const vector<Edge<T>> &adj) {
+void Vertex::setAdj(const vector<Edge> &adj) {
     Vertex::adj = adj;
 }
 
@@ -52,11 +45,10 @@ void Vertex<T>::setAdj(const vector<Edge<T>> &adj) {
  *  Adds a vertex with a given content or info (in) to a graph (this).
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
-template <class T>
-bool Graph<T>::addVertex(const T &src){
+bool Graph::addVertex(const Airport &src){
     if ( findVertex(src) != NULL)
         return false;
-    vertexSet.push_back(new Vertex<T>(src));
+    vertexSet.push_back(new Vertex(src));
     return true;
 }
 
@@ -66,8 +58,7 @@ bool Graph<T>::addVertex(const T &src){
  * destination vertices and the edge weight (w).
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
-template <class T>
-bool Graph<T>::addEdge(const T &sourc, const T &dest, const Airline &airline, double w) {
+bool Graph::addEdge(const Airport &sourc, const Airport &dest, const Airline &airline, double w) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
     if (v1 == NULL || v2 == NULL)
@@ -84,8 +75,7 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, const Airline &airline, do
  * The edge is identified by the source (sourc) and destination (dest) contents.
  * Returns true if successful, and false if such edge does not exist.
  */
-template <class T>
-bool Graph<T>::removeEdge(const T &sourc, const T &dest) {
+bool Graph::removeEdge(const Airport &sourc, const Airport &dest) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
     if (v1 == NULL || v2 == NULL)
@@ -100,10 +90,9 @@ bool Graph<T>::removeEdge(const T &sourc, const T &dest) {
  *  all outgoing and incoming edges.
  *  Returns true if successful, and false if such vertex does not exist.
  */
-template <class T>
-bool Graph<T>::removeVertex(const T &in) {
+bool Graph::removeVertex(const Airport &in) {
     for (auto it = vertexSet.begin(); it != vertexSet.end(); it++)
-        if ((*it)->info  == in) {
+        if ((*it)->getAirport()  == in.getName()) {
             auto v = *it;
             vertexSet.erase(it);
             for (auto u : vertexSet)
@@ -114,8 +103,7 @@ bool Graph<T>::removeVertex(const T &in) {
     return false;
 }
 
-template<class T>
-bool Graph<T>::addAirport(const T &source, const Airport &airport) {
+bool Graph::addAirport(const Airport &source, const Airport &airport) {
 
     auto v = findVertex(source);
 
@@ -125,8 +113,7 @@ bool Graph<T>::addAirport(const T &source, const Airport &airport) {
     v->airport = airport;
 }
 
-template<class T>
-double Graph<T>::distance(double lat1, double lon1, double lat2, double lon2) {
+double Graph::distance(double lat1, double lon1, double lat2, double lon2) {
     double dLat = (lat2 - lat1) * M_PI / 180.0;
     double dLon = (lon2 - lon1) * M_PI / 180.0;
 
@@ -143,9 +130,8 @@ double Graph<T>::distance(double lat1, double lon1, double lat2, double lon2) {
 
 
 // TODO
-template <class T>
-vector<T> Graph<T>::dfs() const {
-    vector<T> res;
+vector<string> Graph::dfs() const {
+    vector<string> res;
     for (auto v : vertexSet) {
         v->setVisited(false); // Resetting visited flag for all vertices
     }
@@ -164,13 +150,12 @@ vector<T> Graph<T>::dfs() const {
  * Updates a parameter with the list of visited node contents.
  */
 // TODO
-template <class T>
-void Graph<T>::dfsVisit(Vertex<T> *v, vector<T> & res) const {
+void Graph::dfsVisit(Vertex *v, vector<string> & res) const {
     v->setVisited(true); // Marking the current vertex as visited
-    res.push_back(v->getInfo()); // Adding current vertex info to the result vector
+    res.push_back(v->getAirport()); // Adding current vertex info to the result vector
 
     for (auto edge : v->getAdj()) {
-        Vertex<T> *adjVertex = edge.getDest();
+        Vertex *adjVertex = edge.getDest();
         if (!adjVertex->isVisited()) {
             dfsVisit(adjVertex, res); // Recursive call for unvisited adjacent vertices
         }
@@ -179,13 +164,12 @@ void Graph<T>::dfsVisit(Vertex<T> *v, vector<T> & res) const {
 
 
 // TODO
-template <class T>
-vector<T> Graph<T>::dfs(const T & source) const {
-    Vertex<T>* sourceVertex = findVertex(source);
+vector<string> Graph::dfs(const Airport & source) const {
+    Vertex* sourceVertex = findVertex(source);
     if (sourceVertex == nullptr)
         return {};
 
-    vector<T> res;
+    vector<string> res;
     for (auto v : vertexSet) {
         v->setVisited(false); // Resetting visited flag for all vertices
     }
@@ -198,8 +182,7 @@ vector<T> Graph<T>::dfs(const T & source) const {
 
 
 // TODO
-template <class T>
-vector<T> Graph<T>::bfs(const T & source) const {
+vector<string> Graph::bfs(const Airport & source) const {
 
     auto src = findVertex(source);
 
@@ -211,21 +194,21 @@ vector<T> Graph<T>::bfs(const T & source) const {
         vertexSet[i]->distance = 0;
     }
 
-    vector<T> res;
+    vector<string> res;
 
-    queue<Vertex<T>*> q;
+    queue<Vertex*> q;
     q.push(src);
 
     vertexSet[src]->visited = true;
 
     while(!q.empty()){
 
-        Vertex<T>* currV = q.front();q.pop();
-        res.push_back(currV->getInfo());
+        Vertex* currV = q.front();q.pop();
+        res.push_back(currV->getAirport());
 
-        for(const Edge<T> &e : currV->adj){
+        for(const Edge &e : currV->adj){
 
-            Vertex<T>* dst = e.getDest();
+            Vertex* dst = e.getDest();
 
             if(!vertexSet[dst]->isVisited()){
                 q.push(dst);

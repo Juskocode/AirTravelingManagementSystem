@@ -13,7 +13,7 @@ using namespace std;
 
 class Edge;
 class Vertex;
-
+class Graph;
 
 
 class Edge {

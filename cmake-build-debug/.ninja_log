@@ -1,0 +1,13 @@
+# ninja log v5
+2	169	7233405503986503	build.ninja	d1bf9aa023401774
+0	378	7233228008587430	CMakeFiles/AirBusManagementSystem.dir/main.cpp.obj	9642cf8bd659ef72
+6	551	7233281762768222	CMakeFiles/AirBusManagementSystem.dir/classes/airline.cpp.obj	98c69b64b19b0955
+1477	1908	7233404590559439	AirBusManagementSystem.exe	be856c32fd155f92
+3	35	7233228005156606	CMakeFiles/AirBusManagementSystem.dir/airlines.cpp.obj	ebc5a4cb3781e98
+1	86	0	CMakeFiles/Doxygen	ca75dca3254d473d
+1	86	0	C:/Users/Utilizador/CLionProjects/AirBusManagementSystem/cmake-build-debug/CMakeFiles/Doxygen	ca75dca3254d473d
+3	547	7233281762728315	CMakeFiles/AirBusManagementSystem.dir/classes/airport.cpp.obj	661cf90e0e0d19c2
+10	911	7233404159971334	CMakeFiles/AirBusManagementSystem.dir/network/vertex.cpp.obj	ecd6a6b87ee96c26
+13	836	7233404159213353	CMakeFiles/AirBusManagementSystem.dir/network/edge.cpp.obj	fc17a1e6912d494c
+7	1087	7233404161716659	CMakeFiles/AirBusManagementSystem.dir/network/graph.cpp.obj	54e6dab02e341559
+2	1477	7233404586234428	CMakeFiles/AirBusManagementSystem.dir/classes/Parser.cpp.obj	c64adaa109cd9fa4

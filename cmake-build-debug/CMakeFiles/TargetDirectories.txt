@@ -1,0 +1,4 @@
+C:/Users/Utilizador/CLionProjects/AirBusManagementSystem/cmake-build-debug/CMakeFiles/AirBusManagementSystem.dir
+C:/Users/Utilizador/CLionProjects/AirBusManagementSystem/cmake-build-debug/CMakeFiles/Doxygen.dir
+C:/Users/Utilizador/CLionProjects/AirBusManagementSystem/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Utilizador/CLionProjects/AirBusManagementSystem/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -30,6 +30,7 @@ public:
     friend class Vertex;
 };
 class Vertex {
+    int id;
     Airport airport = Airport(""); // content
     vector<Edge > adj;    // list of outgoing edges
     bool visited{};          // auxiliary field
@@ -41,8 +42,8 @@ class Vertex {
     void addEdge(Vertex *dest, Airline airline, double w);
     bool removeEdgeTo(Vertex *d);
 public:
-    explicit Vertex(Airport airport);
-    string getAirport() const;
+    explicit Vertex(int id);
+    int getId();
     void setAirport(Airport in);
     bool isVisited() const;
     void setVisited(bool v);
@@ -63,10 +64,10 @@ class Graph {
 public:
 
     explicit Graph(int Vertexs);
-    Vertex *findVertex(const Airport &in) const;
+    Vertex *findVertex(const int &in) const;
 
     bool addVertex(const int &src);
-    bool removeVertex(const Airport &in);
+    bool removeVertex(const int &in);
     bool addEdge(const int &sourc, const int &dest, const Airline &airline, double w);
     bool removeEdge(const int &sourc, const int &dest);
     bool addAirport(const int &sourc, const Airport &airport);

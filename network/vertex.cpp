@@ -5,10 +5,10 @@
 #include "graph.h"
 
 
-Vertex::Vertex(Airport in): airport(in) {}
+Vertex::Vertex(int id): id(id) {}
 
-string Vertex::getAirport() const {
-    return airport.getName();
+int Vertex::getId() {
+    return id;
 }
 
 void Vertex::setAirport(Airport in) {

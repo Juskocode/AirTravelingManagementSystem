@@ -9,7 +9,7 @@ Parser::Parser() {
 Airport::AirportH const& Parser::getAirports() const {return airports;}
 Airline::AirlineH const& Parser::getAirlines() const {return airlines;}
 Airport::CityH const& Parser::getCity() const {return airportsPerCity;}
-Graph<int> Parser::getGraph() const {return graph;}
+Graph Parser::getGraph() const {return graph;}
 
 
 void Parser::createAirports() {
@@ -74,7 +74,7 @@ void Parser::createGraph(){
         getline(is,source,',');
         getline(is,target,',');
         getline(is,airline,',');
-        auto d = Graph<int>::distance(airports.find(Airport(source))->getLatitude(),airports.find(Airport(source))->getLongitude()
+        auto d = Graph::distance(airports.find(Airport(source))->getLatitude(),airports.find(Airport(source))->getLongitude()
                 ,airports.find(Airport(target))->getLatitude(),airports.find(Airport(target))->getLongitude());
         graph.addEdge(idAirports[source],idAirports[target],Airline(airline),d);
     }

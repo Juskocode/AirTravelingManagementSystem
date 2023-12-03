@@ -22,7 +22,7 @@ public:
     Airport::AirportH const& getAirports() const;
     Airline::AirlineH const& getAirlines() const;
     Airport::CityH const &getCity() const;
-    Graph<int> getGraph() const;
+    Graph getGraph() const;
 
 private:
 
@@ -57,7 +57,7 @@ private:
 
     Airport::AirportH airports;
     Airline::AirlineH airlines;
-    Graph<int> graph = Graph<int>(3019);
+    Graph graph = Graph(3019);
 
     unordered_map<string, int> idAirports;
     unordered_set<string> countries;

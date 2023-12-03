@@ -17,9 +17,9 @@ vector<Vertex*> Graph::getVertexSet() const {
 /*
  * Auxiliary function to find a vertex with a given content.
  */
-Vertex * Graph::findVertex(const Airport &in) const {
+Vertex * Graph::findVertex(const int &in) const {
     for (auto v : vertexSet)
-        if (v->getAirport() == in.getName())
+        if (v->getId() == in)
             return v;
     return NULL;
 }
@@ -45,7 +45,7 @@ void Vertex::setAdj(const vector<Edge> &adj) {
  *  Adds a vertex with a given content or info (in) to a graph (this).
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
-bool Graph::addVertex(const Airport &src){
+bool Graph::addVertex(const int &src){
     if ( findVertex(src) != NULL)
         return false;
     vertexSet.push_back(new Vertex(src));
@@ -58,7 +58,7 @@ bool Graph::addVertex(const Airport &src){
  * destination vertices and the edge weight (w).
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
-bool Graph::addEdge(const Airport &sourc, const Airport &dest, const Airline &airline, double w) {
+bool Graph::addEdge(const int &sourc, const int &dest, const Airline &airline, double w) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
     if (v1 == NULL || v2 == NULL)
@@ -75,7 +75,7 @@ bool Graph::addEdge(const Airport &sourc, const Airport &dest, const Airline &ai
  * The edge is identified by the source (sourc) and destination (dest) contents.
  * Returns true if successful, and false if such edge does not exist.
  */
-bool Graph::removeEdge(const Airport &sourc, const Airport &dest) {
+bool Graph::removeEdge(const int &sourc, const int &dest) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
     if (v1 == NULL || v2 == NULL)
@@ -90,9 +90,9 @@ bool Graph::removeEdge(const Airport &sourc, const Airport &dest) {
  *  all outgoing and incoming edges.
  *  Returns true if successful, and false if such vertex does not exist.
  */
-bool Graph::removeVertex(const Airport &in) {
+bool Graph::removeVertex(const int &in) {
     for (auto it = vertexSet.begin(); it != vertexSet.end(); it++)
-        if ((*it)->getAirport()  == in.getName()) {
+        if ((*it)->getId()  == in) {
             auto v = *it;
             vertexSet.erase(it);
             for (auto u : vertexSet)
@@ -103,7 +103,7 @@ bool Graph::removeVertex(const Airport &in) {
     return false;
 }
 
-bool Graph::addAirport(const Airport &source, const Airport &airport) {
+bool Graph::addAirport(const int &source, const Airport &airport) {
 
     auto v = findVertex(source);
 
@@ -130,8 +130,8 @@ double Graph::distance(double lat1, double lon1, double lat2, double lon2) {
 
 
 // TODO
-vector<string> Graph::dfs() const {
-    vector<string> res;
+vector<int> Graph::dfs() const {
+    vector<int> res;
     for (auto v : vertexSet) {
         v->setVisited(false); // Resetting visited flag for all vertices
     }
@@ -150,9 +150,9 @@ vector<string> Graph::dfs() const {
  * Updates a parameter with the list of visited node contents.
  */
 // TODO
-void Graph::dfsVisit(Vertex *v, vector<string> & res) const {
+void Graph::dfsVisit(Vertex *v, vector<int> & res) const {
     v->setVisited(true); // Marking the current vertex as visited
-    res.push_back(v->getAirport()); // Adding current vertex info to the result vector
+    res.push_back(v->getId()); // Adding current vertex info to the result vector
 
     for (auto edge : v->getAdj()) {
         Vertex *adjVertex = edge.getDest();
@@ -164,12 +164,12 @@ void Graph::dfsVisit(Vertex *v, vector<string> & res) const {
 
 
 // TODO
-vector<string> Graph::dfs(const Airport & source) const {
+vector<int> Graph::dfs(const int& source) const {
     Vertex* sourceVertex = findVertex(source);
     if (sourceVertex == nullptr)
         return {};
 
-    vector<string> res;
+    vector<int> res;
     for (auto v : vertexSet) {
         v->setVisited(false); // Resetting visited flag for all vertices
     }
@@ -182,7 +182,7 @@ vector<string> Graph::dfs(const Airport & source) const {
 
 
 // TODO
-vector<string> Graph::bfs(const Airport & source) const {
+vector<int> Graph::bfs(const  int& source) const {
 
     auto src = findVertex(source);
 
@@ -194,23 +194,23 @@ vector<string> Graph::bfs(const Airport & source) const {
         vertexSet[i]->distance = 0;
     }
 
-    vector<string> res;
+    vector<int> res;
 
     queue<Vertex*> q;
     q.push(src);
 
-    vertexSet[src]->visited = true;
+    vertexSet[src->getId()]->visited = true;
 
     while(!q.empty()){
 
         Vertex* currV = q.front();q.pop();
-        res.push_back(currV->getAirport());
+        res.push_back(currV->getId());
 
         for(const Edge &e : currV->adj){
 
             Vertex* dst = e.getDest();
 
-            if(!vertexSet[dst]->isVisited()){
+            if(!vertexSet[dst->getId()]->isVisited()){
                 q.push(dst);
                 dst->setVisited(true);
             }

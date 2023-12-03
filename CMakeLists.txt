@@ -8,6 +8,10 @@ add_executable(AirBusManagementSystem main.cpp
         classes/airline.h
         classes/airport.cpp
         classes/airport.h
+        network/graph.cpp
+        network/graph.h
+        network/vertex.cpp
+        network/edge.cpp
 )
 
 find_package(Doxygen)

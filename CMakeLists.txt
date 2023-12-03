@@ -4,7 +4,10 @@ project(AirBusManagementSystem)
 set(CMAKE_CXX_STANDARD 23)
 
 add_executable(AirBusManagementSystem main.cpp
-        main.cpp
+        classes/airline.cpp
+        classes/airline.h
+        classes/airport.cpp
+        classes/airport.h
 )
 
 find_package(Doxygen)

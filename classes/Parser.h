@@ -19,14 +19,53 @@ using namespace std;
 class Parser {
 public:
     Parser();
+    Airport::AirportH const& getAirports() const;
+    Airline::AirlineH const& getAirlines() const;
+    Airport::CityH const &getCity() const;
+    Graph<int> getGraph() const;
+
 private:
+
+    /**
+     * Reads airports.csv file and stores the airports information in airportsPerCity, idAirports, airports, cities, countries,
+     * citiesPerCountry and in the graphs function we store the airports according to an index\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(n)</b>, n is the number of file lines
+     * </pre>
+     */
     void createAirports();
+
+    /**
+     * Reads airlines.csv file and stores the information in airlines\n\n
+     *  * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(n)</b>, n is the number of file lines
+     * </pre>
+     */
     void createAirlines();
+
+    /**
+     * Reads flights.csv file and stores the airports information in graphs about the flights
+     * (airport of departure/arrival and distance between them)\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(n*log(n))</b>, n is the numbers of file lines
+     * </pre>
+     */
     void createGraph();
 
     Airport::AirportH airports;
     Airline::AirlineH airlines;
-    Graph<int> graph;
+    Graph<int> graph = Graph<int>(3019);
+
+    unordered_map<string, int> idAirports;
+    unordered_set<string> countries;
+    unordered_set<string> cities;
+
+    Airport::CityH airportsPerCity;
+    unordered_map<string, list<string>> citiesPerCountry;
+    map<string, int> nrAirportsPerCountry;
 
 };
 

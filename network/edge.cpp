@@ -4,25 +4,21 @@
 
 #include "graph.h"
 
-template <class T>
-Edge<T>::Edge(Vertex<T> *d, double w): dest(d), weight(w) {}
+Edge::Edge(Vertex *d, double w) : dest(d), weight(w), airline("") {}
 
-template<class T>
-Vertex<T> *Edge<T>::getDest() const {
+Vertex *Edge::getDest() const {
     return dest;
 }
 
-template<class T>
-void Edge<T>::setDest(Vertex<T> *d) {
+
+void Edge::setDest(Vertex *d) {
     Edge::dest = d;
 }
 
-template<class T>
-double Edge<T>::getWeight() const {
+double Edge::getWeight() const {
     return weight;
 }
 
-template<class T>
-void Edge<T>::setWeight(double weight) {
+void Edge::setWeight(double weight) {
     Edge::weight = weight;
 }

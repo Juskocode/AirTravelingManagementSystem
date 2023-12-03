@@ -1,7 +1,13 @@
 #include "graph.h"
 
+
+template<class T>
+Graph<T>::Graph(int Vertexs) {
+    vertexSet.resize(Vertexs);
+}
+
 template <class T>
-int Graph<T>::getNumVertex() const {
+int Graph::getNumVertex() const {
     return vertexSet.size();
 }
 

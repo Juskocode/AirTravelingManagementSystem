@@ -1,6 +1,3 @@
-//
-// Created by Utilizador on 03/12/2023.
-//
 #ifndef AIRBUSMANAGEMENTSYSTEM_AIRLINE_H
 #define AIRBUSMANAGEMENTSYSTEM_AIRLINE_H
 #include <iostream>

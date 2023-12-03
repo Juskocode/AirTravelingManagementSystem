@@ -1,7 +1,3 @@
-//
-// Created by Utilizador on 03/12/2023.
-//
-
 #ifndef AIRBUSMANAGEMENTSYSTEM_AIRPORT_H
 #define AIRBUSMANAGEMENTSYSTEM_AIRPORT_H
 

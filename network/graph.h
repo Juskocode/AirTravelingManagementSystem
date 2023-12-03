@@ -63,6 +63,7 @@ class Graph {
 
 public:
 
+    explicit Graph(int Vertexs);
     Vertex<T> *findVertex(const T &in) const;
 
     bool addVertex(const T &src);
@@ -79,6 +80,7 @@ public:
     vector<T> dfs(const T &source) const;
     vector<T> bfs(const T &source) const;
 };
+
 
 
 

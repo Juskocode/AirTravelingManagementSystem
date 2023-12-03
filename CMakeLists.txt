@@ -12,6 +12,8 @@ add_executable(AirBusManagementSystem main.cpp
         network/graph.h
         network/vertex.cpp
         network/edge.cpp
+        classes/Parser.cpp
+        classes/Parser.h
 )
 
 find_package(Doxygen)

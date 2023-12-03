@@ -4,7 +4,7 @@
 
 #include "graph.h"
 
-Edge::Edge(Vertex *d, double w) : dest(d), weight(w), airline("") {}
+Edge::Edge(Vertex *d, Airline airline, double w) : dest(d), weight(w), airline(airline) {}
 
 Vertex *Edge::getDest() const {
     return dest;

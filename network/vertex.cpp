@@ -11,15 +11,15 @@ string Vertex::getAirport() const {
     return airport.getName();
 }
 
-void Vertex::setInfo(T in) {
-    Vertex::info = in;
+void Vertex::setAirport(Airport in) {
+    Vertex::airport = in;
 }
 
-bool Vertex<T>::isProcessing() const {
+bool Vertex::isProcessing() const {
     return processing;
 }
 
-void Vertex<T>::setProcessing(bool p) {
+void Vertex::setProcessing(bool p) {
     Vertex::processing = p;
 }
 
@@ -27,8 +27,8 @@ void Vertex<T>::setProcessing(bool p) {
  * Auxiliary function to add an outgoing edge to a vertex (this),
  * with a given destination vertex (d) and edge weight (w).
  */
-void Vertex<T>::addEdge(Vertex<T> *d, Airline airline, double w) {
-    adj.push_back(Edge<T>(d, airline, Airline(__cxx11::basic_string())));
+void Vertex::addEdge(Vertex *d, Airline airline, double w) {
+    adj.push_back(Edge(d, airline, w));
 }
 
 /*
@@ -36,7 +36,7 @@ void Vertex<T>::addEdge(Vertex<T> *d, Airline airline, double w) {
  * from a vertex (this).
  * Returns true if successful, and false if such edge does not exist.
  */
-bool Vertex<T>::removeEdgeTo(Vertex<T> *d) {
+bool Vertex::removeEdgeTo(Vertex *d) {
     for (auto it = adj.begin(); it != adj.end(); it++)
         if (it->dest  == d) {
             adj.erase(it);

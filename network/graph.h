@@ -21,7 +21,7 @@ class Edge {
     double weight{};       // edge weight
     Airline airline;
 public:
-    Edge(Vertex *d, double w);
+    Edge(Vertex *d, Airline airline, double w);
     Vertex *getDest() const;
     void setDest(Vertex *dest);
     double getWeight() const;

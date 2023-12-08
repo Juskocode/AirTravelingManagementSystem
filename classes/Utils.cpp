@@ -84,7 +84,7 @@ list<pair<string,string>> Utils::processFlight(int& bestFlight, const vector<str
     for (const auto &s: src)
         for (const auto &d: dest) {
             if (s == d) continue;
-            nrFlights = nrFlights(parser.idAirports[s], parser.idAirports[d], airline);
+            nrFlights = parser.graph.nrFlights(parser.idAirports[s], parser.idAirports[d], airline);
             if (nrFlights != 0 && nrFlights < bestFlight) {
                 bestFlight = nrFlights;
                 res.clear();

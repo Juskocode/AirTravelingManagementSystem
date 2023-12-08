@@ -23,6 +23,20 @@ public:
     Airline::AirlineH const& getAirlines() const;
     Airport::CityH const &getCity() const;
     Graph getGraph() const;
+    unordered_map<string,int> getMap() const;
+    map<string,int> getNrAirportsPerCountry() const;
+
+    Airport::AirportH airports;
+    Airline::AirlineH airlines;
+    Graph graph = Graph(3019);
+
+    unordered_map<string, int> idAirports;
+    unordered_set<string> countries;
+    unordered_set<string> cities;
+
+    Airport::CityH airportsPerCity;
+    unordered_map<string, list<string>> citiesPerCountry;
+    map<string, int> nrAirportsPerCountry;
 
 private:
 
@@ -54,18 +68,6 @@ private:
      * </pre>
      */
     void createGraph();
-
-    Airport::AirportH airports;
-    Airline::AirlineH airlines;
-    Graph graph = Graph(3019);
-
-    unordered_map<string, int> idAirports;
-    unordered_set<string> countries;
-    unordered_set<string> cities;
-
-    Airport::CityH airportsPerCity;
-    unordered_map<string, list<string>> citiesPerCountry;
-    map<string, int> nrAirportsPerCountry;
 
 };
 

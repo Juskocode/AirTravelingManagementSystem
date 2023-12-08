@@ -10,6 +10,10 @@ Airport::AirportH const& Parser::getAirports() const {return airports;}
 Airline::AirlineH const& Parser::getAirlines() const {return airlines;}
 Airport::CityH const& Parser::getCity() const {return airportsPerCity;}
 Graph Parser::getGraph() const {return graph;}
+unordered_map<string,int> Parser::getMap() const{
+    return idAirports;
+}
+map<string,int> Parser::getNrAirportsPerCountry() const {return nrAirportsPerCountry;}
 
 
 void Parser::createAirports() {

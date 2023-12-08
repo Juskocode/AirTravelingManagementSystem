@@ -219,3 +219,33 @@ vector<int> Graph::bfs(const  int& source) const {
 
     return res;
 }
+
+int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
+
+    auto Vertexes = getVertexSet();
+
+    for (auto & node : Vertexes) {
+        node->setVisited(false);
+        node->distance = 0;
+    }
+
+    queue<Vertex* > q;
+    q.push(src);
+
+    Vertexes[src]->setVisited(true);
+
+    while(!q.empty()){
+        int u = q.front(); q.pop();
+        for (const Edge& e : Vertexes[u]->getAdj()){
+            if (!airlines.empty() && airlines.find(e.airline) == airlines.end()) continue;
+            auto w = e.dest;
+            if (!w->isVisited()){
+                q.push(w);
+                Vertexes[w].visited = true;
+                Vertexes[w].distance = Vertexes[u].distance + 1;
+            }
+        }
+    }
+
+    return Vertexes[dest].distance;
+}

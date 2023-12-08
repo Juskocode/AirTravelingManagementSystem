@@ -8,18 +8,18 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug"/>
+				<Option working_dir="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="AirBusManagementSystem">
-				<Option output="/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/AirBusManagementSystem" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug"/>
+				<Option output="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/AirBusManagementSystem" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -33,15 +33,15 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 AirBusManagementSystem"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 AirBusManagementSystem"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="AirBusManagementSystem/fast">
-				<Option output="/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/AirBusManagementSystem" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug"/>
+				<Option output="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/AirBusManagementSystem" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -55,73 +55,73 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 AirBusManagementSystem/fast"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 AirBusManagementSystem/fast"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug"/>
+				<Option working_dir="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug"/>
+				<Option working_dir="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j16 -f &quot;/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/classes/Parser.cpp">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/Parser.cpp">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/classes/Parser.h">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/Parser.h">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/classes/Utils.cpp">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/Utils.cpp">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/classes/Utils.h">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/Utils.h">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/classes/airline.cpp">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/airline.cpp">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/classes/airline.h">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/airline.h">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/classes/airport.cpp">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/airport.cpp">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/classes/airport.h">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/airport.h">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/main.cpp">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/main.cpp">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/network/edge.cpp">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/network/edge.cpp">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/network/graph.cpp">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/network/graph.cpp">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/network/graph.h">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/network/graph.h">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/network/vertex.cpp">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/network/vertex.cpp">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
-		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystem/CMakeLists.txt">
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

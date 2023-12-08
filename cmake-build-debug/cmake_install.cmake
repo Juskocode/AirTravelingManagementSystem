@@ -1,4 +1,4 @@
-# Install script for directory: /home/freitas/CLionProjects/AirTravelingManagementSystem
+# Install script for directory: /home/freitas/CLionProjects/AirTravelingManagementSystemG17
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/freitas/CLionProjects/AirTravelingManagementSystem/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

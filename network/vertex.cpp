@@ -11,6 +11,10 @@ int Vertex::getId() {
     return id;
 }
 
+Airport Vertex::getAirport() {
+    return airport;
+}
+
 void Vertex::setAirport(Airport in) {
     Vertex::airport = in;
 }
@@ -44,3 +48,5 @@ bool Vertex::removeEdgeTo(Vertex *d) {
         }
     return false;
 }
+
+

@@ -88,6 +88,18 @@ public:
     vector<int> dfs() const;
     vector<int> dfs(const int &source) const;
     vector<int> bfs(const int &source) const;
+
+    /**
+     * Calculates the minimum number of flights between source airport and target airport using airlines \n \n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V| + |E|)</b>, V -> number of nodes, E -> number of edges
+     * </pre>
+     * @param src - source node / node of source airport
+     * @param dest - target node
+     * @param airlines - unordered set of airlines to use (if empty, use all airlines)
+     * @return minimum number of flights between source airport and target airport using airlines
+     */
     int nrFlights(int src, int dest, Airline::AirlineH airlines);
 };
 

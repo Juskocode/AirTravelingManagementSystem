@@ -222,30 +222,41 @@ vector<int> Graph::bfs(const  int& source) const {
 
 int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
 
-    auto Vertexes = getVertexSet();
+    auto source = findVertex(src);
+    auto destination = findVertex(dest);
 
-    for (auto & node : Vertexes) {
-        node->setVisited(false);
-        node->distance = 0;
+
+    if(source == nullptr || destination == nullptr)
+        return {};
+
+    for (int i = 1; i <= getNumVertex(); i++) {
+        vertexSet[i]->setVisited(false);
+        vertexSet[i]->distance = 0;
     }
 
-    queue<Vertex* > q;
-    q.push(src);
 
-    Vertexes[src]->setVisited(true);
+    queue<Vertex*> q;
+    q.push(source);
+
+    vertexSet[source->getId()]->visited = true;
 
     while(!q.empty()){
-        int u = q.front(); q.pop();
-        for (const Edge& e : Vertexes[u]->getAdj()){
+
+        Vertex* currV = q.front();q.pop();
+
+        for(const Edge &e : currV->adj){
+
             if (!airlines.empty() && airlines.find(e.airline) == airlines.end()) continue;
-            auto w = e.dest;
-            if (!w->isVisited()){
+
+            Vertex* w = e.getDest();
+
+            if(!vertexSet[w->getId()]->isVisited()){
                 q.push(w);
-                Vertexes[w].visited = true;
-                Vertexes[w].distance = Vertexes[u].distance + 1;
+                w->setVisited(true);
+                w->distance = currV->distance + 1;
             }
         }
     }
 
-    return Vertexes[dest].distance;
+    return (int)destination->distance;
 }

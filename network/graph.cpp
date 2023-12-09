@@ -301,3 +301,19 @@ void Graph::bfsPath(int src, Airline::AirlineH airlines){
     }
 }
 
+void Graph::findPaths(vector<vector<int>>& paths,vector<int>& path, int v){
+
+    auto V = findVertex(v);
+
+    if (V == nullptr) {
+        if (find(paths.begin(),paths.end(),path) == paths.end())
+            paths.push_back(path);
+        return;
+    }
+
+    for (const auto &parent : vertexSet[v]->parents) {
+        path.push_back(v);
+        findPaths(paths,path, parent);
+        path.pop_back();
+    }
+}

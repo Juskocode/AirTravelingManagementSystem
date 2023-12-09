@@ -318,6 +318,7 @@ void Graph::findPaths(vector<vector<int>>& paths,vector<int>& path, int v){
     }
 }
 
+
 Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
     auto source = findVertex(src);
     auto destination = findVertex(dest);
@@ -325,6 +326,7 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
 
     if(source == nullptr || destination == nullptr)
         return {};
+
 
     MinHeap<int, int> minHeap(getNumVertex(), -1);
 
@@ -337,6 +339,7 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
 
     vertexSet[source->getId()]->distance = 0;
     vertexSet[source->getId()]->parents.push_back(source->getId());
+
     minHeap.decreaseKey(src, 0);
 
     while(!minHeap.empty()){

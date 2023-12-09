@@ -153,6 +153,30 @@ classes/Parser.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/AirBusManagementSystem.dir/build.make CMakeFiles/AirBusManagementSystem.dir/classes/Parser.cpp.s
 .PHONY : classes/Parser.cpp.s
 
+classes/Utils.o: classes/Utils.cpp.o
+.PHONY : classes/Utils.o
+
+# target to build an object file
+classes/Utils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AirBusManagementSystem.dir/build.make CMakeFiles/AirBusManagementSystem.dir/classes/Utils.cpp.o
+.PHONY : classes/Utils.cpp.o
+
+classes/Utils.i: classes/Utils.cpp.i
+.PHONY : classes/Utils.i
+
+# target to preprocess a source file
+classes/Utils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AirBusManagementSystem.dir/build.make CMakeFiles/AirBusManagementSystem.dir/classes/Utils.cpp.i
+.PHONY : classes/Utils.cpp.i
+
+classes/Utils.s: classes/Utils.cpp.s
+.PHONY : classes/Utils.s
+
+# target to generate assembly for a file
+classes/Utils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AirBusManagementSystem.dir/build.make CMakeFiles/AirBusManagementSystem.dir/classes/Utils.cpp.s
+.PHONY : classes/Utils.cpp.s
+
 classes/airline.o: classes/airline.cpp.o
 .PHONY : classes/airline.o
 
@@ -309,6 +333,9 @@ help:
 	@echo "... classes/Parser.o"
 	@echo "... classes/Parser.i"
 	@echo "... classes/Parser.s"
+	@echo "... classes/Utils.o"
+	@echo "... classes/Utils.i"
+	@echo "... classes/Utils.s"
 	@echo "... classes/airline.o"
 	@echo "... classes/airline.i"
 	@echo "... classes/airline.s"

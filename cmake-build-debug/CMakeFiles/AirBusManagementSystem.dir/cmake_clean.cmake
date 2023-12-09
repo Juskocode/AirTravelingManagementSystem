@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "AirBusManagementSystem.pdb"
   "CMakeFiles/AirBusManagementSystem.dir/classes/Parser.cpp.o"
   "CMakeFiles/AirBusManagementSystem.dir/classes/Parser.cpp.o.d"
+  "CMakeFiles/AirBusManagementSystem.dir/classes/Utils.cpp.o"
+  "CMakeFiles/AirBusManagementSystem.dir/classes/Utils.cpp.o.d"
   "CMakeFiles/AirBusManagementSystem.dir/classes/airline.cpp.o"
   "CMakeFiles/AirBusManagementSystem.dir/classes/airline.cpp.o.d"
   "CMakeFiles/AirBusManagementSystem.dir/classes/airport.cpp.o"

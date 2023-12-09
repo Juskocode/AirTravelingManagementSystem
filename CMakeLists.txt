@@ -17,6 +17,7 @@ add_executable(AirBusManagementSystem main.cpp
         classes/Utils.cpp
         classes/Utils.h
         classes/Minheap.h
+        classes/Fibtree.h
 )
 
 find_package(Doxygen)

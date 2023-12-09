@@ -16,6 +16,7 @@
 #include <utility>
 #include "../classes/airport.h"
 #include "../classes/airline.h"
+#include "../classes/Minheap.h"
 
 using namespace std;
 

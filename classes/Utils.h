@@ -73,6 +73,17 @@ public:
 
     vector<string> localAirports(double, double, double) const;
 
+
+    /**
+     * Calculates the total number of flights\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V|)</b>, V -> number of nodes
+     * </pre>
+     * @return number of flights
+     */
+    int nrFlights();
+
     /**
      * Calculates the airports that exist in a radius of a certain coordinate\n\n
      * <b>Complexity\n</b>
@@ -99,7 +110,26 @@ public:
      */
     list<pair<string,string>> processDistance(double&, const vector<string>&, const vector<string>&, const Airline::AirlineH&);
 
-    int nrFlights();
+    /**
+     * Calculates the number of airports that belong to each country\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(n*log(m))</b>,n -> number of cities, m -> number of values in airportsPerCountry map
+     * </pre>
+     */
+    void countAirportsPerCountry();
+
+    /**
+     * Calculates the number of airlines that are founded in each country\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(n)</b>, n -> number of airlines
+     * </pre>
+     * @param country - country that the user wants to get information from
+     * @return number of airlines
+     */
+    int countAirlinesPerCountry(const string& country);
+
 
 };
 

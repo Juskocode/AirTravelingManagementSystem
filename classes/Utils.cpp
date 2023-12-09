@@ -96,3 +96,26 @@ list<pair<string,string>> Utils::processDistance(double& bestDistance, const vec
         }
     return res;
 }
+
+
+void Utils::countAirportsPerCountry() {
+    map<string, int> airportsPerCountry;
+    for (const auto& i : parser.airportsPerCity){
+        if (airportsPerCountry.find(i.first.first) == airportsPerCountry.end())
+            airportsPerCountry[i.first.first] = i.second.size();
+        else{
+            auto m = airportsPerCountry.find(i.first.first);
+            m->second += i.second.size();
+        }
+    }
+    parser.nrAirportsPerCountry = airportsPerCountry;
+}
+
+int Utils::countAirlinesPerCountry(const string& country) {
+    int count = 0;
+    for (auto airline : parser.airlines)
+        if (airline.getCountry() == country)
+            count++;
+    return count;
+}
+

@@ -56,6 +56,7 @@ class Vertex {
 public:
     explicit Vertex(int id);
     int getId();
+    double getDistance() const;
     Airport getAirport();
     void setAirport(Airport in);
     bool isVisited() const;

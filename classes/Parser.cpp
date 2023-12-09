@@ -13,6 +13,37 @@ Graph Parser::getGraph() const {return graph;}
 unordered_map<string,int> Parser::getMap() const{
     return idAirports;
 }
+
+/**
+ * Swaps key and value.\n\n
+ * <b>Complexity\n</b>
+ * <pre>
+ *      <b>O(1)</b>
+ * </pre>
+ * @tparam A - key
+ * @tparam B - value
+ * @param p
+ * @return pair where key is the value(B) and value is the key(A)
+ */
+template<typename A, typename B>
+pair<B,A> flip_pair(const pair<A,B> &p)
+{
+    return pair<B,A>(p.second, p.first);
+}
+
+template<typename A, typename B>
+multimap<B,A> flip_map(const map<A,B> &src)
+{
+    multimap<B,A> dst;
+    transform(src.begin(), src.end(), inserter(dst, dst.begin()),
+              flip_pair<A,B>);
+    return dst;
+}
+
+multimap<int,string> Parser::convertMap(const map<string, int>& m) {
+    return flip_map(m);
+}
+
 map<string,int> Parser::getNrAirportsPerCountry() const {return nrAirportsPerCountry;}
 
 

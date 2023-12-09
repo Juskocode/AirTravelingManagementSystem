@@ -1,5 +1,5 @@
 #include "graph.h"
-
+#include "../classes/Parser.h"
 
 Graph::Graph(int Vertexs) {
     vertexSet.resize(Vertexs);
@@ -318,7 +318,8 @@ void Graph::findPaths(vector<vector<int>>& paths,vector<int>& path, int v){
     }
 }
 
-Vertex* Graph::dijkstra(int src, int dest, Airline::AirlineH airlines){
+
+Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
     auto source = findVertex(src);
     auto destination = findVertex(dest);
 
@@ -326,45 +327,100 @@ Vertex* Graph::dijkstra(int src, int dest, Airline::AirlineH airlines){
     if(source == nullptr || destination == nullptr)
         return {};
 
-    FibTree<Vertex*> fibHeap;
 
-    for(int i = 0; i < getNumVertex(); i++){
+    MinHeap<int, int> minHeap(getNumVertex(), -1);
+
+    for(int i = 1; i <= getNumVertex(); i++){
         vertexSet[i]->distance = INT_MAX;
         vertexSet[i]->setVisited(false);
         vertexSet[i]->parents.clear();
-        fibHeap.insert(vertexSet[i]);
+        minHeap.insert(i, INT_MAX);
     }
 
     vertexSet[source->getId()]->distance = 0;
     vertexSet[source->getId()]->parents.push_back(source->getId());
-    fibHeap.decreaseKey(source, 0);
 
-    while(!fibHeap.empty()){
+    minHeap.decreaseKey(src, 0);
 
-        auto u = fibHeap.extractMin();
+    while(!minHeap.empty()){
+
+        auto u = minHeap.extractMin();
         vertexSet[source->getId()]->setVisited(true);
 
-        for(const auto &e : vertexSet[u->getId()]->getAdj()){
+        for(const auto &e : vertexSet[u]->getAdj()){
 
             if (!airlines.empty() && airlines.find(e.airline) == airlines.end()) continue;
 
-            auto v = e.getDest();
-            double w = v->distance;
+            auto v = e.getDest()->getId();
+            double w = e.getWeight();
 
-            if(vertexSet[v->getId()]->isVisited() && vertexSet[u->getId()]->distance + w < vertexSet[v->getId()]->distance){
+            if(vertexSet[v]->isVisited() && vertexSet[u]->distance + w < vertexSet[v]->distance){
 
-                vertexSet[v->getId()]->distance = vertexSet[u->getId()]->distance + w;
+                vertexSet[v]->distance = vertexSet[u]->distance + w;
 
-                auto p = vertexSet[u->getId()]->parents;
-                if (find(p.begin(), p.end(), v->getId()) == p.end()) p.push_back(v->getId());
+                auto p = vertexSet[u]->parents;
+                if (find(p.begin(), p.end(), v) == p.end()) p.push_back(v);
 
-                vertexSet[v->getId()]->parents = p;
-                fibHeap.insert(vertexSet[v->getId()]);
+                vertexSet[v]->parents = p;
+                minHeap.decreaseKey(v, vertexSet[v]->distance);
 
             }
         }
     }
 
     return vertexSet[destination->getId()];
+}
+
+
+vector<string> Graph::getAirlines(int src, int dest, Airline::AirlineH airlines) {
+    vector<string> usedAirlines;
+    for (const auto& e: vertexSet[src]->adj)
+        if (e.dest->getId() == dest && (airlines.empty() || airlines.find(e.airline) != airlines.end()))
+            usedAirlines.push_back(e.airline.getCode());
+    return usedAirlines;
+}
+
+
+void Graph::printPath(vector<int> path, const Airline::AirlineH& airlines) {
+    for (int i = 0; i < path.size()-1; i++){
+        auto possibleAirlines = getAirlines(path[i],path[i+1],airlines);
+        printf("\033[1m\033[46m %s \033[0m", vertexSet[path[i]]->airport.getCode().c_str());
+        cout <<" --- (";
+        for (int j = 0; j < possibleAirlines.size()-1; j++)
+            printf("\033[1m\033[32m %s \033[0m |",possibleAirlines[j].c_str());
+        printf("\033[1m\033[32m %s \033[0m",possibleAirlines[possibleAirlines.size()-1].c_str());
+        cout << ") --- ";
+    }
+    printf("\033[1m\033[46m %s \033[0m\n\n", vertexSet[path[path.size() - 1]]->airport.getCode().c_str());
+}
+
+
+void Graph::printPathsByFlights(int& nrPath, int start, int end, const Airline::AirlineH& airlines) {
+    vector<int> path;
+    vector<vector<int> > paths;
+
+    bfsPath(start,airlines);
+    findPaths(paths,path,end);
+
+    Parser parser;
+    auto map = parser.getMap();
+    for (auto v : paths) {
+        reverse(v.begin(), v.end());
+        cout << " Trajeto nº" << ++nrPath << ": ";
+        printPath(v,airlines);
+    }
+}
+
+
+void Graph::printPathsByDistance(int& nrPath, int start, int end, const Airline::AirlineH& airlines) {
+    Vertex* v = dijkstra(start,end,airlines);
+
+    if (v->parents.empty()) {
+        cout << " Não existem voos\n\n";
+        return;
+    }
+
+    cout << " Trajeto nº" << ++nrPath << ": ";
+    printPath(v->parents, airlines);
 
 }

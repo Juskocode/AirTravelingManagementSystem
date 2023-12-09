@@ -23,7 +23,7 @@ class MinHeap {
     const Key KEY_NOT_FOUND;
 
     void bubbleUp(int index);      // Time Complexity: O(log N)
-    void bubbleDown(int index);    // Time Complexity: O(log N)
+    void bubbleDown(int index);    // Time Complexity: O(log N) O(1) in fibTree case
     void swapNodes(int index1, int index2);
 
 public:
@@ -33,7 +33,17 @@ public:
     void insert(const Key& key, const Value& value);      // Insert (key, value) into the heap. Time Complexity: O(log N)
     void decreaseKey(const Key& key, const Value& value); // Decrease value of key. Time Complexity: O(log N)
     Key extractMin(); // Remove and return key with the smallest value. Time Complexity: O(log N)
+    /**
+     * @brief Checks if the Fibonacci heap is empty.
+     * @return True if the heap is empty, otherwise false.
+     */
+    bool empty() const;
 };
+
+template<class Key, class Value>
+bool MinHeap<Key, Value>::empty() const {
+    return heapSize == 0;
+}
 
 // ----------------------------------------------
 

@@ -72,7 +72,31 @@ public:
     bool isValidCity(const string& country, const string& city);
 
     vector<string> localAirports(double, double, double) const;
+
+    /**
+     * Calculates the airports that exist in a radius of a certain coordinate\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V|*log(n))</b>, n -> number of airports that exist in a certain radius, V-> number of nodes
+     * </pre>
+     * @param latitude - latitude of the center of the circumference
+     * @param longitude -longitude of the center of the circumference
+     * @param radius - radius of the circumference
+     * @return vector of codes of airports that exist in that range
+     */
     list<pair<string,string>> processFlight(int&, const vector<string>&, const vector<string>&, const Airline::AirlineH&);
+
+    /**
+     * Calculates the smallest amount of flights possible to get to a specific airport from another airport\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(n*m*(|V|+|E|))</b>,n -> size of src vector, m -> size of dest vector,V -> number of nodes, E -> number of edges
+     * </pre>
+     * @param src  - source node
+     * @param dest - final node
+     * @param airline - airlines available for use (if empty, use all airlines)
+     * @return list of all best possible paths
+     */
     list<pair<string,string>> processDistance(double&, const vector<string>&, const vector<string>&, const Airline::AirlineH&);
 
     int nrFlights();

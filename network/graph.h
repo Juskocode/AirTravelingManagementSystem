@@ -1,11 +1,19 @@
 #ifndef AIRBUSMANAGEMENTSYSTEM_GRAPH_H
 #define AIRBUSMANAGEMENTSYSTEM_GRAPH_H
 
-#include <cstddef>
+
+#include <string>
 #include <vector>
-#include <queue>
-#include <cmath>
+#include <unordered_set>
 #include <list>
+#include <queue>
+#include <iostream>
+#include <stack>
+#include <cmath>
+#include <set>
+#include <algorithm>
+#include <climits>
+#include <utility>
 #include "../classes/airport.h"
 #include "../classes/airline.h"
 
@@ -44,6 +52,7 @@ class Vertex {
 public:
     explicit Vertex(int id);
     int getId();
+    Airport getAirport();
     void setAirport(Airport in);
     bool isVisited() const;
     void setVisited(bool v);
@@ -79,6 +88,19 @@ public:
     vector<int> dfs() const;
     vector<int> dfs(const int &source) const;
     vector<int> bfs(const int &source) const;
+
+    /**
+     * Calculates the minimum number of flights between source airport and target airport using airlines \n \n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V| + |E|)</b>, V -> number of nodes, E -> number of edges
+     * </pre>
+     * @param src - source node / node of source airport
+     * @param dest - target node
+     * @param airlines - unordered set of airlines to use (if empty, use all airlines)
+     * @return minimum number of flights between source airport and target airport using airlines
+     */
+    int nrFlights(int src, int dest, Airline::AirlineH airlines);
 };
 
 

@@ -82,12 +82,27 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+<<<<<<< HEAD
+=======
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/Minheap.h">
+			<Option target="AirBusManagementSystem"/>
+		</Unit>
+>>>>>>> origin/master
 		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/Parser.cpp">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
 		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/Parser.h">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>
+<<<<<<< HEAD
+=======
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/Utils.cpp">
+			<Option target="AirBusManagementSystem"/>
+		</Unit>
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/Utils.h">
+			<Option target="AirBusManagementSystem"/>
+		</Unit>
+>>>>>>> origin/master
 		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/airline.cpp">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>

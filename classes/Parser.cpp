@@ -10,6 +10,10 @@ Airport::AirportH const& Parser::getAirports() const {return airports;}
 Airline::AirlineH const& Parser::getAirlines() const {return airlines;}
 Airport::CityH const& Parser::getCity() const {return airportsPerCity;}
 Graph Parser::getGraph() const {return graph;}
+unordered_map<string,int> Parser::getMap() const{
+    return idAirports;
+}
+map<string,int> Parser::getNrAirportsPerCountry() const {return nrAirportsPerCountry;}
 
 
 void Parser::createAirports() {
@@ -43,27 +47,20 @@ void Parser::createAirports() {
 
 void Parser::createAirlines() {
     ifstream inFile;
-    string code, name, callsign, country, line;
+    string code, name, callSign, country, line;
     inFile.open("../data/airlines.csv");
     getline(inFile, line);
     while(getline(inFile, line)){
         istringstream is(line);
         getline(is,code,',');
         getline(is,name,',');
-        getline(is,callsign,',');
+        getline(is,callSign,',');
         getline(is,country,',');
-        Airline a = Airline(code, name, callsign, country);
+        Airline a = Airline(code, name, callSign, country);
         airlines.insert(a);
     }
 }
-/**
- * Reads flights.csv file and stores the airports information in graphs about the flights
- * (airport of departure/arrival and distance between them)\n\n
- * <b>Complexity\n</b>
- * <pre>
- *      <b>O(n*log(n))</b>, n -> file lines
- * </pre>
- */
+
 void Parser::createGraph(){
     ifstream inFile;
     string source, target, airline, line;
@@ -74,8 +71,15 @@ void Parser::createGraph(){
         getline(is,source,',');
         getline(is,target,',');
         getline(is,airline,',');
-        auto d = Graph::distance(airports.find(Airport(source))->getLatitude(),airports.find(Airport(source))->getLongitude()
-                ,airports.find(Airport(target))->getLatitude(),airports.find(Airport(target))->getLongitude());
+
+        double latSource = airports.find(Airport(source))->getLatitude();
+        double lonSource = airports.find(Airport(source))->getLongitude();
+
+        double latTarget = airports.find(Airport(target))->getLatitude();
+        double lonTarget = airports.find(Airport(target))->getLongitude();
+
+        auto d = Graph::distance(latSource, lonSource, latTarget, lonTarget);
+
         graph.addEdge(idAirports[source],idAirports[target],Airline(airline),d);
     }
 }

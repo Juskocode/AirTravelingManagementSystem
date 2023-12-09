@@ -154,7 +154,7 @@ void Graph::dfsVisit(Vertex *v, vector<int> & res) const {
     v->setVisited(true); // Marking the current vertex as visited
     res.push_back(v->getId()); // Adding current vertex info to the result vector
 
-    for (auto edge : v->getAdj()) {
+    for (const auto& edge : v->getAdj()) {
         Vertex *adjVertex = edge.getDest();
         if (!adjVertex->isVisited()) {
             dfsVisit(adjVertex, res); // Recursive call for unvisited adjacent vertices
@@ -186,7 +186,7 @@ vector<int> Graph::bfs(const  int& source) const {
 
     auto src = findVertex(source);
 
-    if(src == NULL)
+    if(src == nullptr)
         return {};
 
     for (int i = 1; i <= getNumVertex(); i++) {
@@ -218,4 +218,45 @@ vector<int> Graph::bfs(const  int& source) const {
     }
 
     return res;
+}
+
+int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
+
+    auto source = findVertex(src);
+    auto destination = findVertex(dest);
+
+
+    if(source == nullptr || destination == nullptr)
+        return {};
+
+    for (int i = 1; i <= getNumVertex(); i++) {
+        vertexSet[i]->setVisited(false);
+        vertexSet[i]->distance = 0;
+    }
+
+
+    queue<Vertex*> q;
+    q.push(source);
+
+    vertexSet[source->getId()]->visited = true;
+
+    while(!q.empty()){
+
+        Vertex* currV = q.front();q.pop();
+
+        for(const Edge &e : currV->adj){
+
+            if (!airlines.empty() && airlines.find(e.airline) == airlines.end()) continue;
+
+            Vertex* w = e.getDest();
+
+            if(!vertexSet[w->getId()]->isVisited()){
+                q.push(w);
+                w->setVisited(true);
+                w->distance = currV->distance + 1;
+            }
+        }
+    }
+
+    return (int)destination->distance;
 }

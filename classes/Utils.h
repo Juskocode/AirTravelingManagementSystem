@@ -71,9 +71,9 @@ public:
      */
     bool isValidCity(const string& country, const string& city);
 
-    vector<string> localAirports(double, double, double);
-    list<pair<string,string>> processFlight(int&, const vector<string>&,const vector<string>&,const Airline::AirlineH&);
-    list<pair<string,string>> processDistance(double&, const vector<string>&,const vector<string>&,const Airline::AirlineH&);
+    vector<string> localAirports(double, double, double) const;
+    list<pair<string,string>> processFlight(int&, const vector<string>&, const vector<string>&, const Airline::AirlineH&);
+    list<pair<string,string>> processDistance(double&, const vector<string>&, const vector<string>&, const Airline::AirlineH&);
 
     int nrFlights();
 

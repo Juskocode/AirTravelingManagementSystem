@@ -260,3 +260,44 @@ int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
 
     return (int)destination->distance;
 }
+
+
+void Graph::bfsPath(int src, Airline::AirlineH airlines){
+    auto source = findVertex(src);
+
+    if(source == nullptr)
+        return;
+
+    for (int i = 1; i <= getNumVertex(); i++) {
+        vertexSet[i]->distance = INT_MAX;
+        vertexSet[i]->parents.clear();
+    }
+
+    queue<Vertex*> q;
+    q.push(source);
+
+    vertexSet[source->getId()]->parents = {-1};
+    vertexSet[source->getId()]->distance = 0;
+
+    while(!q.empty()){
+
+        Vertex* currV = q.front();q.pop();
+
+        for(const Edge &e : currV->adj){
+
+            if (!airlines.empty() && airlines.find(e.airline) == airlines.end()) continue;
+
+            Vertex* w = e.getDest();
+
+            if(vertexSet[w->getId()]->distance > vertexSet[currV->getId()]->distance + 1){
+                vertexSet[w->getId()]->distance = vertexSet[currV->getId()]->distance + 1;
+                q.push(w);
+                vertexSet[w->getId()]->parents.clear();
+                vertexSet[w->getId()]->parents.push_back(currV->getId());
+            }
+            else if(vertexSet[w->getId()]->distance == vertexSet[currV->getId()]->distance + 1)
+                vertexSet[w->getId()]->parents.push_back(currV->getId());
+        }
+    }
+}
+

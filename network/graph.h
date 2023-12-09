@@ -46,6 +46,7 @@ class Vertex {
     int num = 0;
     int low{};
     double distance{};
+    vector<int> parents; //to use in bfsPath
 
     void addEdge(Vertex *dest, Airline airline, double w);
     bool removeEdgeTo(Vertex *d);
@@ -101,6 +102,33 @@ public:
      * @return minimum number of flights between source airport and target airport using airlines
      */
     int nrFlights(int src, int dest, Airline::AirlineH airlines);
+
+    /**
+     * Stores in the parents variable the possible flight candidates using bfs. Parents who also have possible flight candidates
+     * allowing us to get all the possible flights from a certain source.\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V|+|E|)</b>, V -> number of nodes, E -> number of edges
+     * </pre>
+     * @param src - source node
+     * @param airlines - unordered set of airlines to use (if empty, use all airlines)
+     */
+    void bfsPath(int src, Airline::AirlineH airlines);
+
+    /**
+     * Stores in paths all possible paths to node v.\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(n)</b> n -> paths size
+     * </pre>
+     * @param paths - vector of paths that are possible
+     * @param path - current path
+     * @param v - target node
+     */
+    void findPaths(vector<vector<int>>& paths,vector<int>& path,int v);
+
+    Vertex* dijkstra(int src, int dest, Airline::AirlineH airlines);
+
 };
 
 

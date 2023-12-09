@@ -54,7 +54,7 @@ int Utils::nrFlights(){
  * @param radius - radius of the circumference
  * @return vector of codes of airports that exist in that range
  */
-vector<string> Utils::localAirports(double latitude, double longitude, double radius) {
+vector<string> Utils::localAirports(double latitude, double longitude, double radius) const {
     vector<string> localAirports;
     double latitude1,longitude1;
     for (const auto& node : parser.graph.getVertexSet()){

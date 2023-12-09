@@ -82,6 +82,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/Minheap.h">
+			<Option target="AirBusManagementSystem"/>
+		</Unit>
 		<Unit filename="/home/freitas/CLionProjects/AirTravelingManagementSystemG17/classes/Parser.cpp">
 			<Option target="AirBusManagementSystem"/>
 		</Unit>

@@ -1,0 +1,3 @@
+/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/CMakeFiles/AirBusManagementSystem.dir
+/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug/CMakeFiles/rebuild_cache.dir

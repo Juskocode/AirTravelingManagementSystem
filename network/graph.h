@@ -16,6 +16,7 @@
 #include <utility>
 #include "../classes/airport.h"
 #include "../classes/airline.h"
+#include "../classes/Fibtree.h"
 
 using namespace std;
 
@@ -94,7 +95,7 @@ public:
      * Calculates the minimum number of flights between source airport and target airport using airlines \n \n
      * <b>Complexity\n</b>
      * <pre>
-     *      <b>O(|V| + |E|)</b>, V -> number of nodes, E -> number of edges
+     *      <b>O(|V|+|E|)</b>, V -> number of nodes, E -> number of edges
      * </pre>
      * @param src - source node / node of source airport
      * @param dest - target node
@@ -127,6 +128,17 @@ public:
      */
     void findPaths(vector<vector<int>>& paths,vector<int>& path,int v);
 
+    /**
+     * Calculates the minimum flown distance between source airport and target airport using airlines \n \n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|E| log(|V|))</b>, V -> number of nodes and E is the number of Edges
+     * </pre>
+     * @param src - source node / node of source airport
+     * @param dest - target node
+     * @param airlines - unordered set of airlines to use (if empty, use all airlines)
+     * @return minimum flown distance between source airport and target airport using airlines
+     */
     Vertex* dijkstra(int src, int dest, Airline::AirlineH airlines);
 
 };

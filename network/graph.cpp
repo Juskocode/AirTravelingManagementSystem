@@ -317,3 +317,54 @@ void Graph::findPaths(vector<vector<int>>& paths,vector<int>& path, int v){
         path.pop_back();
     }
 }
+
+Vertex* Graph::dijkstra(int src, int dest, Airline::AirlineH airlines){
+    auto source = findVertex(src);
+    auto destination = findVertex(dest);
+
+
+    if(source == nullptr || destination == nullptr)
+        return {};
+
+    FibTree<Vertex*> fibHeap;
+
+    for(int i = 0; i < getNumVertex(); i++){
+        vertexSet[i]->distance = INT_MAX;
+        vertexSet[i]->setVisited(false);
+        vertexSet[i]->parents.clear();
+        fibHeap.insert(vertexSet[i]);
+    }
+
+    vertexSet[source->getId()]->distance = 0;
+    vertexSet[source->getId()]->parents.push_back(source->getId());
+    fibHeap.decreaseKey(source, 0);
+
+    while(!fibHeap.empty()){
+
+        auto u = fibHeap.extractMin();
+        vertexSet[source->getId()]->setVisited(true);
+
+        for(const auto &e : vertexSet[u->getId()]->getAdj()){
+
+            if (!airlines.empty() && airlines.find(e.airline) == airlines.end()) continue;
+
+            auto v = e.getDest();
+            double w = v->distance;
+
+            if(vertexSet[v->getId()]->isVisited() && vertexSet[u->getId()]->distance + w < vertexSet[v->getId()]->distance){
+
+                vertexSet[v->getId()]->distance = vertexSet[u->getId()]->distance + w;
+
+                auto p = vertexSet[u->getId()]->parents;
+                if (find(p.begin(), p.end(), v->getId()) == p.end()) p.push_back(v->getId());
+
+                vertexSet[v->getId()]->parents = p;
+                fibHeap.insert(vertexSet[v->getId()]);
+
+            }
+        }
+    }
+
+    return vertexSet[destination->getId()];
+
+}

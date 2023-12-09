@@ -85,7 +85,7 @@ list<pair<string,string>> Utils::processDistance(double& bestDistance, const vec
         for (const auto &d: dest) {
             if (s == d) continue;
             auto node = parser.graph.dijkstra(parser.idAirports[s], parser.idAirports[d], airline);
-            distance = node->distance;
+            distance = node->getDistance();
             if (distance < bestDistance) {
                 bestDistance = distance;
                 res.clear();

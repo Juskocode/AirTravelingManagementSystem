@@ -1,5 +1,5 @@
 #include "graph.h"
-
+#include "../classes/Parser.h"
 
 Graph::Graph(int Vertexs) {
     vertexSet.resize(Vertexs);
@@ -368,3 +368,56 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
     return vertexSet[destination->getId()];
 }
 
+
+vector<string> Graph::getAirlines(int src, int dest, Airline::AirlineH airlines) {
+    vector<string> usedAirlines;
+    for (const auto& e: vertexSet[src]->adj)
+        if (e.dest->getId() == dest && (airlines.empty() || airlines.find(e.airline) != airlines.end()))
+            usedAirlines.push_back(e.airline.getCode());
+    return usedAirlines;
+}
+
+
+void Graph::printPath(vector<int> path, const Airline::AirlineH& airlines) {
+    for (int i = 0; i < path.size()-1; i++){
+        auto possibleAirlines = getAirlines(path[i],path[i+1],airlines);
+        printf("\033[1m\033[46m %s \033[0m", vertexSet[path[i]]->airport.getCode().c_str());
+        cout <<" --- (";
+        for (int j = 0; j < possibleAirlines.size()-1; j++)
+            printf("\033[1m\033[32m %s \033[0m |",possibleAirlines[j].c_str());
+        printf("\033[1m\033[32m %s \033[0m",possibleAirlines[possibleAirlines.size()-1].c_str());
+        cout << ") --- ";
+    }
+    printf("\033[1m\033[46m %s \033[0m\n\n", vertexSet[path[path.size() - 1]]->airport.getCode().c_str());
+}
+
+
+void Graph::printPathsByFlights(int& nrPath, int start, int end, const Airline::AirlineH& airlines) {
+    vector<int> path;
+    vector<vector<int> > paths;
+
+    bfsPath(start,airlines);
+    findPaths(paths,path,end);
+
+    Parser parser;
+    auto map = parser.getMap();
+    for (auto v : paths) {
+        reverse(v.begin(), v.end());
+        cout << " Trajeto nº" << ++nrPath << ": ";
+        printPath(v,airlines);
+    }
+}
+
+
+void Graph::printPathsByDistance(int& nrPath, int start, int end, const Airline::AirlineH& airlines) {
+    Vertex* v = dijkstra(start,end,airlines);
+
+    if (v->parents.empty()) {
+        cout << " Não existem voos\n\n";
+        return;
+    }
+
+    cout << " Trajeto nº" << ++nrPath << ": ";
+    printPath(v->parents, airlines);
+
+}

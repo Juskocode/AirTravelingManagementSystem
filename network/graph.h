@@ -37,6 +37,7 @@ public:
     void setDest(Vertex *dest);
     double getWeight() const;
     void setWeight(double weight);
+    Airline getAirline() const;
     friend class Graph;
     friend class Vertex;
 };

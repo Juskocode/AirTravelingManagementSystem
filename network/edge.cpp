@@ -22,3 +22,7 @@ double Edge::getWeight() const {
 void Edge::setWeight(double weight) {
     Edge::weight = weight;
 }
+
+Airline Edge::getAirline() const{
+    return airline;
+}

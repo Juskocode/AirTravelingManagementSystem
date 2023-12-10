@@ -21,7 +21,7 @@ Vertex * Graph::findVertex(const int &in) const {
     for (auto v : vertexSet)
         if (v->getId() == in)
             return v;
-    return NULL;
+    return nullptr;
 }
 
 bool Vertex::isVisited() const {
@@ -46,7 +46,7 @@ void Vertex::setAdj(const vector<Edge> &adj) {
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
 bool Graph::addVertex(const int &src){
-    if ( findVertex(src) != NULL)
+    if ( findVertex(src) != nullptr)
         return false;
     vertexSet.push_back(new Vertex(src));
     return true;
@@ -61,7 +61,7 @@ bool Graph::addVertex(const int &src){
 bool Graph::addEdge(const int &sourc, const int &dest, const Airline &airline, double w) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
-    if (v1 == NULL || v2 == NULL)
+    if (v1 == nullptr || v2 == nullptr)
         return false;
     v1->addEdge(v2, airline, w);
     return true;
@@ -78,7 +78,7 @@ bool Graph::addEdge(const int &sourc, const int &dest, const Airline &airline, d
 bool Graph::removeEdge(const int &sourc, const int &dest) {
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
-    if (v1 == NULL || v2 == NULL)
+    if (v1 == nullptr || v2 == nullptr)
         return false;
     return v1->removeEdgeTo(v2);
 }
@@ -234,7 +234,6 @@ int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
         vertexSet[i]->distance = 0;
     }
 
-
     queue<Vertex*> q;
     q.push(source);
 
@@ -327,8 +326,8 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
     if(source == nullptr || destination == nullptr)
         return {};
 
-
-    MinHeap<int, int> minHeap(getNumVertex(), -1);
+    //node id and node value(distance)
+    MinHeap<int, double> minHeap(getNumVertex(), -1);
 
     for(int i = 1; i <= getNumVertex(); i++){
         vertexSet[i]->distance = INT_MAX;
@@ -340,7 +339,7 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
     vertexSet[source->getId()]->distance = 0;
     vertexSet[source->getId()]->parents.push_back(source->getId());
 
-    minHeap.decreaseKey(src, 0);
+    minHeap.decreaseKey(source->getId(), 0);
 
     while(!minHeap.empty()){
 

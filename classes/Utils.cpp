@@ -3,42 +3,44 @@
 
 #include <utility>
 
-Utils::Utils(Parser parser) : parser(std::move(parser)){}
+Utils::Utils(){
+}
+
 
 
 bool Utils::isCountry(const string& country){
-    auto i = parser.countries.find(country);
-    if (i == parser.countries.end()) return false;
+    auto i = countries.find(country);
+    if (i == countries.end()) return false;
     return true;
 }
 
 bool Utils::isAirport(const Airport& airport){
-    auto i = parser.airports.find(airport);
-    if (i == parser.airports.end()) return false;
+    auto i = airports.find(airport);
+    if (i == airports.end()) return false;
     return true;
 }
 
 bool Utils::isAirline(const Airline& airline) {
-    auto i = parser.airlines.find(airline);
-    if (i == parser.airlines.end()) return false;
+    auto i = airlines.find(airline);
+    if (i == airlines.end()) return false;
     return true;
 }
 
 bool Utils::isCity(const string& city) {
-    auto i = parser.cities.find(city);
-    if (i == parser.cities.end()) return false;
+    auto i = cities.find(city);
+    if (i == cities.end()) return false;
     return true;
 }
 
 bool Utils::isValidCity(const string& country, const string& city) {
-    for (const auto& c : parser.citiesPerCountry[country])
+    for (const auto& c : citiesPerCountry[country])
         if (city == c) return true;
     return false;
 }
 
 int Utils::nrFlights(){
     int nrFlights = 0;
-    for (const auto& node: parser.graph.getVertexSet())
+    for (const auto& node: graph.getVertexSet())
         nrFlights += node->getAdj().size();
     return nrFlights;
 }
@@ -47,7 +49,7 @@ int Utils::nrFlights(){
 vector<string> Utils::localAirports(double latitude, double longitude, double radius) const {
     vector<string> localAirports;
     double latitude1,longitude1;
-    for (const auto& node : parser.graph.getVertexSet()){
+    for (const auto& node : graph.getVertexSet()){
         latitude1 = node->getAirport().getLatitude();
         longitude1 = node->getAirport().getLongitude();
         if (Graph::distance(latitude,longitude,latitude1,longitude1) <= radius)
@@ -64,7 +66,7 @@ list<pair<string,string>> Utils::processFlight(int& bestFlight, const vector<str
     for (const auto &s: src)
         for (const auto &d: dest) {
             if (s == d) continue;
-            nrFlights = parser.graph.nrFlights(parser.idAirports[s], parser.idAirports[d], airline);
+            nrFlights = graph.nrFlights(idAirports[s], idAirports[d], airline);
             if (nrFlights != 0 && nrFlights < bestFlight) {
                 bestFlight = nrFlights;
                 res.clear();
@@ -84,7 +86,7 @@ list<pair<string,string>> Utils::processDistance(double& bestDistance, const vec
     for (const auto &s: src)
         for (const auto &d: dest) {
             if (s == d) continue;
-            auto node = parser.graph.dijkstra(parser.idAirports[s], parser.idAirports[d], airline);
+            auto node = graph.dijkstra(idAirports[s], idAirports[d], airline);
             distance = node->getDistance();
             if (distance < bestDistance) {
                 bestDistance = distance;
@@ -100,7 +102,7 @@ list<pair<string,string>> Utils::processDistance(double& bestDistance, const vec
 
 void Utils::countAirportsPerCountry() {
     map<string, int> airportsPerCountry;
-    for (const auto& i : parser.airportsPerCity){
+    for (const auto& i : airportsPerCity){
         if (airportsPerCountry.find(i.first.first) == airportsPerCountry.end())
             airportsPerCountry[i.first.first] = i.second.size();
         else{
@@ -108,12 +110,12 @@ void Utils::countAirportsPerCountry() {
             m->second += i.second.size();
         }
     }
-    parser.nrAirportsPerCountry = airportsPerCountry;
+    nrAirportsPerCountry = airportsPerCountry;
 }
 
 int Utils::countAirlinesPerCountry(const string& country) {
     int count = 0;
-    for (auto airline : parser.airlines)
+    for (auto airline : airlines)
         if (airline.getCountry() == country)
             count++;
     return count;

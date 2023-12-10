@@ -7,7 +7,9 @@
 
 Vertex::Vertex(int id): id(id) {}
 
-int Vertex::getId() {
+Vertex::Vertex(int id, Airport airport) : id(id), airport(std::move(airport)) {}
+
+int Vertex::getId() const {
     return id;
 }
 
@@ -31,8 +33,8 @@ void Vertex::setProcessing(bool p) {
  * Auxiliary function to add an outgoing edge to a vertex (this),
  * with a given destination vertex (d) and edge weight (w).
  */
-void Vertex::addEdge(Vertex *d, Airline airline, double w) {
-    adj.push_back(Edge(d, airline, w));
+void Vertex::addEdge(Vertex *d, const Airline& airline, double w) {
+    adj.emplace_back(d, airline, w);
 }
 
 /*

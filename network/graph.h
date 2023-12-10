@@ -52,11 +52,12 @@ class Vertex {
     double distance{};
     vector<int> parents; //to use in bfsPath
 
-    void addEdge(Vertex *dest, Airline airline, double w);
+    void addEdge(Vertex *dest, const Airline& airline, double w);
     bool removeEdgeTo(Vertex *d);
 public:
-    explicit Vertex(int id);
-    int getId();
+    Vertex(int id);
+    Vertex(int id, Airport airport);
+    int getId() const;
     double getDistance();
     Airport getAirport();
     void setAirport(Airport in);
@@ -74,6 +75,7 @@ public:
 class Graph {
 
     vector<Vertex *> vertexSet;    // vertex set
+    const int size = 3020;
     void dfsVisit(Vertex *v,  vector<int> &res) const;
 
 public:
@@ -81,10 +83,8 @@ public:
     explicit Graph(int Vertexs);
     Vertex *findVertex(const int &in) const;
 
-    bool addVertex(const int &src);
-    bool removeVertex(const int &in);
+    bool addVertex(const int &src, Airport airport);
     bool addEdge(const int &sourc, const int &dest, const Airline &airline, double w);
-    bool removeEdge(const int &sourc, const int &dest);
     bool addAirport(const int &sourc, const Airport &airport);
 
     int getNumVertex() const;

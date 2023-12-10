@@ -26,6 +26,19 @@ public:
     unordered_map<string,int> getMap() const;
     map<string,int> getNrAirportsPerCountry() const;
 
+    /**
+     * Transforms the map into a multimap and swaps it information\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(n*log(m))</b>,n -> size of map src, insertion of map src key in multimap
+     * </pre>
+     * @tparam A - key
+     * @tparam B - value
+     * @param src
+     * @return flipped multimap were all the keys turn to values and values to keys
+    */
+    static multimap<int,string> convertMap(const map<string,int>& m);
+
     Airport::AirportH airports;
     Airline::AirlineH airlines;
     Graph graph = Graph(3019);

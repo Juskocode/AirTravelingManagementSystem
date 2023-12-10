@@ -40,6 +40,9 @@ void Vertex::setAdj(const vector<Edge> &adj) {
     Vertex::adj = adj;
 }
 
+double Vertex::getDistance(){
+    return distance;
+}
 
 /*
  *  Adds a vertex with a given content or info (in) to a graph (this).

@@ -43,17 +43,7 @@ int Utils::nrFlights(){
     return nrFlights;
 }
 
-/**
- * Calculates the airports that exist in a radius of a certain coordinate\n\n
- * <b>Complexity\n</b>
- * <pre>
- *      <b>O(|V|*log(n))</b>, n -> number of airports that exist in a certain radius, V-> number of nodes
- * </pre>
- * @param latitude - latitude of the center of the circumference
- * @param longitude -longitude of the center of the circumference
- * @param radius - radius of the circumference
- * @return vector of codes of airports that exist in that range
- */
+
 vector<string> Utils::localAirports(double latitude, double longitude, double radius) const {
     vector<string> localAirports;
     double latitude1,longitude1;
@@ -65,17 +55,7 @@ vector<string> Utils::localAirports(double latitude, double longitude, double ra
     }
     return localAirports;
 }
-/**
- * Calculates the smallest amount of flights possible to get to a specific airport from another airport\n\n
- * <b>Complexity\n</b>
- * <pre>
- *      <b>O(n*m*(|V|+|E|))</b>,n -> size of src vector, m -> size of dest vector,V -> number of nodes, E -> number of edges
- * </pre>
- * @param src  - source node
- * @param dest - final node
- * @param airline - airlines available for use (if empty, use all airlines)
- * @return list of all best possible paths
- */
+
 list<pair<string,string>> Utils::processFlight(int& bestFlight, const vector<string>& src, const vector<string>& dest,
                                                const Airline::AirlineH& airline) {
     bestFlight = INT_MAX;
@@ -95,3 +75,47 @@ list<pair<string,string>> Utils::processFlight(int& bestFlight, const vector<str
         }
     return res;
 }
+
+list<pair<string,string>> Utils::processDistance(double& bestDistance, const vector<string>& src, const vector<string>& dest,
+                                                      const Airline::AirlineH& airline) {
+    bestDistance = MAXFLOAT;
+    double distance;
+    list<pair<string,string>> res;
+    for (const auto &s: src)
+        for (const auto &d: dest) {
+            if (s == d) continue;
+            auto node = parser.graph.dijkstra(parser.idAirports[s], parser.idAirports[d], airline);
+            distance = node->getDistance();
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                res.clear();
+                res.emplace_back(s,d);
+            }
+            else if (distance == bestDistance)
+                res.emplace_back(s,d);
+        }
+    return res;
+}
+
+
+void Utils::countAirportsPerCountry() {
+    map<string, int> airportsPerCountry;
+    for (const auto& i : parser.airportsPerCity){
+        if (airportsPerCountry.find(i.first.first) == airportsPerCountry.end())
+            airportsPerCountry[i.first.first] = i.second.size();
+        else{
+            auto m = airportsPerCountry.find(i.first.first);
+            m->second += i.second.size();
+        }
+    }
+    parser.nrAirportsPerCountry = airportsPerCountry;
+}
+
+int Utils::countAirlinesPerCountry(const string& country) {
+    int count = 0;
+    for (auto airline : parser.airlines)
+        if (airline.getCountry() == country)
+            count++;
+    return count;
+}
+

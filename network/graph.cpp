@@ -1,4 +1,6 @@
 #include "graph.h"
+
+#include <utility>
 #include "../classes/Parser.h"
 
 Graph::Graph(int Vertexs) {
@@ -18,9 +20,14 @@ vector<Vertex*> Graph::getVertexSet() const {
  * Auxiliary function to find a vertex with a given content.
  */
 Vertex * Graph::findVertex(const int &in) const {
-    for (auto v : vertexSet)
-        if (v->getId() == in)
-            return v;
+
+    if(vertexSet.empty())
+        return nullptr;
+
+    for (int i = 1; i <= getNumVertex(); i++) {
+        if (i == in)
+            return vertexSet[i];
+    }
     return nullptr;
 }
 
@@ -48,10 +55,10 @@ double Vertex::getDistance(){
  *  Adds a vertex with a given content or info (in) to a graph (this).
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
-bool Graph::addVertex(const int &src){
+bool Graph::addVertex(const int &src, Airport airport){
     if ( findVertex(src) != nullptr)
         return false;
-    vertexSet.push_back(new Vertex(src));
+    vertexSet.push_back(new Vertex(src, std::move(airport)));
     return true;
 }
 
@@ -62,58 +69,23 @@ bool Graph::addVertex(const int &src){
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
 bool Graph::addEdge(const int &sourc, const int &dest, const Airline &airline, double w) {
-    auto v1 = findVertex(sourc);
-    auto v2 = findVertex(dest);
+    auto v1 = vertexSet[sourc];
+    auto v2 = vertexSet[dest];
     if (v1 == nullptr || v2 == nullptr)
         return false;
+
     v1->addEdge(v2, airline, w);
     return true;
 }
 
-
-
-
-/*
- * Removes an edge from a graph (this).
- * The edge is identified by the source (sourc) and destination (dest) contents.
- * Returns true if successful, and false if such edge does not exist.
- */
-bool Graph::removeEdge(const int &sourc, const int &dest) {
-    auto v1 = findVertex(sourc);
-    auto v2 = findVertex(dest);
-    if (v1 == nullptr || v2 == nullptr)
-        return false;
-    return v1->removeEdgeTo(v2);
-}
-
-
-
-/*
- *  Removes a vertex with a given content (in) from a graph (this), and
- *  all outgoing and incoming edges.
- *  Returns true if successful, and false if such vertex does not exist.
- */
-bool Graph::removeVertex(const int &in) {
-    for (auto it = vertexSet.begin(); it != vertexSet.end(); it++)
-        if ((*it)->getId()  == in) {
-            auto v = *it;
-            vertexSet.erase(it);
-            for (auto u : vertexSet)
-                u->removeEdgeTo(v);
-            delete v;
-            return true;
-        }
-    return false;
-}
-
 bool Graph::addAirport(const int &source, const Airport &airport) {
 
-    auto v = findVertex(source);
+    //auto v = findVertex(source);
 
-    if ( findVertex(source) != NULL)
-        return false;
+    if (source < 1 || source > 3021) return false;
 
-    v->airport = airport;
+    addVertex(source, airport);
+    return true;
 }
 
 double Graph::distance(double lat1, double lon1, double lat2, double lon2) {

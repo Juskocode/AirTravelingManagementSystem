@@ -1,0 +1,34 @@
+<changelist name="Uncommitted_changes_before_Update_at_10-12-2023_16_21_[Changes]1" date="1702225269495" recycled="true" deleted="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-12-2023_16_21_[Changes]1/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 10-12-2023 16:21 [Changes]" />
+  <binary>
+    <option name="BEFORE_PATH" value="cmake-build-debug/AirBusManagementSystem" />
+    <option name="AFTER_PATH" value="cmake-build-debug/AirBusManagementSystem" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-12-2023_16_21_[Changes]1/AirBusManagementSystem" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="cmake-build-debug/CMakeFiles/AirBusManagementSystem.dir/classes/Parser.cpp.o" />
+    <option name="AFTER_PATH" value="cmake-build-debug/CMakeFiles/AirBusManagementSystem.dir/classes/Parser.cpp.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-12-2023_16_21_[Changes]1/Parser.cpp.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="cmake-build-debug/CMakeFiles/AirBusManagementSystem.dir/network/edge.cpp.o" />
+    <option name="AFTER_PATH" value="cmake-build-debug/CMakeFiles/AirBusManagementSystem.dir/network/edge.cpp.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-12-2023_16_21_[Changes]1/edge.cpp.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="cmake-build-debug/CMakeFiles/AirBusManagementSystem.dir/classes/Utils.cpp.o" />
+    <option name="AFTER_PATH" value="cmake-build-debug/CMakeFiles/AirBusManagementSystem.dir/classes/Utils.cpp.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-12-2023_16_21_[Changes]1/Utils.cpp.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="cmake-build-debug/CMakeFiles/AirBusManagementSystem.dir/network/graph.cpp.o" />
+    <option name="AFTER_PATH" value="cmake-build-debug/CMakeFiles/AirBusManagementSystem.dir/network/graph.cpp.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-12-2023_16_21_[Changes]1/graph.cpp.o" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" value="cmake-build-debug/CMakeFiles/AirBusManagementSystem.dir/network/vertex.cpp.o" />
+    <option name="AFTER_PATH" value="cmake-build-debug/CMakeFiles/AirBusManagementSystem.dir/network/vertex.cpp.o" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_10-12-2023_16_21_[Changes]1/vertex.cpp.o" />
+  </binary>
+</changelist>

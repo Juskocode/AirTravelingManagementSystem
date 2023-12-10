@@ -7,13 +7,11 @@
 
 #include "Parser.h"
 
-class Utils {
-private:
-    Parser parser;
+class Utils : public Parser{
 
 public:
 
-    Utils(Parser parser);
+    Utils();
 
     /**
      * Verifies if a country is in the countries unordered_set\n\n

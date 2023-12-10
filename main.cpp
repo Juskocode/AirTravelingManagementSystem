@@ -1,9 +1,9 @@
-//
-// Created by Utilizador on 03/12/2023.
-//
-#include <iostream>
+#include "classes/menu.h"
 
+using namespace std;
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    Menu menu;
+    Parser parser;
+    menu.init();
+    Menu::end();
 }

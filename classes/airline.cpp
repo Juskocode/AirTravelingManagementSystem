@@ -8,7 +8,7 @@ Airline::Airline(string code, string name, string callSign, string country){
 }
 
 Airline::Airline(string code){
-    this->code = std::move(code);
+    this->code = code;
 }
 
 string Airline::getCode() const {return this->code;}

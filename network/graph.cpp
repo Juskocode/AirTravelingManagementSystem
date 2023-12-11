@@ -284,12 +284,12 @@ vector<pair<int,string>> Graph::airlinesPerAirport() {
     return nrAirlines;
 }
 
-Airport::AirportH Graph::listAirports(int v, int max) {
-
+template <typename Container>
+Container Graph::listReachableEntities(int v, int max) {
     for (int i = 1; i < getNumVertex(); i++)
         vertexSet[i]->setVisited(false);
 
-    Airport::AirportH airports;
+    Container entities;
 
     queue<int> q;
     q.push(v);
@@ -308,13 +308,24 @@ Airport::AirportH Graph::listAirports(int v, int max) {
                 vertexSet[w]->setVisited(true);
                 vertexSet[w]->distance = vertexSet[u]->getDistance() + 1;
 
-                if (vertexSet[w]->getDistance() <= max)
-                    airports.insert(vertexSet[w]->getAirport());
+                if (vertexSet[w]->getDistance() <= max) {
+
+                    if constexpr (std::is_same<Container, Airport::AirportH>::value) {
+                        entities.insert(vertexSet[w]->getAirport());
+                    }
+                    else if constexpr (std::is_same<Container, Airport::CityH2>::value) {
+                        entities.insert({vertexSet[w]->getAirport().getCountry(), vertexSet[w]->getAirport().getCity()});
+                    }
+                    else if constexpr (std::is_same<Container, std::set<std::string>>::value) {
+                        entities.insert(vertexSet[w]->getAirport().getCountry());
+                    }
+                }
             }
         }
     }
-    return airports;
+    return entities;
 }
+
 
 
 void Graph::bfsPath(int src, Airline::AirlineH airlines){

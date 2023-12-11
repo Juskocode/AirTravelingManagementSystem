@@ -139,14 +139,28 @@ public:
      */
     vector<pair<int, string>> airlinesPerAirport();
 
-    Airport::AirportH listAirports(int nI, int max);
-    Airport::CityH2 listCities(int nI, int max);
-    set<string> listCountries(int nI, int max);
-
 
     /*!                                                 */
     /*!                 Main Algorithms                 */
     /*!                                                 */
+
+
+    /**
+    * Calculates the reachable entities using "max" number of flights\n\n
+    * <b>Complexity\n</b>
+    * <pre>
+    *      <b>O(|V| + |E|)</b>, V -> number of nodes, E -> number of edges
+    * </pre>
+    * @param v - source node
+    * @param max - number of flights
+    * @note the entities can be airports, countries or cities
+    * @return set of reachable airports using "max" number of flights
+    * @example  Airport::AirportH airports = graph.listReachableEntities<Airport::AirportH>(sourceNode, maxFlights);
+    *           Airport::CityH2 cities = graph.listReachableEntities<Airport::CityH2>(sourceNode, maxFlights);\n
+    *           std::set<std::string> countries = graph.listReachableEntities<std::set<std::string>>(sourceNode, maxFlights);
+    */
+    template <typename Container>
+    Container listReachableEntities(int v, int max);
 
     /**
      * Stores in the parents variable the possible flight candidates using bfs. Parents who also have possible flight candidates

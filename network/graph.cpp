@@ -284,6 +284,38 @@ vector<pair<int,string>> Graph::airlinesPerAirport() {
     return nrAirlines;
 }
 
+Airport::AirportH Graph::listAirports(int v, int max) {
+
+    for (int i = 1; i < getNumVertex(); i++)
+        vertexSet[i]->setVisited(false);
+
+    Airport::AirportH airports;
+
+    queue<int> q;
+    q.push(v);
+    vertexSet[v]->setVisited(true);
+    vertexSet[v]->distance = 0;
+
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        for (const auto& e : vertexSet[u]->getAdj()) {
+
+            int w = e.dest->getId();
+
+            if (!vertexSet[w]->isVisited()) {
+
+                q.push(w);
+                vertexSet[w]->setVisited(true);
+                vertexSet[w]->distance = vertexSet[u]->getDistance() + 1;
+
+                if (vertexSet[w]->getDistance() <= max)
+                    airports.insert(vertexSet[w]->getAirport());
+            }
+        }
+    }
+    return airports;
+}
+
 
 void Graph::bfsPath(int src, Airline::AirlineH airlines){
     auto source = findVertex(src);

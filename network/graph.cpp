@@ -235,6 +235,23 @@ int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
     return (int)destination->distance;
 }
 
+int Graph::airlineFlights(const string& airline){
+    int count = 0;
+    for (int i = 1 ; i < getNumVertex(); i++)
+        for (const Edge& e : vertexSet[i]->getAdj())
+            if (e.airline.getCode() == airline)
+                count++;
+    return count;
+}
+
+vector<string> Graph::getAirlines(int src, int dest, Airline::AirlineH airlines) {
+    vector<string> usedAirlines;
+    for (const auto& e: vertexSet[src]->adj)
+        if (e.dest->getId() == dest && (airlines.empty() || airlines.find(e.airline) != airlines.end()))
+            usedAirlines.push_back(e.airline.getCode());
+    return usedAirlines;
+}
+
 
 void Graph::bfsPath(int src, Airline::AirlineH airlines){
     auto source = findVertex(src);
@@ -343,15 +360,6 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
     }
 
     return vertexSet[destination->getId()];
-}
-
-
-vector<string> Graph::getAirlines(int src, int dest, Airline::AirlineH airlines) {
-    vector<string> usedAirlines;
-    for (const auto& e: vertexSet[src]->adj)
-        if (e.dest->getId() == dest && (airlines.empty() || airlines.find(e.airline) != airlines.end()))
-            usedAirlines.push_back(e.airline.getCode());
-    return usedAirlines;
 }
 
 

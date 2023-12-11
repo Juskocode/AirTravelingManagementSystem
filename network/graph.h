@@ -33,11 +33,11 @@ class Edge {
     Airline airline;
 public:
     Edge(Vertex *d, Airline airline, double w);
-    Vertex *getDest() const;
+    [[nodiscard]] Vertex *getDest() const;
     void setDest(Vertex *dest);
-    double getWeight() const;
+    [[nodiscard]] double getWeight() const;
     void setWeight(double weight);
-    Airline getAirline() const;
+    [[nodiscard]] Airline getAirline() const;
     friend class Graph;
     friend class Vertex;
 };
@@ -55,17 +55,17 @@ class Vertex {
     void addEdge(Vertex *dest, const Airline& airline, double w);
     bool removeEdgeTo(Vertex *d);
 public:
-    Vertex(int id);
+    explicit Vertex(int id);
     Vertex(int id, Airport airport);
-    int getId() const;
+    [[nodiscard]] int getId() const;
     double getDistance();
     Airport getAirport();
     void setAirport(Airport in);
-    bool isVisited() const;
+    [[nodiscard]] bool isVisited() const;
     void setVisited(bool v);
-    bool isProcessing() const;
+    [[nodiscard]] bool isProcessing() const;
     void setProcessing(bool p);
-    const vector<Edge> &getAdj() const;
+    [[nodiscard]] const vector<Edge> &getAdj() const;
     void setAdj(const vector<Edge> &adj);
     friend class Graph;
 };
@@ -81,19 +81,19 @@ class Graph {
 public:
 
     explicit Graph(int Vertexs);
-    Vertex *findVertex(const int &in) const;
+    [[nodiscard]] Vertex *findVertex(const int &in) const;
 
     bool addVertex(const int &src, Airport airport);
     bool addEdge(const int &sourc, const int &dest, const Airline &airline, double w);
     bool addAirport(const int &sourc, const Airport &airport);
 
-    int getNumVertex() const;
+    [[nodiscard]] int getNumVertex() const;
     static double distance(double lat1, double lon1, double lat2, double lon2);
 
-    vector<Vertex * > getVertexSet() const;
-    vector<int> dfs() const;
-    vector<int> dfs(const int &source) const;
-    vector<int> bfs(const int &source) const;
+    [[nodiscard]] vector<Vertex * > getVertexSet() const;
+    [[nodiscard]] vector<int> dfs() const;
+    [[nodiscard]] vector<int> dfs(const int &source) const;
+    [[nodiscard]] vector<int> bfs(const int &source) const;
 
     /**
      * Calculates the minimum number of flights between source airport and target airport using airlines \n \n
@@ -107,6 +107,17 @@ public:
      * @return minimum number of flights between source airport and target airport using airlines
      */
     int nrFlights(int src, int dest, Airline::AirlineH airlines);
+
+    /**
+     * Calculates the number of flights of a specific airline\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|E|)</b>, E -> number of edges
+     * </pre>
+     * @param airline
+     * @return number of flights of a specific airline
+     */
+    int airlineFlights(const string& airline);
 
     /**
      * Stores in the parents variable the possible flight candidates using bfs. Parents who also have possible flight candidates

@@ -204,7 +204,7 @@ int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
     if(source == nullptr || destination == nullptr)
         return {};
 
-    for (int i = 1; i <= getNumVertex(); i++) {
+    for (int i = 1; i < getNumVertex(); i++) {
         vertexSet[i]->setVisited(false);
         vertexSet[i]->distance = 0;
     }
@@ -304,7 +304,7 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
     //node id and node value(distance)
     MinHeap<int, double> minHeap(getNumVertex(), -1);
 
-    for(int i = 1; i <= getNumVertex(); i++){
+    for(int i = 1; i < getNumVertex(); i++){
         vertexSet[i]->distance = INT_MAX;
         vertexSet[i]->setVisited(false);
         vertexSet[i]->parents.clear();
@@ -328,7 +328,7 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
             auto v = e.getDest()->getId();
             double w = e.getWeight();
 
-            if(vertexSet[v]->isVisited() && vertexSet[u]->distance + w < vertexSet[v]->distance){
+            if(!vertexSet[v]->isVisited() && vertexSet[u]->distance + w < vertexSet[v]->distance){
 
                 vertexSet[v]->distance = vertexSet[u]->distance + w;
 

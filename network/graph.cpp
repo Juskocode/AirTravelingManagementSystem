@@ -252,6 +252,38 @@ vector<string> Graph::getAirlines(int src, int dest, Airline::AirlineH airlines)
     return usedAirlines;
 }
 
+vector<pair<int, string>> Graph::flightsPerAirport() {
+    vector<pair<int,string>> n;
+
+    for (int i = 1; i < getNumVertex(); i++){
+        int nrFlights = vertexSet[i]->getAdj().size();
+        n.emplace_back(nrFlights, vertexSet[i]->getAirport().getCode());
+    }
+
+    sort(n.begin(), n.end(), [](const pair<int,string>& a, const pair<int,string>& b)
+                                                                            {return a.first > b.first;});
+    return n;
+}
+
+vector<pair<int,string>> Graph::airlinesPerAirport() {
+
+    vector<pair<int,string>> nrAirlines;
+
+    for (int i = 1; i < getNumVertex(); i++){
+        set<string> n;
+
+        for (const Edge& e : vertexSet[i]->getAdj())
+            n.insert(e.airline.getCode());
+
+        nrAirlines.emplace_back(n.size(), vertexSet[i]->getAirport().getCode());
+    }
+
+    sort(nrAirlines.begin(), nrAirlines.end(), [](const pair<int,string>& a, const pair<int,string>& b)
+                                                                                            {return a.first > b.first;});
+
+    return nrAirlines;
+}
+
 
 void Graph::bfsPath(int src, Airline::AirlineH airlines){
     auto source = findVertex(src);

@@ -120,6 +120,27 @@ public:
     int airlineFlights(const string& airline);
 
     /**
+     * Calculates the number of flights of a specific airline\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|E|)</b>, E -> number of edges
+     * </pre>
+     * @param airline
+     * @return number of flights of a specific airline
+     */
+    vector<pair<int, string>> flightsPerAirport();
+
+    /**
+     * Calculates the number of departures of each airport.\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V|*log(|V|))</b>, V -> number of nodes
+     * </pre>
+     * @return ordered vector of pair<Number of departures,Airport Code> by descending order of number of flights
+     */
+    vector<pair<int, string>> airlinesPerAirport();
+
+    /**
      * Stores in the parents variable the possible flight candidates using bfs. Parents who also have possible flight candidates
      * allowing us to get all the possible flights from a certain source.\n\n
      * <b>Complexity\n</b>

@@ -242,7 +242,7 @@ void Graph::bfsPath(int src, Airline::AirlineH airlines){
     if(source == nullptr)
         return;
 
-    for (int i = 1; i <= getNumVertex(); i++) {
+    for (int i = 1; i < getNumVertex(); i++) {
         vertexSet[i]->distance = INT_MAX;
         vertexSet[i]->parents.clear();
     }

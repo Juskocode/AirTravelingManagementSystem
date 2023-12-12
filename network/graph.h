@@ -20,8 +20,6 @@
 #include "../classes/Minheap.h"
 
 
-using namespace std;
-
 class Edge;
 class Vertex;
 class Graph;
@@ -44,7 +42,7 @@ public:
 class Vertex {
     int id;
     Airport airport = Airport(""); // content
-    vector<Edge > adj;    // list of outgoing edges
+    list<Edge > adj;    // list of outgoing edges
     bool visited{};          // auxiliary field
     bool processing{};       // auxiliary field
     int num = 0;             // to use in articulation points
@@ -59,15 +57,15 @@ public:
     explicit Vertex(int id);
     Vertex(int id, Airport airport);
     [[nodiscard]] int getId() const;
-    double getDistance();
+    [[nodiscard]] double getDistance() const;
     Airport getAirport();
     void setAirport(Airport in);
     [[nodiscard]] bool isVisited() const;
     void setVisited(bool v);
     [[nodiscard]] bool isProcessing() const;
     void setProcessing(bool p);
-    [[nodiscard]] const vector<Edge> &getAdj() const;
-    void setAdj(const vector<Edge> &adj);
+    [[nodiscard]] const list<Edge> &getAdj() const;
+    void setAdj(const list<Edge> &adj);
     friend class Graph;
 
 };
@@ -85,8 +83,7 @@ public:
     explicit Graph(int vertexes);
     [[nodiscard]] bool findVertex(const int &in) const;
 
-    bool addVertex(const int &src, Airport airport);
-    bool addEdge(const int &src, const int &dest, const Airline &airline, double w);
+    bool addFlight(const int &src, const int &dest, const Airline &airline, double w);
     bool addAirport(const int &src, const Airport &airport);
 
     [[nodiscard]] int getNumVertex() const;
@@ -201,6 +198,9 @@ public:
      * @return minimum flown distance between source airport and target airport using airlines
      */
     Vertex* dijkstra(int src, int dest, Airline::AirlineH airlines);
+
+    Vertex* dijkstraFib(int src, int dest, Airline::AirlineH airlines);
+
 
     /**
      * Calculates the max distance between connected nodes\n\n

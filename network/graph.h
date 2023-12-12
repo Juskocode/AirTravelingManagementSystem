@@ -80,12 +80,12 @@ class Graph {
 
 public:
 
-    explicit Graph(int Vertexs);
+    explicit Graph(int vertexes);
     [[nodiscard]] Vertex *findVertex(const int &in) const;
 
     bool addVertex(const int &src, Airport airport);
-    bool addEdge(const int &sourc, const int &dest, const Airline &airline, double w);
-    bool addAirport(const int &sourc, const Airport &airport);
+    bool addEdge(const int &src, const int &dest, const Airline &airline, double w);
+    bool addAirport(const int &src, const Airport &airport);
 
     [[nodiscard]] int getNumVertex() const;
     static double distance(double lat1, double lon1, double lat2, double lon2);
@@ -199,6 +199,27 @@ public:
      * @return minimum flown distance between source airport and target airport using airlines
      */
     Vertex* dijkstra(int src, int dest, Airline::AirlineH airlines);
+
+    /**
+     * Calculates the max distance between connected nodes\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V|+|E|)</b>, V -> number of nodes, E -> number of edges
+     * </pre>
+     * @param v - source node
+     * @return the diameter of a connected component
+     */
+    double bfsDiameter(int v);
+
+    /**
+     * Calculates the diameter using a bfs.\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V|+|E|)</b>, V -> number of nodes, E -> number of edges
+     * </pre>
+     * @return diameter between all connected components.
+     */
+    double diameter();
 
     /**
      * Searches all the airlines that can be used to travel between a source and dest with a certain user input of airlines(or none).\n\n

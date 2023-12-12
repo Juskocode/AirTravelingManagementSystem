@@ -437,6 +437,49 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
     return vertexSet[destination->getId()];
 }
 
+double Graph::bfsDiameter(int v) {
+    for (int i = 1; i <= size; i++){
+        vertexSet[i]->setVisited(false);
+        vertexSet[i]->distance = -1.0;
+    }
+
+    queue<int> q;
+    q.push(v);
+    vertexSet[v]->setVisited(true);
+    vertexSet[v]->distance = 0.0;
+    double max = 0;
+
+    while(!q.empty()){
+        int u = q.front(); q.pop();
+        for (const auto& e: vertexSet[u]->getAdj()){
+
+            int w = e.dest->getId();
+
+            if (!vertexSet[w]->isVisited()){
+                q.push(w);
+                vertexSet[w]->setVisited(true);
+                vertexSet[w]->distance = vertexSet[u]->distance + 1;
+                if (vertexSet[w]->distance > max) max = vertexSet[w]->distance;
+            }
+        }
+    }
+    return max;
+}
+
+
+double Graph::diameter() {
+    vertexSet[1]->setVisited(true);//TODO solve graph first vertex NULL
+    double max = bfsDiameter(1);
+    for (int i = 1; i <= size; i++)
+        if (!vertexSet[i]->isVisited()){
+            vertexSet[i]->setVisited(true);
+            double diameter = bfsDiameter(i);
+            if (diameter > max) max = diameter;
+        }
+    return max;
+}
+
+
 
 void Graph::printPath(vector<int> path, const Airline::AirlineH& airlines) {
     for (int i = 0; i < path.size()-1; i++){

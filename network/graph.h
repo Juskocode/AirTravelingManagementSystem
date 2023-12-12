@@ -120,6 +120,49 @@ public:
     int airlineFlights(const string& airline);
 
     /**
+     * Calculates the number of departures of each airport.\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V|*log(|V|))</b>, V -> number of nodes
+     * </pre>
+     * @return ordered vector of pair<Number of departures,Airport Code> by descending order of number of flights
+     */
+    vector<pair<int, string>> flightsPerAirport();
+
+    /**
+     * Calculates the number of airlines that work with each airport.\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V| + |E| + n * log(n))</b>, V -> number of nodes, E -> number of edges, n -> size of nrAirlines
+     * </pre>
+     * @return ordered vector of pair<Number of airlines,Airport Code> by descending order of number of airlines
+     */
+    vector<pair<int, string>> airlinesPerAirport();
+
+
+    /*!                                                 */
+    /*!                 Main Algorithms                 */
+    /*!                                                 */
+
+
+    /**
+    * Calculates the reachable entities using "max" number of flights\n\n
+    * <b>Complexity\n</b>
+    * <pre>
+    *      <b>O(|V| + |E|)</b>, V -> number of nodes, E -> number of edges
+    * </pre>
+    * @param v - source node
+    * @param max - number of flights
+    * @note the entities can be airports, countries or cities
+    * @return set of reachable airports using "max" number of flights
+    * @example  Airport::AirportH airports = graph.listReachableEntities<Airport::AirportH>(sourceNode, maxFlights);
+    *           Airport::CityH2 cities = graph.listReachableEntities<Airport::CityH2>(sourceNode, maxFlights);\n
+    *           std::set<std::string> countries = graph.listReachableEntities<std::set<std::string>>(sourceNode, maxFlights);
+    */
+    template <typename Container>
+    Container listReachableEntities(int v, int max);
+
+    /**
      * Stores in the parents variable the possible flight candidates using bfs. Parents who also have possible flight candidates
      * allowing us to get all the possible flights from a certain source.\n\n
      * <b>Complexity\n</b>
@@ -135,13 +178,13 @@ public:
      * Stores in paths all possible paths to node v.\n\n
      * <b>Complexity\n</b>
      * <pre>
-     *      <b>O(n)</b> n -> paths size
+     *      <b>O(n)</b> n -> paths vector size
      * </pre>
      * @param paths - vector of paths that are possible
      * @param path - current path
      * @param v - target node
      */
-    void findPaths(vector<vector<int>>& paths,vector<int>& path,int v);
+    void findPaths(vector<vector<int>>& paths, vector<int>& path, int v);
 
     /**
      * Calculates the minimum flown distance between source airport and target airport using airlines \n \n
@@ -174,7 +217,7 @@ public:
      * Prints a possible path from a source airport to a target airport\n\n
      *  * <b>Complexity\n</b>
      * <pre>
-     *      <b>O(n*m)</b>, n -> path size , m -> possibleAirlines size
+     *      <b>O(n * m)</b>, n -> path size , m -> possibleAirlines size
      * </pre>
      * @param path - visited nodes during the path
      * @param airlines - unordered set of airlines to use (if empty, use all airlines)
@@ -185,7 +228,7 @@ public:
      * Calculates (using bfs) and prints most optimal path of flights(least amount of flights)\n\n
      * <b>Complexity\n</b>
      * <pre>
-     *      <b>O((|V|+|E|)*p)</b>, V -> number of nodes , E-> number of edges, p-> possibleAirlines size
+     *      <b>O((|V|+|E|) * p)</b>, V -> number of nodes , E-> number of edges, p-> possibleAirlines size
      * </pre>
      * @param nrPath
      * @param start - source node
@@ -198,7 +241,7 @@ public:
      * Calculates and prints the most optimal paths based on distance of nodes using the dijkstra algorithm.\n\n
      * <b>Complexity\n</b>
      * <pre>
-     *      <b>O(log(|V|)*p)</b>, V -> number of nodes , p -> possibleAirlines size
+     *      <b>O(log(|V|) * p)</b>, V -> number of nodes , p -> possibleAirlines size
      * </pre>
      * @param nrPath
      * @param start - source node

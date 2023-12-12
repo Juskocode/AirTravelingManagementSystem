@@ -19,16 +19,12 @@ vector<Vertex*> Graph::getVertexSet() const {
 /*
  * Auxiliary function to find a vertex with a given content.
  */
-Vertex * Graph::findVertex(const int &in) const {
+bool Graph::findVertex(const int &in) const {
 
     if(vertexSet.empty())
-        return nullptr;
+        return false;
 
-    for (int i = 1; i <= getNumVertex(); i++) {
-        if (i == in)
-            return vertexSet[i];
-    }
-    return nullptr;
+    return (in > 0 && in <= size);
 }
 
 bool Vertex::isVisited() const {
@@ -56,7 +52,7 @@ double Vertex::getDistance(){
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
 bool Graph::addVertex(const int &src, Airport airport){
-    if ( findVertex(src) != nullptr)
+    if (!findVertex(src))
         return false;
     vertexSet.push_back(new Vertex(src, std::move(airport)));
     return true;
@@ -68,8 +64,8 @@ bool Graph::addVertex(const int &src, Airport airport){
  * destination vertices and the edge weight (w).
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
-bool Graph::addEdge(const int &sourc, const int &dest, const Airline &airline, double w) {
-    auto v1 = vertexSet[sourc];
+bool Graph::addEdge(const int &src, const int &dest, const Airline &airline, double w) {
+    auto v1 = vertexSet[src];
     auto v2 = vertexSet[dest];
     if (v1 == nullptr || v2 == nullptr)
         return false;
@@ -82,7 +78,7 @@ bool Graph::addAirport(const int &source, const Airport &airport) {
 
     //auto v = findVertex(source);
 
-    if (source < 1 || source > 3021) return false;
+    if (source < 1 || source > getNumVertex()) return false;
 
     addVertex(source, airport);
     return true;
@@ -140,8 +136,7 @@ void Graph::dfsVisit(Vertex *v, vector<int> & res) const {
 
 // TODO
 vector<int> Graph::dfs(const int& source) const {
-    Vertex* sourceVertex = findVertex(source);
-    if (sourceVertex == nullptr)
+    if (!findVertex(source))
         return {};
 
     vector<int> res;
@@ -150,7 +145,7 @@ vector<int> Graph::dfs(const int& source) const {
     }
 
     // Initiating DFS traversal from the source node
-    dfsVisit(sourceVertex, res);
+    dfsVisit(vertexSet[source], res);
 
     return res;
 }
@@ -159,9 +154,7 @@ vector<int> Graph::dfs(const int& source) const {
 // TODO
 vector<int> Graph::bfs(const  int& source) const {
 
-    auto src = findVertex(source);
-
-    if(src == nullptr)
+    if(!findVertex(source))
         return {};
 
     for (int i = 1; i <= getNumVertex(); i++) {
@@ -172,9 +165,9 @@ vector<int> Graph::bfs(const  int& source) const {
     vector<int> res;
 
     queue<Vertex*> q;
-    q.push(src);
+    q.push(vertexSet[source]);
 
-    vertexSet[src->getId()]->visited = true;
+    vertexSet[source]->visited = true;
 
     while(!q.empty()){
 
@@ -197,11 +190,7 @@ vector<int> Graph::bfs(const  int& source) const {
 
 int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
 
-    auto source = findVertex(src);
-    auto destination = findVertex(dest);
-
-
-    if(source == nullptr || destination == nullptr)
+    if(!findVertex(src) || !findVertex(dest))
         return {};
 
     for (int i = 1; i < getNumVertex(); i++) {
@@ -210,9 +199,9 @@ int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
     }
 
     queue<Vertex*> q;
-    q.push(source);
+    q.push(vertexSet[src]);
 
-    vertexSet[source->getId()]->visited = true;
+    vertexSet[src]->visited = true;
 
     while(!q.empty()){
 
@@ -232,7 +221,7 @@ int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
         }
     }
 
-    return (int)destination->distance;
+    return (int)vertexSet[dest]->distance;
 }
 
 int Graph::airlineFlights(const string& airline){
@@ -329,9 +318,8 @@ Container Graph::listReachableEntities(int v, int max) {
 
 
 void Graph::bfsPath(int src, Airline::AirlineH airlines){
-    auto source = findVertex(src);
 
-    if(source == nullptr)
+    if(!findVertex(src))
         return;
 
     for (int i = 1; i < getNumVertex(); i++) {
@@ -340,10 +328,10 @@ void Graph::bfsPath(int src, Airline::AirlineH airlines){
     }
 
     queue<Vertex*> q;
-    q.push(source);
+    q.push(vertexSet[src]);
 
-    vertexSet[source->getId()]->parents = {-1};
-    vertexSet[source->getId()]->distance = 0;
+    vertexSet[src]->parents = {-1};
+    vertexSet[src]->distance = 0;
 
     while(!q.empty()){
 
@@ -369,9 +357,7 @@ void Graph::bfsPath(int src, Airline::AirlineH airlines){
 
 void Graph::findPaths(vector<vector<int>>& paths,vector<int>& path, int v){
 
-    auto V = findVertex(v);
-
-    if (V == nullptr) {
+    if (!findVertex(v)) {
         if (find(paths.begin(),paths.end(),path) == paths.end())
             paths.push_back(path);
         return;
@@ -386,11 +372,8 @@ void Graph::findPaths(vector<vector<int>>& paths,vector<int>& path, int v){
 
 
 Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
-    auto source = findVertex(src);
-    auto destination = findVertex(dest);
 
-
-    if(source == nullptr || destination == nullptr)
+    if(!findVertex(src) || !findVertex(dest))
         return {};
 
     //node id and node value(distance)
@@ -403,15 +386,15 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
         minHeap.insert(i, INT_MAX);
     }
 
-    vertexSet[source->getId()]->distance = 0;
-    vertexSet[source->getId()]->parents.push_back(source->getId());
+    vertexSet[src]->distance = 0;
+    vertexSet[src]->parents.push_back(src);
 
-    minHeap.decreaseKey(source->getId(), 0);
+    minHeap.decreaseKey(src, 0);
 
     while(!minHeap.empty()){
 
         auto u = minHeap.extractMin();
-        vertexSet[source->getId()]->setVisited(true);
+        vertexSet[src]->setVisited(true);
 
         for(const auto &e : vertexSet[u]->getAdj()){
 
@@ -434,7 +417,7 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
         }
     }
 
-    return vertexSet[destination->getId()];
+    return vertexSet[dest];
 }
 
 double Graph::bfsDiameter(int v) {
@@ -479,6 +462,49 @@ double Graph::diameter() {
     return max;
 }
 
+
+void Graph::dfsArt(int v, int index, list<int>& res, Airline::AirlineH airlines) {
+    vertexSet[v]->num = vertexSet[v]->low = index++;
+    vertexSet[v]->art = true;
+    int count = 0;
+    for (const auto& e : vertexSet[v]->getAdj()){
+
+        auto w = e.dest->getId();
+
+        if(airlines.find(e.airline) != airlines.end() || airlines.empty()){
+
+            if (vertexSet[w]->num == 0){
+                count++;
+                dfsArt(w,index,res,airlines);
+                vertexSet[v]->low = min(vertexSet[v]->low, vertexSet[w]->low);
+
+                if (vertexSet[w]->low >= vertexSet[v]->num && std::find(res.begin(),res.end(),v) == res.end()) {
+                    if (index == 2 && count > 1) res.push_back(1);
+                    else if (index != 2 && std::find(res.begin(),res.end(),v)== res.end()) res.push_back(v);
+                }
+            }
+            else if (vertexSet[v]->art)
+                vertexSet[v]->low = min(vertexSet[v]->low, vertexSet[w]->num);
+        }
+    }
+}
+
+list<int> Graph::articulationPoints(const Airline::AirlineH& airlines) {
+    list<int> res;
+
+    for (int i = 1; i <= size; i++){
+        vertexSet[i]->setVisited(false);
+        vertexSet[i]->art = false;
+    }
+
+    int index = 1;
+
+    for (int i = 1; i <= size; i++)
+        if (vertexSet[i]->num == 0)
+            dfsArt(i, index,res, airlines);
+
+    return res;
+}
 
 
 void Graph::printPath(vector<int> path, const Airline::AirlineH& airlines) {

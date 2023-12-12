@@ -10,7 +10,6 @@ Menu::Menu() {
     printf("\033[44m===========================================================\033[0m\t\t");
     cout << "\n\n" << " Bem-vindo!\n (Pressione [0] sempre que quiser voltar atrás)\n\n";
     utilities = new Utils();
-    parser = new Parser();
 }
 
 /**

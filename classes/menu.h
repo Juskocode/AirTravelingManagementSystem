@@ -46,7 +46,6 @@ private:
     static string validateOption(const string& message);
 
     Utils* utilities;
-    Parser* parser;
     vector<string> src;
     vector<string> dest;
     Airline::AirlineH airlines;

@@ -47,8 +47,9 @@ class Vertex {
     vector<Edge > adj;    // list of outgoing edges
     bool visited{};          // auxiliary field
     bool processing{};       // auxiliary field
-    int num = 0;
-    int low{};
+    int num = 0;             // to use in articulation points
+    int low{};               // to use in articulation points
+    bool art;                // to use in articulation points
     double distance{};
     vector<int> parents; //to use in bfsPath
 
@@ -68,6 +69,7 @@ public:
     [[nodiscard]] const vector<Edge> &getAdj() const;
     void setAdj(const vector<Edge> &adj);
     friend class Graph;
+
 };
 
 
@@ -81,7 +83,7 @@ class Graph {
 public:
 
     explicit Graph(int vertexes);
-    [[nodiscard]] Vertex *findVertex(const int &in) const;
+    [[nodiscard]] bool findVertex(const int &in) const;
 
     bool addVertex(const int &src, Airport airport);
     bool addEdge(const int &src, const int &dest, const Airline &airline, double w);
@@ -220,6 +222,30 @@ public:
      * @return diameter between all connected components.
      */
     double diameter();
+
+    /**
+     * Finds the nodes that are articulation points and inserts them in res\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O((|V| + |E|)*n)</b>, V -> number of nodes, E -> number of edges, n-> list size
+     * </pre>
+     * @param v - source node
+     * @param index
+     * @param res - list of articulation points
+     * @param airlines - unordered set of airlines to use (if empty, use all airlines)
+     */
+    void dfsArt(int v, int index, list<int> &res, Airline::AirlineH airlines);
+
+    /**
+     * Calculates the list of articulation points that exist in a specific unordered_set of airlines or in all airlines.\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O((|V| + |E|) * n)</b>, V -> number of nodes, E -> number of edges, n-> list size
+     * </pre>
+     * @param airlines - unordered set of airlines to use (if empty, use all airlines)
+     * @return The list of articulation points.
+     */
+    list<int> articulationPoints(const Airline::AirlineH& airlines);
 
     /**
      * Searches all the airlines that can be used to travel between a source and dest with a certain user input of airlines(or none).\n\n

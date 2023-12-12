@@ -1,9 +1,18 @@
 #include "Parser.h"
+#include <chrono>
 
 Parser::Parser() {
+    auto start = std::chrono::steady_clock::now();
     createAirports();
     createAirlines();
     createGraph();
+    auto end = std::chrono::steady_clock::now();
+
+    // Calculate the duration in milliseconds
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+    // Output the duration
+    std::cout << "Execution time: " << duration.count() << " milliseconds" << std::endl;
 }
 
 Airport::AirportH const& Parser::getAirports() const {return airports;}

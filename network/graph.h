@@ -83,7 +83,7 @@ class Graph {
 public:
 
     explicit Graph(int vertexes);
-    [[nodiscard]] Vertex *findVertex(const int &in) const;
+    [[nodiscard]] bool findVertex(const int &in) const;
 
     bool addVertex(const int &src, Airport airport);
     bool addEdge(const int &src, const int &dest, const Airline &airline, double w);

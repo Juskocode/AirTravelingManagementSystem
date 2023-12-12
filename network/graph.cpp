@@ -480,6 +480,49 @@ double Graph::diameter() {
 }
 
 
+void Graph::dfsArt(int v, int index, list<int>& res, Airline::AirlineH airlines) {
+    vertexSet[v]->num = vertexSet[v]->low = index++;
+    vertexSet[v]->art = true;
+    int count = 0;
+    for (const auto& e : vertexSet[v]->getAdj()){
+
+        auto w = e.dest->getId();
+
+        if(airlines.find(e.airline) != airlines.end() || airlines.empty()){
+
+            if (vertexSet[w]->num == 0){
+                count++;
+                dfsArt(w,index,res,airlines);
+                vertexSet[v]->low = min(vertexSet[v]->low, vertexSet[w]->low);
+
+                if (vertexSet[w]->low >= vertexSet[v]->num && std::find(res.begin(),res.end(),v) == res.end()) {
+                    if (index == 2 && count > 1) res.push_back(1);
+                    else if (index != 2 && std::find(res.begin(),res.end(),v)== res.end()) res.push_back(v);
+                }
+            }
+            else if (vertexSet[v]->art)
+                vertexSet[v]->low = min(vertexSet[v]->low, vertexSet[w]->num);
+        }
+    }
+}
+
+list<int> Graph::articulationPoints(const Airline::AirlineH& airlines) {
+    list<int> res;
+
+    for (int i = 1; i <= size; i++){
+        vertexSet[i]->setVisited(false);
+        vertexSet[i]->art = false;
+    }
+
+    int index = 1;
+
+    for (int i = 1; i <= size; i++)
+        if (vertexSet[i]->num == 0)
+            dfsArt(i, index,res, airlines);
+
+    return res;
+}
+
 
 void Graph::printPath(vector<int> path, const Airline::AirlineH& airlines) {
     for (int i = 0; i < path.size()-1; i++){

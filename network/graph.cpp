@@ -3,13 +3,13 @@
 #include <utility>
 #include "../classes/Parser.h"
 
-Graph::Graph(int Vertexs) {
-    vertexSet.resize(Vertexs);
+Graph::Graph(int Vertexes) {
+    vertexSet.resize(Vertexes);
 }
 
 
 int Graph::getNumVertex() const {
-    return vertexSet.size();
+    return (int)vertexSet.size();
 }
 
 vector<Vertex*> Graph::getVertexSet() const {
@@ -24,7 +24,7 @@ bool Graph::findVertex(const int &in) const {
     if(vertexSet.empty())
         return false;
 
-    return (in > 0 && in <= size);
+    return (in > 0 && in < size);
 }
 
 bool Vertex::isVisited() const {
@@ -35,52 +35,36 @@ void Vertex::setVisited(bool v) {
     Vertex::visited = v;
 }
 
-const vector<Edge> &Vertex::getAdj() const {
+const list<Edge> &Vertex::getAdj() const {
     return adj;
 }
 
-void Vertex::setAdj(const vector<Edge> &adj) {
+void Vertex::setAdj(const list<Edge> &adj) {
     Vertex::adj = adj;
 }
 
-double Vertex::getDistance(){
+double Vertex::getDistance() const{
     return distance;
 }
-
-/*
- *  Adds a vertex with a given content or info (in) to a graph (this).
- *  Returns true if successful, and false if a vertex with that content already exists.
- */
-bool Graph::addVertex(const int &src, Airport airport){
-    if (!findVertex(src))
-        return false;
-    vertexSet.push_back(new Vertex(src, std::move(airport)));
-    return true;
-}
-
 
 /*
  * Adds an edge to a graph (this), given the contents of the source and
  * destination vertices and the edge weight (w).
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
-bool Graph::addEdge(const int &src, const int &dest, const Airline &airline, double w) {
-    auto v1 = vertexSet[src];
-    auto v2 = vertexSet[dest];
-    if (v1 == nullptr || v2 == nullptr)
+bool Graph::addFlight(const int &src, const int &dest, const Airline &airline, double w) {
+    if (!findVertex(src) || !findVertex(dest))
         return false;
 
-    v1->addEdge(v2, airline, w);
+    vertexSet[src]->addEdge(vertexSet[dest], airline, w);
     return true;
 }
 
-bool Graph::addAirport(const int &source, const Airport &airport) {
+bool Graph::addAirport(const int &src, const Airport &airport) {
 
-    //auto v = findVertex(source);
-
-    if (source < 1 || source > getNumVertex()) return false;
-
-    addVertex(source, airport);
+    if (!findVertex(src))
+        return false;
+    vertexSet.push_back(new Vertex(src, airport));
     return true;
 }
 
@@ -419,6 +403,60 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
 
     return vertexSet[dest];
 }
+
+Vertex *Graph::dijkstraFib(int src, int dest, Airline::AirlineH airlines) {
+    if(!findVertex(src) || !findVertex(dest))
+        return {};
+
+    //node id and node value(distance)
+    FibTree<Vertex *> fibHeap;
+
+    for(int i = 1; i < getNumVertex(); i++){
+        vertexSet[i]->distance = INT_MAX;
+        vertexSet[i]->setVisited(false);
+        vertexSet[i]->parents.clear();
+        fibHeap.insert(vertexSet[i]);
+    }
+
+    vertexSet[src]->distance = 0;
+    vertexSet[src]->parents.push_back(src);
+    Vertex newKey(src);
+    newKey = *vertexSet[src];
+    newKey.distance = 0;
+    fibHeap.decreaseKey(vertexSet[src], &newKey);
+
+    while(!fibHeap.empty()){
+
+        auto u = fibHeap.extractMin()->getId();
+        vertexSet[src]->setVisited(true);
+
+        for(const auto &e : vertexSet[u]->getAdj()){
+
+            if (!airlines.empty() && airlines.find(e.airline) == airlines.end()) continue;
+
+            auto v = e.getDest()->getId();
+            double w = e.getWeight();
+
+            if(!vertexSet[v]->isVisited() && vertexSet[u]->distance + w < vertexSet[v]->distance){
+
+                Vertex newKey(v);
+                vertexSet[v]->distance = vertexSet[u]->distance + w;
+
+                auto p = vertexSet[u]->parents;
+                if (find(p.begin(), p.end(), v) == p.end()) p.push_back(v);
+
+                vertexSet[v]->parents = p;
+
+                newKey = *vertexSet[v];
+                fibHeap.decreaseKey(vertexSet[v], &newKey);
+
+            }
+        }
+    }
+
+    return vertexSet[dest];
+}
+
 
 double Graph::bfsDiameter(int v) {
     for (int i = 1; i <= size; i++){

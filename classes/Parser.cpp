@@ -120,6 +120,6 @@ void Parser::createGraph(){
 
         auto d = Graph::distance(latSource, lonSource, latTarget, lonTarget);
 
-        graph.addEdge(idAirports[source],idAirports[target],Airline(airline),d);
+        graph.addFlight(idAirports[source],idAirports[target],Airline(airline),d);
     }
 }

@@ -229,8 +229,14 @@ void FibTree<T>::consolidate() {
 template <typename T>
 void FibTree<T>::link(Node* node1, Node* node2) {
     node1->left->right = node1->right;
-    node1->right->left = node1->left;
+
+    // Check if node1->right is not nullptr before accessing its left pointer
+    if (node1->right != nullptr) {
+        node1->right->left = node1->left;
+    }
+
     node1->parent = node2;
+
     if (node2->child == nullptr) {
         node2->child = node1;
         node1->left = node1;
@@ -239,8 +245,13 @@ void FibTree<T>::link(Node* node1, Node* node2) {
         node1->left = node2->child;
         node1->right = node2->child->right;
         node2->child->right = node1;
-        node1->right->left = node1;
+
+        // Check if node1->right is not nullptr before accessing its left pointer
+        if (node1->right != nullptr) {
+            node1->right->left = node1;
+        }
     }
+
     node2->degree++;
     node1->marked = false;
 }

@@ -390,7 +390,6 @@ void Menu::showOptions(const string& airport) {
                 " [1] Aeroportos\n [2] Cidades\n [3] Países\n\n Opção: ";
         cin >> option;
 
-
         if (option == "1") {
             Airport::AirportH airports = utilities->getGraph().listReachableEntities<Airport::AirportH>
                                                                  (utilities->getMap()[airport],  maxFlight);

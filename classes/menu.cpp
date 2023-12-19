@@ -398,6 +398,8 @@ void Menu::showOptions(const string& airport) {
                 printf("\033[1m\033[32m %s \033[0m", airport_.getCode().c_str());
                 cout << "- " << airport_.getName() << '\n';
             }
+            cout << "Nº de aeroportos alcançáveis ";
+            printf("\033[1m\033[36m %lu \n\033[0m", airports.size());
         }
         else if (option == "2") {
             Airport::CityH2 cities = utilities->getGraph().listReachableEntities<Airport::CityH2>
@@ -408,6 +410,8 @@ void Menu::showOptions(const string& airport) {
                 printf("\033[1m\033[32m %s \033[0m", city.second.c_str());
                 cout << "- "<< city.first << '\n';
             }
+            cout << "Nº de cidades alcançáveis ";
+            printf("\033[1m\033[36m %lu \n\033[0m", cities.size());
         }
         else if (option == "3"){
             std::set<std::string> countries = utilities->getGraph().listReachableEntities<std::set<std::string>>
@@ -418,6 +422,8 @@ void Menu::showOptions(const string& airport) {
                 printf("\033[1m\033[32m - \033[0m");
                 cout << " " << country << '\n';
             }
+            cout << "Nº de paises alcançáveis ";
+            printf("\033[1m\033[36m %lu \n\033[0m", countries.size());
         }
         else if (option == "0")
             return;
@@ -807,6 +813,8 @@ void Menu::maxReach() {
                 printf("\033[1m\033[32m %s \033[0m", airport_.getCode().c_str());
                 cout << "- " << airport_.getName() << '\n';
             }
+            cout << "Nº de aeroportos alcançáveis ";
+            printf("\033[1m\033[36m %lu \n\033[0m", airports.size());
         }
         else if (option == "2") {
             auto cities = utilities->getGraph().listReachableEntities<Airport::CityH2>
@@ -817,6 +825,8 @@ void Menu::maxReach() {
                 printf("\033[1m\033[32m %s \033[0m", city.second.c_str());
                 cout << "- "<< city.first << '\n';
             }
+            cout << "Nº de cidades alcançáveis ";
+            printf("\033[1m\033[36m %lu \n\033[0m", cities.size());
         }
         else if (option == "3"){
             auto countries = utilities->getGraph().listReachableEntities<std::set<std::string>>
@@ -827,6 +837,8 @@ void Menu::maxReach() {
                 printf("\033[1m\033[32m - \033[0m");
                 cout << " " << country << '\n';
             }
+            cout << "Nº de paises alcançáveis ";
+            printf("\033[1m\033[36m %lu \n\033[0m", countries.size());
         }
         else if (option == "0")
             return;

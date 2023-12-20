@@ -53,8 +53,6 @@ multimap<int,string> Parser::convertMap(const map<string, int>& m) {
     return flip_map(m);
 }
 
-map<string,int> Parser::getNrAirportsPerCountry() const {return nrAirportsPerCountry;}
-
 
 void Parser::createAirports() {
     ifstream myFile;

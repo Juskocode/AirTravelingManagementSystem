@@ -62,11 +62,8 @@ bool Graph::addFlight(const int &src, const int &dest, const Airline &airline, d
 }
 
 bool Graph::addAirport(const int &src, const Airport &airport) {
-
-    if (!findVertex(src))
-        return false;
     vertexSet.push_back(new Vertex(src, airport));
-    return true;
+    return !findVertex(src);
 }
 
 double Graph::distance(double lat1, double lon1, double lat2, double lon2) {

@@ -367,30 +367,34 @@ double Graph::diameter() {
     return max;
 }
 
-
-void Graph::dfsArt(int v, int index, list<int>& res, Airline::AirlineH airlines) {
+//TODO check for all cases
+void Graph::dfsArt(int v, int index, list<int>& res, Airline::AirlineH airlines, int parent) {
     vertexSet[v]->num = vertexSet[v]->low = index++;
-    vertexSet[v]->art = true;
+    vertexSet[v]->art = false; // Initialize as false, then set to true if it's an articulation point
     int count = 0;
-    for (const auto& e : vertexSet[v]->getAdj()){
+    bool isArticulationPoint = false;
 
+    for (const auto& e : vertexSet[v]->getAdj()) {
         auto w = e.dest->getId();
 
-        if(airlines.find(e.airline) != airlines.end() || airlines.empty()){
-
-            if (vertexSet[w]->num == 0){
+        if (airlines.find(e.airline) != airlines.end() || airlines.empty()) {
+            if (vertexSet[w]->num == 0) {
                 count++;
-                dfsArt(w,index,res,airlines);
+                dfsArt(w, index, res, airlines, v);
                 vertexSet[v]->low = min(vertexSet[v]->low, vertexSet[w]->low);
 
-                if (vertexSet[w]->low >= vertexSet[v]->num && std::find(res.begin(),res.end(),v) == res.end()) {
-                    if (index == 2 && count > 1) res.push_back(1);
-                    else if (index != 2 && std::find(res.begin(),res.end(),v)== res.end()) res.push_back(v);
+                if ((vertexSet[w]->low >= vertexSet[v]->num && parent != -1) || (parent == -1 && count > 1)) {
+                    vertexSet[v]->art = true;
+                    isArticulationPoint = true;
                 }
-            }
-            else if (vertexSet[v]->art)
+            } else if (w != parent) { // Ignore edge to the parent in DFS tree
                 vertexSet[v]->low = min(vertexSet[v]->low, vertexSet[w]->num);
+            }
         }
+    }
+
+    if ((parent == -1 && count > 1) || (parent != -1 && isArticulationPoint)) {
+        res.push_back(v);
     }
 }
 
@@ -406,7 +410,7 @@ list<int> Graph::articulationPoints(const Airline::AirlineH& airlines) {
 
     for(int i = 0; i < getNumVertex(); i++)
         if (vertexSet[i]->num == 0)
-            dfsArt(i, index,res, airlines);
+            dfsArt(i, index,res, airlines, 0);
 
     return res;
 }

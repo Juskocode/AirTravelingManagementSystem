@@ -230,7 +230,7 @@ public:
      * @param res - list of articulation points
      * @param airlines - unordered set of airlines to use (if empty, use all airlines)
      */
-    void dfsArt(int v, int index, list<int> &res, Airline::AirlineH airlines);
+    void dfsArt(int v, int index, list<int> &res, Airline::AirlineH airlines, int parent);
 
     /**
      * Calculates the list of articulation points that exist in a specific unordered_set of airlines or in all airlines.\n\n

@@ -9,9 +9,13 @@
 
 class Utils : public Parser{
 
+private:
+    map<string, int> nrAirportsPerCountry;
+
 public:
 
     Utils();
+    map<string,int> getNrAirportsPerCountry() const;
 
     /**
      * Verifies if a country is in the countries unordered_set\n\n

@@ -60,7 +60,7 @@ void Parser::createAirports() {
     ifstream myFile;
     string currentLine, code, name, city, country, x;
     double latitude, longitude;
-    int i = 1;
+    int i = 0;
     myFile.open("../data/airports.csv");
     getline(myFile, currentLine);
 

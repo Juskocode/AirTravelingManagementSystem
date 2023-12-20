@@ -1,3 +1,15 @@
-# CLion project files
+
+#ignore idea
 .idea
-cmake-build-*
+
+# Ignore CMake build directories
+build/
+CMakeFiles/
+cmake-build-debug/
+cmake-build-release/
+
+# Ignore specific CMake-generated files
+CMakeCache.txt
+CMakeLists.txt.user
+*.cmake
+*.make

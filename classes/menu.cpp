@@ -327,7 +327,6 @@ void Menu::showAirport(){
                 cout << " " << airport << " ---( "<< i.getAirline().getCode() << " )--- " <<  target << endl;
             }
         }
-        /*
         else if (option == "2"){
             airport = validateAirport();
             if (airport == "0") continue;
@@ -369,7 +368,6 @@ void Menu::showAirport(){
                 cout << " " << i << endl;
             }
         }
-         */
         else if (option == "6"){
             airport = validateAirport();
             if (airport == "0") continue;
@@ -760,7 +758,7 @@ void Menu::airportStats() {
             cout << "\n Nº de voos existentes a partir de " << airport << ":";
             printf("\033[1m\033[36m %lu \n\033[0m", utilities->getGraph().getVertexSet()[source]->getAdj().size()) ;
         }
-        /*
+
         else if (option == "2"){
             airport = validateAirport();
             if (airport == "0") continue;
@@ -791,7 +789,6 @@ void Menu::airportStats() {
             cout << "\n Nº de países diferentes alcancáveis a partir de " << airport << ":";
             printf("\033[1m\033[36m %lu \n\033[0m", utilities->getGraph().countriesFromAirport(source).size());
         }
-         */
         else if (option == "6") maxReach();
         else if (option == "0") return;
         else{

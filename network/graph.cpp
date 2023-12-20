@@ -52,6 +52,7 @@ double Vertex::getDistance() const{
  * destination vertices and the edge weight (w).
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
+
 bool Graph::addFlight(const int &src, const int &dest, const Airline &airline, double w) {
     if (!findVertex(src) || !findVertex(dest))
         return false;
@@ -256,49 +257,6 @@ vector<pair<int,string>> Graph::airlinesPerAirport() {
 
     return nrAirlines;
 }
-
-template <typename Container>
-Container Graph::listReachableEntities(int v, int max) {
-    for (int i = 1; i < getNumVertex(); i++)
-        vertexSet[i]->setVisited(false);
-
-    Container entities;
-
-    queue<int> q;
-    q.push(v);
-    vertexSet[v]->setVisited(true);
-    vertexSet[v]->distance = 0;
-
-    while (!q.empty()) {
-        int u = q.front(); q.pop();
-        for (const auto& e : vertexSet[u]->getAdj()) {
-
-            int w = e.dest->getId();
-
-            if (!vertexSet[w]->isVisited()) {
-
-                q.push(w);
-                vertexSet[w]->setVisited(true);
-                vertexSet[w]->distance = vertexSet[u]->getDistance() + 1;
-
-                if (vertexSet[w]->getDistance() <= max) {
-
-                    if constexpr (std::is_same<Container, Airport::AirportH>::value) {
-                        entities.insert(vertexSet[w]->getAirport());
-                    }
-                    else if constexpr (std::is_same<Container, Airport::CityH2>::value) {
-                        entities.insert({vertexSet[w]->getAirport().getCountry(), vertexSet[w]->getAirport().getCity()});
-                    }
-                    else if constexpr (std::is_same<Container, std::set<std::string>>::value) {
-                        entities.insert(vertexSet[w]->getAirport().getCountry());
-                    }
-                }
-            }
-        }
-    }
-    return entities;
-}
-
 
 
 void Graph::bfsPath(int src, Airline::AirlineH airlines){

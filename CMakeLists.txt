@@ -20,6 +20,7 @@ add_executable(AirBusManagementSystem main.cpp
         classes/Fibtree.h
         classes/menu.cpp
         classes/menu.h
+        network/graph_templates.h
 )
 
 find_package(Doxygen)

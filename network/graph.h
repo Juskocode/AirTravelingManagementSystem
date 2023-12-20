@@ -301,5 +301,5 @@ public:
 
 
 
-
+#include "graph_templates.h"
 #endif //AIRBUSMANAGEMENTSYSTEM_GRAPH_H

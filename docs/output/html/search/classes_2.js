@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['parser_0',['Parser',['../class_parser.html',1,'']]]
+  ['fibtree_146',['FibTree',['../class_fib_tree.html',1,'']]]
 ];

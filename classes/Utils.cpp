@@ -3,8 +3,7 @@
 
 #include <utility>
 
-Utils::Utils(){
-}
+Utils::Utils() = default;
 
 
 

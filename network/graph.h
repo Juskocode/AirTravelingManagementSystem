@@ -75,8 +75,7 @@ public:
 class Graph {
 
     vector<Vertex *> vertexSet;    // vertex set
-    const int size = 3020;
-    void dfsVisit(Vertex *v,  vector<int> &res) const;
+    const int size = 3019;
 
 public:
 
@@ -90,9 +89,6 @@ public:
     static double distance(double lat1, double lon1, double lat2, double lon2);
 
     [[nodiscard]] vector<Vertex * > getVertexSet() const;
-    [[nodiscard]] vector<int> dfs() const;
-    [[nodiscard]] vector<int> dfs(const int &source) const;
-    [[nodiscard]] vector<int> bfs(const int &source) const;
 
     /**
      * Calculates the minimum number of flights between source airport and target airport using airlines \n \n
@@ -160,6 +156,64 @@ public:
     */
     template <typename Container>
     Container listReachableEntities(int v, int max);
+
+    struct PairStringHash{
+        int operator()(const pair<string,string> &b) const {
+            string code = b.second;
+            int v = 0;
+            for (char i : code)
+                v = 37 * v + i;
+            return v;
+        }
+        bool operator()(const pair<string,string> &b1, const pair<string,string> &b2) const {
+            return b1.first == b2.first && b1.second== b2.second;
+        }
+    };
+    typedef unordered_set<pair<string, string>, PairStringHash, PairStringHash> PairH;
+
+    /**
+     * From a specific airport, calculates all of the airports that are reachable within 1 flight.\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|E|)</b>,E -> number of edges of source node
+     * </pre>
+     * @param source - source node
+     * @return unordered_set of airports code and name
+     */
+    PairH airportsFromAirport(int source) const;
+
+    /**
+     * Calculates the different airlines that cooperate with an airport\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|E|)</b>, E -> number of edges of node i
+     * </pre>
+     * @param i - source node
+     * @return set of all the different airlines
+     */
+    unordered_set<string> airlinesFromAirport(int i);
+
+    /**
+     * Calculates the different cities that are reachable from an airport within 1 flight\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|E|)</b>, E -> number of edges of node i
+     * </pre>
+     * @param i - source node
+     * @return set of all the different cities
+     */
+    Airport::CityH2 targetsFromAirport(int i);
+
+    /**
+     * Calculates the different countries that are reachable from an airport within 1 flight\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|E|)</b>, E -> number of edges of node i
+     * </pre>
+     * @param i - source node
+     * @return set of all the different countries
+     */
+    unordered_set<string> countriesFromAirport(int i) const;
 
     /**
      * Stores in the parents variable the possible flight candidates using bfs. Parents who also have possible flight candidates
@@ -234,7 +288,7 @@ public:
      * @param res - list of articulation points
      * @param airlines - unordered set of airlines to use (if empty, use all airlines)
      */
-    void dfsArt(int v, int index, list<int> &res, Airline::AirlineH airlines);
+    void dfsArt(int v, int index, list<int> &res, Airline::AirlineH airlines, int parent);
 
     /**
      * Calculates the list of articulation points that exist in a specific unordered_set of airlines or in all airlines.\n\n

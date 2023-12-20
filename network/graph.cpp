@@ -24,7 +24,7 @@ bool Graph::findVertex(const int &in) const {
     if(vertexSet.empty())
         return false;
 
-    return (in > 0 && in < size);
+    return (in >= 0 && in < size);
 }
 
 bool Vertex::isVisited() const {
@@ -62,11 +62,8 @@ bool Graph::addFlight(const int &src, const int &dest, const Airline &airline, d
 }
 
 bool Graph::addAirport(const int &src, const Airport &airport) {
-
-    if (!findVertex(src))
-        return false;
     vertexSet.push_back(new Vertex(src, airport));
-    return true;
+    return !findVertex(src);
 }
 
 double Graph::distance(double lat1, double lon1, double lat2, double lon2) {
@@ -85,100 +82,12 @@ double Graph::distance(double lat1, double lon1, double lat2, double lon2) {
 }
 
 
-// TODO
-vector<int> Graph::dfs() const {
-    vector<int> res;
-    for (auto v : vertexSet) {
-        v->setVisited(false); // Resetting visited flag for all vertices
-    }
-
-    for (auto v : vertexSet) {
-        if (!v->isVisited()) {
-            dfsVisit(v, res);
-        }
-    }
-
-    return res;
-}
-
-/*
- * Auxiliary function that visits a vertex (v) and its adjacent, recursively.
- * Updates a parameter with the list of visited node contents.
- */
-// TODO
-void Graph::dfsVisit(Vertex *v, vector<int> & res) const {
-    v->setVisited(true); // Marking the current vertex as visited
-    res.push_back(v->getId()); // Adding current vertex info to the result vector
-
-    for (const auto& edge : v->getAdj()) {
-        Vertex *adjVertex = edge.getDest();
-        if (!adjVertex->isVisited()) {
-            dfsVisit(adjVertex, res); // Recursive call for unvisited adjacent vertices
-        }
-    }
-}
-
-
-// TODO
-vector<int> Graph::dfs(const int& source) const {
-    if (!findVertex(source))
-        return {};
-
-    vector<int> res;
-    for (auto v : vertexSet) {
-        v->setVisited(false); // Resetting visited flag for all vertices
-    }
-
-    // Initiating DFS traversal from the source node
-    dfsVisit(vertexSet[source], res);
-
-    return res;
-}
-
-
-// TODO
-vector<int> Graph::bfs(const  int& source) const {
-
-    if(!findVertex(source))
-        return {};
-
-    for (int i = 1; i <= getNumVertex(); i++) {
-        vertexSet[i]->setVisited(false);
-        vertexSet[i]->distance = 0;
-    }
-
-    vector<int> res;
-
-    queue<Vertex*> q;
-    q.push(vertexSet[source]);
-
-    vertexSet[source]->visited = true;
-
-    while(!q.empty()){
-
-        Vertex* currV = q.front();q.pop();
-        res.push_back(currV->getId());
-
-        for(const Edge &e : currV->adj){
-
-            Vertex* dst = e.getDest();
-
-            if(!vertexSet[dst->getId()]->isVisited()){
-                q.push(dst);
-                dst->setVisited(true);
-            }
-        }
-    }
-
-    return res;
-}
-
 int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
 
     if(!findVertex(src) || !findVertex(dest))
         return {};
 
-    for (int i = 1; i < getNumVertex(); i++) {
+    for (int i = 0; i < getNumVertex(); i++) {
         vertexSet[i]->setVisited(false);
         vertexSet[i]->distance = 0;
     }
@@ -211,7 +120,7 @@ int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
 
 int Graph::airlineFlights(const string& airline){
     int count = 0;
-    for (int i = 1 ; i < getNumVertex(); i++)
+    for (int i = 0 ; i < getNumVertex(); i++)
         for (const Edge& e : vertexSet[i]->getAdj())
             if (e.airline.getCode() == airline)
                 count++;
@@ -229,8 +138,8 @@ vector<string> Graph::getAirlines(int src, int dest, Airline::AirlineH airlines)
 vector<pair<int, string>> Graph::flightsPerAirport() {
     vector<pair<int,string>> n;
 
-    for (int i = 1; i < getNumVertex(); i++){
-        int nrFlights = vertexSet[i]->getAdj().size();
+    for (int i = 0; i < getNumVertex(); i++){
+        int nrFlights = (int)vertexSet[i]->getAdj().size();
         n.emplace_back(nrFlights, vertexSet[i]->getAirport().getCode());
     }
 
@@ -243,7 +152,7 @@ vector<pair<int,string>> Graph::airlinesPerAirport() {
 
     vector<pair<int,string>> nrAirlines;
 
-    for (int i = 1; i < getNumVertex(); i++){
+    for (int i = 0; i < getNumVertex(); i++){
         set<string> n;
 
         for (const Edge& e : vertexSet[i]->getAdj())
@@ -258,13 +167,48 @@ vector<pair<int,string>> Graph::airlinesPerAirport() {
     return nrAirlines;
 }
 
+Graph::PairH Graph::airportsFromAirport(int source) const {
+    Graph::PairH ans;
+    for(const auto& e : vertexSet[source]->getAdj())
+        ans.insert({vertexSet[e.getDest()->getId()]->airport.getCode(),
+                    vertexSet[e.getDest()->getId()]->airport.getName()});
+    return ans;
+}
+
+unordered_set<string> Graph::airlinesFromAirport(int i) {
+    unordered_set<string> ans;
+    for (const Edge& e : vertexSet[i]->getAdj())
+        ans.insert(e.airline.getCode());
+    return ans;
+}
+
+unordered_set<string> Graph::countriesFromAirport(int i) const {
+    unordered_set<string> ans;
+    for (const Edge& e : vertexSet[i]->getAdj()){
+        int w = e.dest->getId();
+        ans.insert(vertexSet[w]->getAirport().getCountry());
+    }
+    return ans;
+}
+
+
+Airport::CityH2 Graph::targetsFromAirport(int i){
+    Airport::CityH2 ans;
+    for (const auto& e : vertexSet[i]->getAdj()){
+        int w = e.dest->getId();
+        ans.insert({vertexSet[w]->airport.getCountry(), vertexSet[w]->airport.getCity()});
+    }
+    return ans;
+}
+
+
 
 void Graph::bfsPath(int src, Airline::AirlineH airlines){
 
     if(!findVertex(src))
         return;
 
-    for (int i = 1; i < getNumVertex(); i++) {
+    for (int i = 0; i < getNumVertex(); i++) {
         vertexSet[i]->distance = INT_MAX;
         vertexSet[i]->parents.clear();
     }
@@ -321,7 +265,7 @@ Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
     //node id and node value(distance)
     MinHeap<int, double> minHeap(getNumVertex(), -1);
 
-    for(int i = 1; i < getNumVertex(); i++){
+    for(int i = 0; i < getNumVertex(); i++){
         vertexSet[i]->distance = INT_MAX;
         vertexSet[i]->setVisited(false);
         vertexSet[i]->parents.clear();
@@ -369,7 +313,7 @@ Vertex *Graph::dijkstraFib(int src, int dest, Airline::AirlineH airlines) {
     //node id and node value(distance)
     FibTree<Vertex *> fibHeap;
 
-    for(int i = 1; i < getNumVertex(); i++){
+    for(int i = 0; i < getNumVertex(); i++){
         vertexSet[i]->distance = INT_MAX;
         vertexSet[i]->setVisited(false);
         vertexSet[i]->parents.clear();
@@ -417,7 +361,7 @@ Vertex *Graph::dijkstraFib(int src, int dest, Airline::AirlineH airlines) {
 
 
 double Graph::bfsDiameter(int v) {
-    for (int i = 1; i <= size; i++){
+    for(int i = 0; i < getNumVertex(); i++){
         vertexSet[i]->setVisited(false);
         vertexSet[i]->distance = -1.0;
     }
@@ -447,9 +391,9 @@ double Graph::bfsDiameter(int v) {
 
 
 double Graph::diameter() {
-    vertexSet[1]->setVisited(true);//TODO solve graph first vertex NULL
-    double max = bfsDiameter(1);
-    for (int i = 1; i <= size; i++)
+    vertexSet[0]->setVisited(true);
+    double max = bfsDiameter(0);
+    for(int i = 0; i < getNumVertex(); i++)
         if (!vertexSet[i]->isVisited()){
             vertexSet[i]->setVisited(true);
             double diameter = bfsDiameter(i);
@@ -458,57 +402,61 @@ double Graph::diameter() {
     return max;
 }
 
-
-void Graph::dfsArt(int v, int index, list<int>& res, Airline::AirlineH airlines) {
+//TODO check for all cases
+void Graph::dfsArt(int v, int index, list<int>& res, Airline::AirlineH airlines, int parent) {
     vertexSet[v]->num = vertexSet[v]->low = index++;
-    vertexSet[v]->art = true;
+    vertexSet[v]->art = false; // Initialize as false, then set to true if it's an articulation point
     int count = 0;
-    for (const auto& e : vertexSet[v]->getAdj()){
+    bool isArticulationPoint = false;
 
+    for (const auto& e : vertexSet[v]->getAdj()) {
         auto w = e.dest->getId();
 
-        if(airlines.find(e.airline) != airlines.end() || airlines.empty()){
-
-            if (vertexSet[w]->num == 0){
+        if (airlines.find(e.airline) != airlines.end() || airlines.empty()) {
+            if (vertexSet[w]->num == 0) {
                 count++;
-                dfsArt(w,index,res,airlines);
+                dfsArt(w, index, res, airlines, v);
                 vertexSet[v]->low = min(vertexSet[v]->low, vertexSet[w]->low);
 
-                if (vertexSet[w]->low >= vertexSet[v]->num && std::find(res.begin(),res.end(),v) == res.end()) {
-                    if (index == 2 && count > 1) res.push_back(1);
-                    else if (index != 2 && std::find(res.begin(),res.end(),v)== res.end()) res.push_back(v);
+                if ((vertexSet[w]->low >= vertexSet[v]->num && parent != -1) || (parent == -1 && count > 1)) {
+                    vertexSet[v]->art = true;
+                    isArticulationPoint = true;
                 }
-            }
-            else if (vertexSet[v]->art)
+            } else if (w != parent) { // Ignore edge to the parent in DFS tree
                 vertexSet[v]->low = min(vertexSet[v]->low, vertexSet[w]->num);
+            }
         }
+    }
+
+    if ((parent == -1 && count > 1) || (parent != -1 && isArticulationPoint)) {
+        res.push_back(v);
     }
 }
 
 list<int> Graph::articulationPoints(const Airline::AirlineH& airlines) {
     list<int> res;
 
-    for (int i = 1; i <= size; i++){
+    for(int i = 0; i < getNumVertex(); i++){
         vertexSet[i]->setVisited(false);
         vertexSet[i]->art = false;
     }
 
-    int index = 1;
+    int index = 0;
 
-    for (int i = 1; i <= size; i++)
+    for(int i = 0; i < getNumVertex(); i++)
         if (vertexSet[i]->num == 0)
-            dfsArt(i, index,res, airlines);
+            dfsArt(i, index,res, airlines, 0);
 
     return res;
 }
 
 
 void Graph::printPath(vector<int> path, const Airline::AirlineH& airlines) {
-    for (int i = 0; i < path.size()-1; i++){
+    for (int i = 0; i < path.size() - 1; i++){
         auto possibleAirlines = getAirlines(path[i],path[i+1],airlines);
         printf("\033[1m\033[46m %s \033[0m", vertexSet[path[i]]->airport.getCode().c_str());
         cout <<" --- (";
-        for (int j = 0; j < possibleAirlines.size()-1; j++)
+        for (int j = 0; j < possibleAirlines.size() - 1; j++)
             printf("\033[1m\033[32m %s \033[0m |",possibleAirlines[j].c_str());
         printf("\033[1m\033[32m %s \033[0m",possibleAirlines[possibleAirlines.size()-1].c_str());
         cout << ") --- ";

@@ -10,7 +10,6 @@ Vertex *Edge::getDest() const {
     return dest;
 }
 
-
 void Edge::setDest(Vertex *d) {
     Edge::dest = d;
 }

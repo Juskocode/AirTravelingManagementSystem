@@ -24,7 +24,6 @@ public:
     Airport::CityH const &getCity() const;
     Graph getGraph() const;
     unordered_map<string,int> getMap() const;
-    map<string,int> getNrAirportsPerCountry() const;
 
     /**
      * Transforms the map into a multimap and swaps it information\n\n
@@ -41,7 +40,7 @@ public:
 
     Airport::AirportH airports;
     Airline::AirlineH airlines;
-    Graph graph = Graph(1);
+    Graph graph = Graph(0);
 
     unordered_map<string, int> idAirports;
     unordered_set<string> countries;
@@ -49,7 +48,6 @@ public:
 
     Airport::CityH airportsPerCity;
     unordered_map<string, list<string>> citiesPerCountry;
-    map<string, int> nrAirportsPerCountry;
 
 private:
 

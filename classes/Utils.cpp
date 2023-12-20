@@ -3,7 +3,9 @@
 
 #include <utility>
 
-Utils::Utils() = default;
+Utils::Utils(){
+    countAirportsPerCountry();
+}
 
 
 
@@ -120,3 +122,4 @@ int Utils::countAirlinesPerCountry(const string& country) {
     return count;
 }
 
+map<string,int> Utils::getNrAirportsPerCountry() const {return nrAirportsPerCountry;}

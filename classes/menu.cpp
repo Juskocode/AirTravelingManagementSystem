@@ -91,6 +91,11 @@ void Menu::chooseSource() {
 
         if (option == "3"){
             src = validateLocal();
+            cout << '\n' << "Por volta da area especificada existe(m) o(s) seguinte(s) aeroporto(s): " << "\n";
+            for(const auto & s : src){
+                printf("\033[1m\033[46m %s \033[0m", s.c_str());
+                cout << '\n';
+            }
             chooseTarget();
             return;
         }
@@ -147,6 +152,11 @@ void Menu::chooseTarget() {
 
         if (option == "3"){
             dest = validateLocal();
+            cout << '\n' << "Por volta da area especificada existe(m) o(s) seguinte(s) aeroporto(s): " << "\n";
+            for(const auto & s : dest){
+                printf("\033[1m\033[46m %s \033[0m", s.c_str());
+                cout << '\n';
+            }
             chooseAirlines(true);
             return;
         }
@@ -317,7 +327,6 @@ void Menu::showAirport(){
                 cout << " " << airport << " ---( "<< i.getAirline().getCode() << " )--- " <<  target << endl;
             }
         }
-        /*
         else if (option == "2"){
             airport = validateAirport();
             if (airport == "0") continue;
@@ -359,7 +368,6 @@ void Menu::showAirport(){
                 cout << " " << i << endl;
             }
         }
-         */
         else if (option == "6"){
             airport = validateAirport();
             if (airport == "0") continue;
@@ -750,7 +758,7 @@ void Menu::airportStats() {
             cout << "\n Nº de voos existentes a partir de " << airport << ":";
             printf("\033[1m\033[36m %lu \n\033[0m", utilities->getGraph().getVertexSet()[source]->getAdj().size()) ;
         }
-        /*
+
         else if (option == "2"){
             airport = validateAirport();
             if (airport == "0") continue;
@@ -781,7 +789,6 @@ void Menu::airportStats() {
             cout << "\n Nº de países diferentes alcancáveis a partir de " << airport << ":";
             printf("\033[1m\033[36m %lu \n\033[0m", utilities->getGraph().countriesFromAirport(source).size());
         }
-         */
         else if (option == "6") maxReach();
         else if (option == "0") return;
         else{

@@ -75,8 +75,7 @@ public:
 class Graph {
 
     vector<Vertex *> vertexSet;    // vertex set
-    const int size = 3020;
-    void dfsVisit(Vertex *v,  vector<int> &res) const;
+    const int size = 3019;
 
 public:
 
@@ -90,9 +89,6 @@ public:
     static double distance(double lat1, double lon1, double lat2, double lon2);
 
     [[nodiscard]] vector<Vertex * > getVertexSet() const;
-    [[nodiscard]] vector<int> dfs() const;
-    [[nodiscard]] vector<int> dfs(const int &source) const;
-    [[nodiscard]] vector<int> bfs(const int &source) const;
 
     /**
      * Calculates the minimum number of flights between source airport and target airport using airlines \n \n

@@ -167,6 +167,41 @@ vector<pair<int,string>> Graph::airlinesPerAirport() {
     return nrAirlines;
 }
 
+Graph::PairH Graph::airportsFromAirport(int source) const {
+    Graph::PairH ans;
+    for(const auto& e : vertexSet[source]->getAdj())
+        ans.insert({vertexSet[e.getDest()->getId()]->airport.getCode(),
+                    vertexSet[e.getDest()->getId()]->airport.getName()});
+    return ans;
+}
+
+unordered_set<string> Graph::airlinesFromAirport(int i) {
+    unordered_set<string> ans;
+    for (const Edge& e : vertexSet[i]->getAdj())
+        ans.insert(e.airline.getCode());
+    return ans;
+}
+
+unordered_set<string> Graph::countriesFromAirport(int i) const {
+    unordered_set<string> ans;
+    for (const Edge& e : vertexSet[i]->getAdj()){
+        int w = e.dest->getId();
+        ans.insert(vertexSet[w]->getAirport().getCountry());
+    }
+    return ans;
+}
+
+
+Airport::CityH2 Graph::targetsFromAirport(int i){
+    Airport::CityH2 ans;
+    for (const auto& e : vertexSet[i]->getAdj()){
+        int w = e.dest->getId();
+        ans.insert({vertexSet[w]->airport.getCountry(), vertexSet[w]->airport.getCity()});
+    }
+    return ans;
+}
+
+
 
 void Graph::bfsPath(int src, Airline::AirlineH airlines){
 

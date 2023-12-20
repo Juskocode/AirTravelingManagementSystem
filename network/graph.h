@@ -157,6 +157,64 @@ public:
     template <typename Container>
     Container listReachableEntities(int v, int max);
 
+    struct PairStringHash{
+        int operator()(const pair<string,string> &b) const {
+            string code = b.second;
+            int v = 0;
+            for (char i : code)
+                v = 37 * v + i;
+            return v;
+        }
+        bool operator()(const pair<string,string> &b1, const pair<string,string> &b2) const {
+            return b1.first == b2.first && b1.second== b2.second;
+        }
+    };
+    typedef unordered_set<pair<string, string>, PairStringHash, PairStringHash> PairH;
+
+    /**
+     * From a specific airport, calculates all of the airports that are reachable within 1 flight.\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|E|)</b>,E -> number of edges of source node
+     * </pre>
+     * @param source - source node
+     * @return unordered_set of airports code and name
+     */
+    PairH airportsFromAirport(int source) const;
+
+    /**
+     * Calculates the different airlines that cooperate with an airport\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|E|)</b>, E -> number of edges of node i
+     * </pre>
+     * @param i - source node
+     * @return set of all the different airlines
+     */
+    unordered_set<string> airlinesFromAirport(int i);
+
+    /**
+     * Calculates the different cities that are reachable from an airport within 1 flight\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|E|)</b>, E -> number of edges of node i
+     * </pre>
+     * @param i - source node
+     * @return set of all the different cities
+     */
+    Airport::CityH2 targetsFromAirport(int i);
+
+    /**
+     * Calculates the different countries that are reachable from an airport within 1 flight\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|E|)</b>, E -> number of edges of node i
+     * </pre>
+     * @param i - source node
+     * @return set of all the different countries
+     */
+    unordered_set<string> countriesFromAirport(int i) const;
+
     /**
      * Stores in the parents variable the possible flight candidates using bfs. Parents who also have possible flight candidates
      * allowing us to get all the possible flights from a certain source.\n\n

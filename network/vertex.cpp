@@ -4,7 +4,10 @@
 
 #include "graph.h"
 
-
+/**
+ * @file
+ * @brief Contains the Vertex class implementation
+ */
 Vertex::Vertex(int id): id(id) {}
 
 Vertex::Vertex(int id, Airport airport) : id(id), airport(std::move(airport)) {}

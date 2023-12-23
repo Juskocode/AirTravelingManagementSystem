@@ -6,6 +6,11 @@
 
 #include "graph.h"
 
+/**
+ * @file
+ * @brief Contains the Edge class implementation
+ */
+
 Edge::Edge(Vertex *d, Airline airline, double w) : dest(d), weight(w), airline(std::move(airline)) {}
 
 Vertex *Edge::getDest() const {

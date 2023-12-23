@@ -146,11 +146,12 @@ public:
     * </pre>
     * @param v - source node
     * @param max - number of flights
-    * @note the entities can be airports, countries or cities
-    * @return set of reachable airports using "max" number of flights
-    * @example  Airport::AirportH airports = graph.listReachableEntities<Airport::AirportH>(sourceNode, maxFlights);
-    *           Airport::CityH2 cities = graph.listReachableEntities<Airport::CityH2>(sourceNode, maxFlights);\n
-    *           std::set<std::string> countries = graph.listReachableEntities<std::set<std::string>>(sourceNode, maxFlights);
+    * @note the entities can be airports, countries or cities. The use of this function runs as follows.
+    * @details  Airport::AirportH airports = graph.listReachableEntities<Airport::AirportH>(sourceNode, maxFlights);
+    * @details  Airport::CityH2 cities = graph.listReachableEntities<Airport::CityH2>(sourceNode, maxFlights);\n
+    * @details  std::set<std::string> countries = graph.listReachableEntities<std::set<std::string>>(sourceNode, maxFlights);
+    * @return set of reachable airports using "max" number of flights.
+    *
     */
     template <typename Container>
     Container listReachableEntities(int v, int max);

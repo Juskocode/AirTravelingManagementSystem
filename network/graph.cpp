@@ -3,6 +3,10 @@
 #include <utility>
 #include "../classes/Parser.h"
 
+/**
+ * @file
+ * @brief Contains the Graph class implementaion
+ */
 Graph::Graph(int Vertexes) {
     for (int i = 0; i < size; ++i) {
         vertexSet.push_back(new Vertex(i)); // Assuming the Vertex constructor with just id parameter

@@ -84,16 +84,21 @@ Classes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a903ed8fff65f53e9281fb7f447f0d930"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_min_heap.html#a903ed8fff65f53e9281fb7f447f0d930">MinHeap</a> (int n, const Key &amp;notFound)</td></tr>
+<tr class="memdesc:a903ed8fff65f53e9281fb7f447f0d930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor to create a <a class="el" href="class_min_heap.html">MinHeap</a> instance.  <a href="class_min_heap.html#a903ed8fff65f53e9281fb7f447f0d930">More...</a><br /></td></tr>
 <tr class="separator:a903ed8fff65f53e9281fb7f447f0d930"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a504b87f216d456454cc15dc57f1a19"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_min_heap.html#a7a504b87f216d456454cc15dc57f1a19">getSize</a> ()</td></tr>
 <tr class="separator:a7a504b87f216d456454cc15dc57f1a19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ace629004aca3f5ff412653dadc43417b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_min_heap.html#ace629004aca3f5ff412653dadc43417b">contains</a> (const Key &amp;key)</td></tr>
+<tr class="memdesc:ace629004aca3f5ff412653dadc43417b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the heap contains a specific key.  <a href="class_min_heap.html#ace629004aca3f5ff412653dadc43417b">More...</a><br /></td></tr>
 <tr class="separator:ace629004aca3f5ff412653dadc43417b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a3d6c01d1c3f0ca8806ab088a2381ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_min_heap.html#a0a3d6c01d1c3f0ca8806ab088a2381ec">insert</a> (const Key &amp;key, const Value &amp;value)</td></tr>
+<tr class="memdesc:a0a3d6c01d1c3f0ca8806ab088a2381ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a new key-value pair into the min-heap.  <a href="class_min_heap.html#a0a3d6c01d1c3f0ca8806ab088a2381ec">More...</a><br /></td></tr>
 <tr class="separator:a0a3d6c01d1c3f0ca8806ab088a2381ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a447b77be886f62f4c221a884c345d335"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_min_heap.html#a447b77be886f62f4c221a884c345d335">decreaseKey</a> (const Key &amp;key, const Value &amp;value)</td></tr>
+<tr class="memdesc:a447b77be886f62f4c221a884c345d335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decreases the value associated with a specific key in the heap.  <a href="class_min_heap.html#a447b77be886f62f4c221a884c345d335">More...</a><br /></td></tr>
 <tr class="separator:a447b77be886f62f4c221a884c345d335"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af96c28a2635ef8171e1f76ad9cd93395"><td class="memItemLeft" align="right" valign="top">Key&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_min_heap.html#af96c28a2635ef8171e1f76ad9cd93395">extractMin</a> ()</td></tr>
+<tr class="memdesc:af96c28a2635ef8171e1f76ad9cd93395"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes and returns the key with the smallest value in the heap.  <a href="class_min_heap.html#af96c28a2635ef8171e1f76ad9cd93395">More...</a><br /></td></tr>
 <tr class="separator:af96c28a2635ef8171e1f76ad9cd93395"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4aba063da9183561b11bc36911ea60d1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_min_heap.html#a4aba063da9183561b11bc36911ea60d1">empty</a> () const</td></tr>
 <tr class="memdesc:a4aba063da9183561b11bc36911ea60d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the Fibonacci heap is empty.  <a href="class_min_heap.html#a4aba063da9183561b11bc36911ea60d1">More...</a><br /></td></tr>
@@ -150,6 +155,16 @@ template&lt;class Key , class Value &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Constructor to create a <a class="el" href="class_min_heap.html">MinHeap</a> instance. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">n</td><td>Maximum number of pairs (Key, Value) allowed in the heap. </td></tr>
+    <tr><td class="paramname">notFound</td><td>Value returned when the heap is empty. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Constructs a min-heap for a maximum of n pairs (Key, Value) with 'notFound' returned when empty. </dd></dl>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -178,6 +193,16 @@ template&lt;class Key , class Value &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Moves a value down the tree until it reaches its appropriate position in the heap. </p><pre>
+     <b>O(log N)</b> O(log N) in general, O(1) in Fibonacci heap case.(decrease key also)
+                 N represents the number of elements in the heap.
+</pre> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>The index of the element to bubble down. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This function moves a value down the tree until it reaches its correct position in the heap. It maintains the min-heap property by swapping elements as necessary. </dd></dl>
 
 </div>
 </div>
@@ -206,6 +231,16 @@ template&lt;class Key , class Value &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Moves a value up the tree until it reaches its appropriate position in the heap. <b>Complexity<br  />
+</b> </p><pre>
+     <b>O(log N)</b>, where N is the number of elements in the heap.
+</pre> <dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>The index of the element to bubble up. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This function moves a value up the tree until it reaches its correct position in the heap. It maintains the min-heap property by swapping elements as necessary. </dd></dl>
 
 </div>
 </div>
@@ -226,6 +261,16 @@ template&lt;class Key , class Value &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Checks if the heap contains a specific key. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key to check for existence in the heap. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>True if the key exists in the heap, otherwise false. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Verifies if a specified key exists within the heap. </dd></dl>
 
 </div>
 </div>
@@ -256,6 +301,16 @@ template&lt;class Key , class Value &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Decreases the value associated with a specific key in the heap. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key whose value needs to be decreased. </td></tr>
+    <tr><td class="paramname">value</td><td>The new value to be set for the key. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Decreases the value associated with a key in the heap if the new value is smaller. </dd></dl>
 
 </div>
 </div>
@@ -291,6 +346,10 @@ template&lt;class Key , class Value &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Removes and returns the key with the smallest value in the heap. </p>
+<dl class="section return"><dt>Returns</dt><dd>The key with the smallest value. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Removes and returns the key with the smallest value in the heap. </dd></dl>
 
 </div>
 </div>
@@ -338,6 +397,16 @@ template&lt;class Key , class Value &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Inserts a new key-value pair into the min-heap. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>The key to be inserted. </td></tr>
+    <tr><td class="paramname">value</td><td>The value associated with the key to be inserted. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>Inserts a new key-value pair into the min-heap. </dd></dl>
+
 </div>
 </div>
 <a id="aa5d5fbb293ab22d5504a6e97d1b40b64"></a>
@@ -375,6 +444,15 @@ template&lt;class Key , class Value &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Swaps two nodes within the heap and updates their positions.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index1</td><td>Index of the first node to be swapped. </td></tr>
+    <tr><td class="paramname">index2</td><td>Index of the second node to be swapped. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section note"><dt>Note</dt><dd>This function swaps two nodes within the heap and updates their positions in the heapArray. </dd></dl>
 
 </div>
 </div>

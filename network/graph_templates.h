@@ -3,10 +3,13 @@
 
 #include "graph.h"
 
-
+/**
+ * @file
+ * @brief Contains Graph template functions implementations
+ */
 template<typename Container>
 Container Graph::listReachableEntities(int v, int max) {
-    for (int i = 1; i < getNumVertex(); i++)
+    for (int i = 0; i < getNumVertex(); i++)
         vertexSet[i]->setVisited(false);
 
     Container entities;

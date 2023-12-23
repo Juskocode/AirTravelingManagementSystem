@@ -4,7 +4,9 @@
 #include "../classes/Parser.h"
 
 Graph::Graph(int Vertexes) {
-    vertexSet.resize(Vertexes);
+    for (int i = 0; i < size; ++i) {
+        vertexSet.push_back(new Vertex(i)); // Assuming the Vertex constructor with just id parameter
+    }
 }
 
 
@@ -39,10 +41,6 @@ const list<Edge> &Vertex::getAdj() const {
     return adj;
 }
 
-void Vertex::setAdj(const list<Edge> &adj) {
-    Vertex::adj = adj;
-}
-
 double Vertex::getDistance() const{
     return distance;
 }
@@ -62,8 +60,10 @@ bool Graph::addFlight(const int &src, const int &dest, const Airline &airline, d
 }
 
 bool Graph::addAirport(const int &src, const Airport &airport) {
-    vertexSet.push_back(new Vertex(src, airport));
-    return !findVertex(src);
+    if(!findVertex(src))
+        return false;
+    vertexSet[src]->airport = std::move(airport);
+    return true;
 }
 
 double Graph::distance(double lat1, double lon1, double lat2, double lon2) {

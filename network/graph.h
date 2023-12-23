@@ -28,6 +28,7 @@ class Edge {
     Vertex * dest{};       // destination vertex
     double weight{};       // edge weight
     Airline airline;
+
 public:
     Edge(Vertex *d, Airline airline, double w);
     [[nodiscard]] Vertex *getDest() const;
@@ -285,7 +286,7 @@ public:
      * @param res - list of articulation points
      * @param airlines - unordered set of airlines to use (if empty, use all airlines)
      */
-    void dfsArt(int v, int index, list<int> &res, Airline::AirlineH airlines, int parent);
+    void dfsArt(int v, int index, list<int> &res, Airline::AirlineH airlines);
 
     /**
      * Calculates the list of articulation points that exist in a specific unordered_set of airlines or in all airlines.\n\n

@@ -40,7 +40,7 @@ public:
 
     Airport::AirportH airports;
     Airline::AirlineH airlines;
-    Graph graph = Graph(0);
+    Graph graph = Graph(3019);
 
     unordered_map<string, int> idAirports;
     unordered_set<string> countries;

@@ -32,7 +32,7 @@ class MinHeap {
      * @note This function moves a value up the tree until it reaches its correct position in the heap.
      *       It maintains the min-heap property by swapping elements as necessary.
      */
-    void bubbleUp(int index);      // Time Complexity: O(log N)
+    void bubbleUp(int index); // Time Complexity: O(log N)
 
     /**
      * Moves a value down the tree until it reaches its appropriate position in the heap.
@@ -44,7 +44,7 @@ class MinHeap {
      * @note This function moves a value down the tree until it reaches its correct position in the heap.
      *       It maintains the min-heap property by swapping elements as necessary.
      */
-    void bubbleDown(int index);    // Time Complexity: O(log N) O(1) in fibTree case
+    void bubbleDown(int index); // Time Complexity: O(log N) O(1) in fibTree case
 
     /**
      * Swaps two nodes within the heap and updates their positions.

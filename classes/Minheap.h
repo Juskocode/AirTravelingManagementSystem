@@ -22,16 +22,84 @@ class MinHeap {
     std::unordered_map<Key, int> positions; // Maps a key into its position in the heapArray
     const Key KEY_NOT_FOUND;
 
+    /**
+     * Moves a value up the tree until it reaches its appropriate position in the heap.
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(log N)</b>, where N is the number of elements in the heap.
+     * </pre>
+     * @param index The index of the element to bubble up.
+     * @note This function moves a value up the tree until it reaches its correct position in the heap.
+     *       It maintains the min-heap property by swapping elements as necessary.
+     */
     void bubbleUp(int index);      // Time Complexity: O(log N)
+
+    /**
+     * Moves a value down the tree until it reaches its appropriate position in the heap.
+     * <pre>
+     *      <b>O(log N)</b> O(log N) in general, O(1) in Fibonacci heap case.(decrease key also)
+     *                  N represents the number of elements in the heap.
+     * </pre>
+     * @param index The index of the element to bubble down.
+     * @note This function moves a value down the tree until it reaches its correct position in the heap.
+     *       It maintains the min-heap property by swapping elements as necessary.
+     */
     void bubbleDown(int index);    // Time Complexity: O(log N) O(1) in fibTree case
+
+    /**
+     * Swaps two nodes within the heap and updates their positions.
+     *
+     * @param index1 Index of the first node to be swapped.
+     * @param index2 Index of the second node to be swapped.
+     * @note This function swaps two nodes within the heap and updates their positions in the heapArray.
+     */
     void swapNodes(int index1, int index2);
 
 public:
-    MinHeap(int n, const Key& notFound); // Create a min-heap for a maximum of n pairs (Key, Value) with notFound returned when empty
+    /**
+     * @brief Constructor to create a MinHeap instance.
+     *
+     * @param n Maximum number of pairs (Key, Value) allowed in the heap.
+     * @param notFound Value returned when the heap is empty.
+     * @note Constructs a min-heap for a maximum of n pairs (Key, Value) with 'notFound' returned when empty.
+     */
+    MinHeap(int n, const Key& notFound);
+
     int getSize();              // Return number of elements in the heap
+
+    /**
+     * @brief Checks if the heap contains a specific key.
+     *
+     * @param key The key to check for existence in the heap.
+     * @return True if the key exists in the heap, otherwise false.
+     * @note Verifies if a specified key exists within the heap.
+     */
     bool contains(const Key& key);  // Checks if heap contains a key
+
+    /**
+     * @brief Inserts a new key-value pair into the min-heap.
+     *
+     * @param key The key to be inserted.
+     * @param value The value associated with the key to be inserted.
+     * @note Inserts a new key-value pair into the min-heap.
+     */
     void insert(const Key& key, const Value& value);      // Insert (key, value) into the heap. Time Complexity: O(log N)
+
+    /**
+     * @brief Decreases the value associated with a specific key in the heap.
+     *
+     * @param key The key whose value needs to be decreased.
+     * @param value The new value to be set for the key.
+     * @note Decreases the value associated with a key in the heap if the new value is smaller.
+     */
     void decreaseKey(const Key& key, const Value& value); // Decrease value of key. Time Complexity: O(log N)
+
+    /**
+     * @brief Removes and returns the key with the smallest value in the heap.
+     *
+     * @return The key with the smallest value.
+     * @note Removes and returns the key with the smallest value in the heap.
+     */
     Key extractMin(); // Remove and return key with the smallest value. Time Complexity: O(log N)
     /**
      * @brief Checks if the Fibonacci heap is empty.

@@ -24,7 +24,6 @@ class Edge;
 class Vertex;
 class Graph;
 
-
 class Edge {
     Vertex * dest{};       // destination vertex
     double weight{};       // edge weight
@@ -32,9 +31,7 @@ class Edge {
 public:
     Edge(Vertex *d, Airline airline, double w);
     [[nodiscard]] Vertex *getDest() const;
-    void setDest(Vertex *dest);
     [[nodiscard]] double getWeight() const;
-    void setWeight(double weight);
     [[nodiscard]] Airline getAirline() const;
     friend class Graph;
     friend class Vertex;
@@ -51,26 +48,26 @@ class Vertex {
     double distance{};
     vector<int> parents; //to use in bfsPath
 
+    /*!
+     * @note Auxiliary function to add an outgoing edge to a vertex (this),
+     *       with a given destination vertex (d), the airline associated and the edge weight (w).
+     */
     void addEdge(Vertex *dest, const Airline& airline, double w);
-    bool removeEdgeTo(Vertex *d);
+
 public:
     explicit Vertex(int id);
     Vertex(int id, Airport airport);
     [[nodiscard]] int getId() const;
     [[nodiscard]] double getDistance() const;
     Airport getAirport();
-    void setAirport(Airport in);
     [[nodiscard]] bool isVisited() const;
     void setVisited(bool v);
     [[nodiscard]] bool isProcessing() const;
     void setProcessing(bool p);
     [[nodiscard]] const list<Edge> &getAdj() const;
-    void setAdj(const list<Edge> &adj);
     friend class Graph;
 
 };
-
-
 
 class Graph {
 

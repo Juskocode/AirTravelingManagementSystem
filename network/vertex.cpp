@@ -29,7 +29,7 @@ void Vertex::setProcessing(bool p) {
 }
 
 
-void Vertex::addEdge(Vertex *d, const Airline& airline, double w) {
+void Vertex::addEdge(const int d, const Airline& airline, double w) {
     adj.emplace_back(d, airline, w);
 }
 

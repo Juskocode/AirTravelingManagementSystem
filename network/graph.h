@@ -2,14 +2,13 @@
 #define AIRBUSMANAGEMENTSYSTEM_GRAPH_H
 
 
-#include <string>
-#include <vector>
-#include <unordered_set>
+#include <immintrin.h>
+#include <cmath>
+#include <thread>
+#include <mutex>
 #include <list>
 #include <queue>
-#include <iostream>
 #include <stack>
-#include <cmath>
 #include <set>
 #include <algorithm>
 #include <climits>
@@ -25,13 +24,13 @@ class Vertex;
 class Graph;
 
 class Edge {
-    Vertex * dest{};       // destination vertex
+    int dest;       // position of the dest Vertex
     double weight{};       // edge weight
     Airline airline;
 
 public:
-    Edge(Vertex *d, Airline airline, double w);
-    [[nodiscard]] Vertex *getDest() const;
+    Edge(int dest, Airline airline, double w);
+    [[nodiscard]] int getDest() const;
     [[nodiscard]] double getWeight() const;
     [[nodiscard]] Airline getAirline() const;
     friend class Graph;
@@ -45,7 +44,7 @@ class Vertex {
     bool processing{};       // auxiliary field
     int num = 0;             // to use in articulation points
     int low{};               // to use in articulation points
-    bool art;                // to use in articulation points
+    bool art{};                // to use in articulation points
     double distance{};
     vector<int> parents; //to use in bfsPath
 
@@ -53,40 +52,55 @@ class Vertex {
      * @note Auxiliary function to add an outgoing edge to a vertex (this),
      *       with a given destination vertex (d), the airline associated and the edge weight (w).
      */
-    void addEdge(Vertex *dest, const Airline& airline, double w);
+    void addEdge(int dest, const Airline& airline, double w);
 
 public:
     explicit Vertex(int id);
     Vertex(int id, Airport airport);
     [[nodiscard]] int getId() const;
     [[nodiscard]] double getDistance() const;
-    Airport getAirport();
+    [[nodiscard]] Airport getAirport();
     [[nodiscard]] bool isVisited() const;
     void setVisited(bool v);
     [[nodiscard]] bool isProcessing() const;
     void setProcessing(bool p);
     [[nodiscard]] const list<Edge> &getAdj() const;
     friend class Graph;
-
 };
 
 class Graph {
 
-    vector<Vertex *> vertexSet;    // vertex set
+    vector<Vertex> vertexSet;    // vertex set
     const int size = 3019;
 
 public:
 
     explicit Graph(int vertexes);
+    //[[nodiscard]] is used to indicate that the return value of a function should not be ignored.
+    // it aids the compiler by saying hey this return value should not be ignored
+    // in this case it helps to write a more robust code by ensuring that important
+    // return values are not accidentally overlooked.
     [[nodiscard]] bool findVertex(const int &in) const;
 
-    bool addFlight(const int &src, const int &dest, const Airline &airline, double w);
-    bool addAirport(const int &src, const Airport &airport);
+    void addFlight(const int &src, const int &dest, const Airline &airline, double w);
+    void addAirport(const int &src, const Airport &airport);
 
     [[nodiscard]] int getNumVertex() const;
-    static double distance(double lat1, double lon1, double lat2, double lon2);
+    [[nodiscard]] vector<Vertex > getVertexSet() const;
 
-    [[nodiscard]] vector<Vertex * > getVertexSet() const;
+    /**
+     * Calculates the distance between two airports given the latitude and longitude, using haversine formula\n \n
+     *
+     * @param lat1 - latitude of airport 1
+     * @param lon1 - longitude of airport 1
+     * @param lat2 - latitude of airport 2
+     * @param lon2 - longitude of airport 2
+     * @return distance between the two airports
+     */
+    static double haversineDistanceGeneric(double lat1, double lon1, double lat2, double lon2);
+
+    static double parallelHaversineDistance_(double lat1, double lon1, double lat2, double lon2);
+    static double haversineDistance(double lat1, double lon1, double lat2, double lon2);
 
     /**
      * Calculates the minimum number of flights between source airport and target airport using airlines \n \n
@@ -111,6 +125,17 @@ public:
      * @return number of flights of a specific airline
      */
     int airlineFlights(const string& airline);
+
+    /**
+     * Calculates the number of flights of a specific city\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|E|)</b>, E -> number of edges
+     * </pre>
+     * @param city
+     * @return number of flights of a specific city
+     */
+    int cityFlights(const string& city);
 
     /**
      * Calculates the number of departures of each airport.\n\n
@@ -179,7 +204,7 @@ public:
      * @param source - source node
      * @return unordered_set of airports code and name
      */
-    PairH airportsFromAirport(int source) const;
+    [[nodiscard]] PairH airportsFromAirport(int source) const;
 
     /**
      * Calculates the different airlines that cooperate with an airport\n\n
@@ -212,7 +237,7 @@ public:
      * @param i - source node
      * @return set of all the different countries
      */
-    unordered_set<string> countriesFromAirport(int i) const;
+    [[nodiscard]] unordered_set<string> countriesFromAirport(int i) const;
 
     /**
      * Stores in the parents variable the possible flight candidates using bfs. Parents who also have possible flight candidates
@@ -250,9 +275,29 @@ public:
      * @param airlines - unordered set of airlines to use (if empty, use all airlines)
      * @return minimum flown distance between source airport and target airport using airlines
      */
-    Vertex* dijkstra(int src, int dest, Airline::AirlineH airlines);
+    Vertex dijkstra(int src, int dest, Airline::AirlineH airlines);
 
-    Vertex* dijkstraFib(int src, int dest, Airline::AirlineH airlines);
+    Vertex dijkstraFib(int src, int dest, Airline::AirlineH airlines);
+
+
+    /**
+     * Calculates the minimum flown distance between source airport and target airport using airlines \n \n
+     * <b>Complexity\n</b>
+     * <pre>
+
+     *      <b>O(|E|)</b>,  E is the number of Edges, best case(where the heuristic is ideal for the given problem)
+     *      <b>O(|E|log(|V|)</b>, V -> number of nodes and E is the number of Edges, worst case(the heuristic is less informative)
+     * </pre>
+     * @note This A* implementation uses the Haversine formula as the heuristic for estimating distances between vertices
+     * @note based on their geographical coordinates.
+     * @note It aims to efficiently find the shortest path in the airway network by considering
+     * @note both the actual distance traveled and the estimated distance to the destination.
+     * @param src - source node / node of source airport
+     * @param dest - target node
+     * @param airlines - unordered set of airlines to use (if empty, use all airlines)
+     * @return minimum flown distance between source airport and target airport using airlines
+     */
+    Vertex aStar(int src, int dest, Airline::AirlineH airlines);
 
 
     /**
@@ -275,6 +320,17 @@ public:
      * @return diameter between all connected components.
      */
     double diameter();
+
+    /**
+     * Computes the pairs (source, destination) with the max diameter\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V|+|E|)</b>, V -> number of nodes, E -> number of edges
+     * </pre>
+     *
+     * @return the pairs whose diameter is the max diameter of the graph
+     */
+    vector<pair<int, int>> maxDiameterSourceDest();
 
     /**
      * Finds the nodes that are articulation points and inserts them in res\n\n
@@ -350,9 +406,8 @@ public:
      */
     void printPathsByDistance(int& nrPath, int start, int end, const Airline::AirlineH& airlines);
 
+
 };
 
-
-
 #include "graph_templates.h"
-#endif //AIRBUSMANAGEMENTSYSTEM_GRAPH_H
+#endif

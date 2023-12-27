@@ -84,7 +84,7 @@ public:
         int operator()(const Airport &b) const {
             string c = b.getCode();
             int v = 0;
-            for (char i : c) v = 131 * v + i;
+            for (char i : c) v = 3023 * v + i;
             return v;
         }
 
@@ -112,7 +112,7 @@ public:
         int operator()(const pair<string,string> &b) const {
             string cityCode = b.second;
             int v = 0;
-            for (char i : cityCode) v = 131 * v + i;
+            for (char i : cityCode) v = 33 * v + i;
             return v;
         }
 

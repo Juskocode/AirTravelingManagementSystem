@@ -23,6 +23,11 @@ add_executable(AirBusManagementSystem main.cpp
         network/graph_templates.h
 )
 
+# Set compiler flags for SSE2 or AVX (choose one)
+target_compile_options(AirBusManagementSystem PRIVATE -msse2)
+# Uncomment the line below if you want to enable AVX instead of SSE2
+# target_compile_options(AirBusManagementSystem PRIVATE -mavx)
+
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
     set(BUILD_DOC_DIR "${CMAKE_SOURCE_DIR}/docs/output")

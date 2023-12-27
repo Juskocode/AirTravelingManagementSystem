@@ -41,8 +41,8 @@ bool Utils::isValidCity(const string& country, const string& city) {
 
 int Utils::nrFlights(){
     int nrFlights = 0;
-    for (const auto& node: graph.getVertexSet())
-        nrFlights += node->getAdj().size();
+    for (const auto& v: graph.getVertexSet())
+        nrFlights += v.getAdj().size();
     return nrFlights;
 }
 
@@ -50,11 +50,11 @@ int Utils::nrFlights(){
 vector<string> Utils::localAirports(double latitude, double longitude, double radius) const {
     vector<string> localAirports;
     double latitude1,longitude1;
-    for (const auto& node : graph.getVertexSet()){
-        latitude1 = node->getAirport().getLatitude();
-        longitude1 = node->getAirport().getLongitude();
-        if (Graph::distance(latitude,longitude,latitude1,longitude1) <= radius)
-            localAirports.push_back(node->getAirport().getCode());
+    for (auto v : graph.getVertexSet()){
+        latitude1 = v.getAirport().getLatitude();
+        longitude1 = v.getAirport().getLongitude();
+        if (Graph::haversineDistance(latitude,longitude,latitude1,longitude1) <= radius)
+            localAirports.push_back(v.getAirport().getCode());
     }
     return localAirports;
 }
@@ -87,8 +87,8 @@ list<pair<string,string>> Utils::processDistance(double& bestDistance, const vec
     for (const auto &s: src)
         for (const auto &d: dest) {
             if (s == d) continue;
-            auto node = graph.dijkstra(idAirports[s], idAirports[d], airline);
-            distance = node->getDistance();
+            auto v = graph.dijkstra(idAirports[s], idAirports[d], airline);
+            distance = v.getDistance();
             if (distance < bestDistance) {
                 bestDistance = distance;
                 res.clear();

@@ -2,9 +2,11 @@
 #include <chrono>
 
 Parser::Parser() {
-    auto start = std::chrono::steady_clock::now();
+
     createAirports();
     createAirlines();
+
+    auto start = std::chrono::steady_clock::now();
     createGraph();
     auto end = std::chrono::steady_clock::now();
 
@@ -12,7 +14,7 @@ Parser::Parser() {
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
     // Output the duration
-    std::cout << "Execution time: " << duration.count() << " milliseconds" << std::endl;
+    std::cout << "CreateGraph execution time: " << duration.count() << " milliseconds" << std::endl;
 }
 
 Airport::AirportH const& Parser::getAirports() const {return airports;}
@@ -55,14 +57,14 @@ multimap<int,string> Parser::convertMap(const map<string, int>& m) {
 
 
 void Parser::createAirports() {
-    ifstream myFile;
+    ifstream in;
     string currentLine, code, name, city, country, x;
     double latitude, longitude;
     int i = 0;
-    myFile.open("../data/airports.csv");
-    getline(myFile, currentLine);
+    in.open("../data/airports.csv");
+    getline(in, currentLine);
 
-    while (getline(myFile,currentLine)){
+    while (getline(in,currentLine)){
         istringstream iss(currentLine);
 
         getline(iss,code,',');
@@ -84,11 +86,11 @@ void Parser::createAirports() {
 }
 
 void Parser::createAirlines() {
-    ifstream inFile;
+    ifstream in;
     string code, name, callSign, country, line;
-    inFile.open("../data/airlines.csv");
-    getline(inFile, line);
-    while(getline(inFile, line)){
+    in.open("../data/airlines.csv");
+    getline(in, line);
+    while(getline(in, line)){
         istringstream is(line);
         getline(is,code,',');
         getline(is,name,',');
@@ -100,11 +102,11 @@ void Parser::createAirlines() {
 }
 
 void Parser::createGraph(){
-    ifstream inFile;
+    ifstream in;
     string source, target, airline, line;
-    inFile.open("../data/flights.csv");
-    getline(inFile, line);
-    while(getline(inFile, line)){
+    in.open("../data/flights.csv");
+    getline(in, line);
+    while(getline(in, line)){
         istringstream is(line);
         getline(is,source,',');
         getline(is,target,',');
@@ -116,7 +118,7 @@ void Parser::createGraph(){
         double latTarget = airports.find(Airport(target))->getLatitude();
         double lonTarget = airports.find(Airport(target))->getLongitude();
 
-        auto d = Graph::distance(latSource, lonSource, latTarget, lonTarget);
+        auto d = Graph::haversineDistanceGeneric(latSource, lonSource, latTarget, lonTarget);
 
         graph.addFlight(idAirports[source],idAirports[target],Airline(airline),d);
     }

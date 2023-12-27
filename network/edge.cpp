@@ -11,9 +11,9 @@
  * @brief Contains the Edge class implementation
  */
 
-Edge::Edge(Vertex *d, Airline airline, double w) : dest(d), weight(w), airline(std::move(airline)) {}
+Edge::Edge(int dest, Airline airline, double w) : dest(dest), weight(w), airline(std::move(airline)) {}
 
-Vertex *Edge::getDest() const {
+int Edge::getDest() const {
     return dest;
 }
 

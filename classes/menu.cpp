@@ -1,6 +1,7 @@
 #include "menu.h"
 
 #include <ranges>
+#include <chrono>
 
 // Foreground colors
 #define FG_BLACK "\033[30m"
@@ -263,6 +264,8 @@ void Menu::processOperation() {
             cout << " O número mínimo de voos é " << nrFlights << "\n\n";}
     }
     else{
+        auto start = std::chrono::steady_clock::now();
+
         printf(BOLD FG_GREEN"\n===============================================================\n" RESET_COLOR);
         int nrPath = 0;
         double distance;
@@ -275,6 +278,13 @@ void Menu::processOperation() {
         }
 
         if (nrPath != 0) cout << " A distância mínima é " << distance << " km\n\n";
+
+        auto end = std::chrono::steady_clock::now();
+        // Calculate the duration in milliseconds
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+        // Output the duration
+        std::cout << "Execution time: " << duration.count() << " milliseconds" << std::endl;
     }
 
     printf(BOLD FG_CYAN"===============================================================\n" RESET_COLOR);
@@ -308,7 +318,7 @@ void Menu::info(){
             auto res = utilities->getGraph().articulationPoints(airlines);
             cout << '\n';
             for(auto index: res){
-                auto airport=utilities->getGraph().getVertexSet()[index]->getAirport();
+                auto airport=utilities->getGraph().getVertexSet()[index].getAirport();
                 printf(BOLD FG_GREEN" %s" RESET_COLOR, airport.getCode().c_str());
                 cout << " : " << airport.getName() << endl;
             }
@@ -317,7 +327,14 @@ void Menu::info(){
         else if (option == "6"){
             cout << "\n Diâmetro da rede: ";
             printf(BOLD FG_CYAN"%.0f\n" RESET_COLOR, utilities->getGraph().diameter());
+            vector<pair<int, int>> v = utilities->getGraph().maxDiameterSourceDest();
+
+            for(const auto & p: v)
+                printf(BOLD FG_CYAN"%s - %s\n" RESET_COLOR, utilities->getGraph().getVertexSet()[p.first].getAirport().getCode().c_str(),
+                       utilities->getGraph().getVertexSet()[p.second].getAirport().getCode().c_str());
+
         }
+        //TODO trajetos com o diametro maximo
 
         else if (option == "0") {
             cout << "\n";
@@ -350,9 +367,9 @@ void Menu::showAirport(){
             if (airport == "0") continue;
             source = utilities->getMap()[airport];
             cout << "\n";
-            auto edges = utilities->getGraph().getVertexSet()[source]->getAdj();
+            auto edges = utilities->getGraph().getVertexSet()[source].getAdj();
             for (const auto& i: edges){
-                string target = utilities->getGraph().getVertexSet()[i.getDest()->getId()]->getAirport().getCode();
+                string target = utilities->getGraph().getVertexSet()[i.getDest()].getAirport().getCode();
                 cout << " " << airport << " ---( "<< i.getAirline().getCode() << " )--- " <<  target << endl;
             }
         }
@@ -676,7 +693,7 @@ void Menu::numberFlights(){
     string option;
     while(true){
         cout << "\n Pretende ver o número de:\n\n "
-                "[1] Voos totais\n [2] Voos de uma companhia aérea\n\n Opção: ";
+                "[1] Voos totais\n [2] Voos de uma companhia aérea\n [3] Voos de uma cidade\n\n Opção: ";
         cin >> option;
         if (option == "1"){
             cout << "\n Existem ";
@@ -688,6 +705,16 @@ void Menu::numberFlights(){
             if (airline == "0") continue;
             cout << "\n A " << airline << " tem ";
             printf(BOLD FG_MAGENTA"%d " RESET_COLOR, utilities->getGraph().airlineFlights(airline));
+            cout << "voos\n";
+        }
+        else if (option == "3"){
+            string country = validateCountry();
+            if (country == "0") continue;
+
+            string city = validateCity(country);
+            if (city == "0") continue;
+            cout << "\n A " << city << " tem ";
+            printf(BOLD FG_MAGENTA"%d " RESET_COLOR, utilities->getGraph().cityFlights(city));
             cout << "voos\n";
         }
         else if (option == "0")
@@ -718,7 +745,6 @@ void Menu::numberAirports() {
             string country = validateCountry();
             if (country == "0") continue;
             int count = utilities->getNrAirportsPerCountry()[country];
-
             cout << "\n Neste país (" << country << ") existem ";
             printf(BOLD FG_RED"%i" RESET_COLOR, count);
             cout << " aeroportos\n";
@@ -785,7 +811,7 @@ void Menu::airportStats() {
             if (airport == "0") continue;
             source = utilities->getMap()[airport];
             cout << "\n Nº de voos existentes a partir de " << airport << ":";
-            printf(BOLD FG_CYAN" %lu \n" RESET_COLOR, utilities->getGraph().getVertexSet()[source]->getAdj().size()) ;
+            printf(BOLD FG_CYAN" %lu \n" RESET_COLOR, utilities->getGraph().getVertexSet()[source].getAdj().size()) ;
         }
 
         else if (option == "2"){

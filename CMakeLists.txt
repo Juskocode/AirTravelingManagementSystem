@@ -23,6 +23,8 @@ add_executable(AirBusManagementSystem main.cpp
         network/graph_templates.h
 )
 
+target_compile_options(AirBusManagementSystem PRIVATE -msse2)
+
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
     set(BUILD_DOC_DIR "${CMAKE_SOURCE_DIR}/docs/output")

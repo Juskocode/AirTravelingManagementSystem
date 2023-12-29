@@ -39,37 +39,37 @@ public:
      * @brief Gets the airport code.
      * @return The airport code.
      */
-    string getCode() const;
+    [[nodiscard]] string getCode() const;
 
     /**
      * @brief Gets the name of the airport.
      * @return The name of the airport.
      */
-    string getName() const;
+    [[nodiscard]] string getName() const;
 
     /**
      * @brief Gets the city where the airport is located.
      * @return The city where the airport is located.
      */
-    string getCity() const;
+    [[nodiscard]] string getCity() const;
 
     /**
      * @brief Gets the country where the airport is located.
      * @return The country where the airport is located.
      */
-    string getCountry() const;
+    [[nodiscard]] string getCountry() const;
 
     /**
      * @brief Gets the latitude coordinate of the airport.
      * @return The latitude coordinate of the airport.
      */
-    double getLatitude() const;
+    [[nodiscard]] double getLatitude() const;
 
     /**
      * @brief Gets the longitude coordinate of the airport.
      * @return The longitude coordinate of the airport.
      */
-    double getLongitude() const;
+    [[nodiscard]] double getLongitude() const;
 
     /**
      * @struct AirportHash
@@ -84,7 +84,7 @@ public:
         int operator()(const Airport &b) const {
             string c = b.getCode();
             int v = 0;
-            for (char i : c) v = 131 * v + i;
+            for (char i : c) v = 3019 * v + i;
             return v;
         }
 

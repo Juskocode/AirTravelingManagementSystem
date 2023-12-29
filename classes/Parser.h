@@ -40,9 +40,9 @@ public:
 
     Airport::AirportH airports;
     Airline::AirlineH airlines;
-    Graph graph = Graph(3019);
+    Graph graph = Graph(0);
 
-    unordered_map<string, int> idAirports;
+    unordered_map<string, int> idAirports;//graph
     unordered_set<string> countries;
     unordered_set<string> cities;
 
@@ -78,7 +78,12 @@ private:
      *      <b>O(n*log(n))</b>, n is the numbers of file lines
      * </pre>
      */
+    void createGraphGeneric();
+
     void createGraph();
+
+
+    void processEdges(const std::vector<std::string>& lines);
 
 };
 

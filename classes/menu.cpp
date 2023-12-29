@@ -329,15 +329,15 @@ void Menu::info(){
             cout << "\n Diâmetro da rede: ";
             vector<pair<string, string>> v = utilities->getGraph().maxDiameterSourceDestPairs(d);//src, dest with max trip
 
-            printf(BOLD FG_CYAN"%.0d\n" RESET_COLOR, d);
-
-
+            printf(BOLD FG_CYAN"%d\n" RESET_COLOR, d);
+            /*
             for(const auto &p : v){
                 string source = p.first;
                 string dst = p.second;
                 printf(BOLD FG_GREEN" %s" RESET_COLOR " : " BOLD FG_GREEN"%s \n" RESET_COLOR, source.c_str(), dst.c_str());
             }
             cout << v.size() << endl;
+             */
 
         }
 
@@ -451,7 +451,7 @@ void Menu::showOptions(const string& airport) {
 
         if (option == "1") {
             Airport::AirportH airports = utilities->getGraph().listReachableEntities<Airport::AirportH>
-                                                                 (utilities->getMap()[airport],  maxFlight);
+                    (utilities->getMap()[airport],  maxFlight);
             cout << "\n A partir de " << airport << " é possível alcançar o(s) seguinte(s) aeroporto(s)" << "\n\n";
             for(const auto& airport_ : airports){
                 printf(BOLD FG_GREEN" %s " RESET_COLOR, airport_.getCode().c_str());
@@ -462,7 +462,7 @@ void Menu::showOptions(const string& airport) {
         }
         else if (option == "2") {
             Airport::CityH2 cities = utilities->getGraph().listReachableEntities<Airport::CityH2>
-                                                          (utilities->getMap()[airport], maxFlight);
+                    (utilities->getMap()[airport], maxFlight);
 
             cout << "\n A partir de " << airport << " é possível alcançar a(s) seguinte(s) cidades(s)" << "\n\n";
             for(const auto& city : cities){
@@ -474,7 +474,7 @@ void Menu::showOptions(const string& airport) {
         }
         else if (option == "3"){
             std::set<std::string> countries = utilities->getGraph().listReachableEntities<std::set<std::string>>
-                                                                    (utilities->getMap()[airport], maxFlight);
+                    (utilities->getMap()[airport], maxFlight);
 
             cout << "\n A partir de " << airport << " é possível alcançar o(s) seguinte(s) países(s)" << "\n\n";
             for(const auto& country : countries){

@@ -1,14 +1,17 @@
 #include "Parser.h"
 #include <chrono>
+#include <thread>
+#include <vector>
+#include <mutex>
 
 Parser::Parser() {
+    auto start = std::chrono::steady_clock::now();
+
     createAirports();
     createAirlines();
 
-
-    auto start = std::chrono::steady_clock::now();
-
-    createGraph();
+    cout << graph.getNumVertex() << endl;
+    createGraphGeneric();
     auto end = std::chrono::steady_clock::now();
 
     // Calculate the duration in milliseconds
@@ -16,6 +19,8 @@ Parser::Parser() {
 
     // Output the duration
     std::cout << "CreateGraph execution time: " << duration.count() << " milliseconds" << std::endl;
+    cout << graph.getNumVertex() << endl;
+
 }
 
 Airport::AirportH const& Parser::getAirports() const {return airports;}
@@ -62,7 +67,7 @@ void Parser::createAirports() {
     string currentLine, code, name, city, country, x;
     double latitude, longitude;
     int i = 0;
-    in.open("../data/airports.csv");
+    in.open("../TrainingDataSet/airport.csv");
     getline(in, currentLine);
 
     while (getline(in,currentLine)) {
@@ -91,7 +96,7 @@ void Parser::createAirports() {
 void Parser::createAirlines() {
     ifstream in;
     string code, name, callSign, country, line;
-    in.open("../data/airlines.csv");
+    in.open("../TrainingDataSet/airline.csv");
     getline(in, line);
     while(getline(in, line)){
         istringstream is(line);
@@ -104,10 +109,71 @@ void Parser::createAirlines() {
     }
 }
 
-void Parser::createGraph(){
+std::mutex mtx;
+
+void Parser::processEdges(const std::vector<std::string>& lines) {
+    for (const auto& line : lines) {
+        std::istringstream is(line);
+        std::string source, target, airline;
+
+        std::getline(is, source, ',');
+        std::getline(is, target, ',');
+        std::getline(is, airline, ',');
+
+        double latSource = airports.find(Airport(source))->getLatitude();
+        double lonSource = airports.find(Airport(source))->getLongitude();
+
+        double latTarget = airports.find(Airport(target))->getLatitude();
+        double lonTarget = airports.find(Airport(target))->getLongitude();
+
+        double d = Graph::haversineDistanceGeneric(latSource, lonSource, latTarget, lonTarget);
+
+        std::lock_guard<std::mutex> lock(mtx);
+        graph.addFlight(idAirports[source], idAirports[target], Airline(airline), d);
+    }
+}
+
+void Parser::createGraph() {
+    std::ifstream in("../data/flight.csv");
+    std::string line;
+    std::vector<std::string> allLines;
+    std::vector<std::thread> threads;
+    const int numThreads = std::thread::hardware_concurrency();
+
+    std::getline(in, line); // Skip header
+
+    while (std::getline(in, line)) {
+        allLines.push_back(line);
+    }
+
+    const int totalLines = allLines.size();
+    const int idealChunkSize = totalLines / numThreads;
+    const int minChunkSize = 100; // Minimum chunk size
+
+    int start = 0;
+    int end = std::min(idealChunkSize, totalLines); // Initial chunk size
+
+    while (start < totalLines) {
+        if (end - start < minChunkSize || end >= totalLines) {
+            end = totalLines;
+        }
+
+        std::vector<std::string> lines(allLines.begin() + start, allLines.begin() + end);
+
+        threads.emplace_back([this, lines]() { this->processEdges(lines); });
+
+        start = end;
+        end = std::min(start + idealChunkSize, totalLines);
+    }
+
+    for (auto& thread : threads) {
+        thread.join();
+    }
+}
+void Parser::createGraphGeneric(){
     ifstream in;
     string source, target, airline, line;
-    in.open("../data/flights.csv");
+    in.open("../TrainingDataSet/Edges.csv");
     getline(in, line);
     while(getline(in, line)){
         istringstream is(line);

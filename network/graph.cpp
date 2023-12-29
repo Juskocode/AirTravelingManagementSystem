@@ -8,9 +8,8 @@
  * @brief Contains the Graph class implementaion
  */
 Graph::Graph(int Vertexes) {
-    for (int i = 0; i < size; ++i) {
+    for (int i = 0; i < Vertexes; ++i)
         vertexSet.push_back(new Vertex(i)); // Assuming the Vertex constructor with just id parameter
-    }
 }
 
 
@@ -64,9 +63,7 @@ bool Graph::addFlight(const int &src, const int &dest, const Airline &airline, d
 }
 
 bool Graph::addAirport(const int &src, const Airport &airport) {
-    if(!findVertex(src))
-        return false;
-    vertexSet[src]->airport = airport;
+    vertexSet.push_back(new Vertex(src, airport));
     return true;
 }
 
@@ -220,7 +217,7 @@ vector<pair<int, string>> Graph::flightsPerAirport() {
     }
 
     sort(n.begin(), n.end(), [](const pair<int,string>& a, const pair<int,string>& b)
-                                                                            {return a.first > b.first;});
+    {return a.first > b.first;});
     return n;
 }
 
@@ -238,7 +235,7 @@ vector<pair<int,string>> Graph::airlinesPerAirport() {
     }
 
     sort(nrAirlines.begin(), nrAirlines.end(), [](const pair<int,string>& a, const pair<int,string>& b)
-                                                                                            {return a.first > b.first;});
+    {return a.first > b.first;});
 
     return nrAirlines;
 }
@@ -478,7 +475,7 @@ Vertex* Graph::aStar(int src, int dest, Airline::AirlineH airlines) {
                 if (find(p.begin(), p.end(), v) == p.end()) p.push_back(v);
                 vertexSet[v]->parents = p;
 
-                double priority = newDistance + heuristic;
+                double priority = newDistance - heuristic;
                 minHeap.decreaseKey(v, priority);
 
             }
@@ -534,7 +531,7 @@ vector<pair<string, string>> Graph::maxDiameterSourceDestPairs(int &d) {
     d = diameter(); // Calculate the maximum diameter
 
     vector<pair<string, string>> maxDiameterPairs;
-
+    /*
     for (int i = 0; i < getNumVertex(); ++i) {
         bfsPath(i, Airline::AirlineH()); // Run BFS from each vertex
 
@@ -549,7 +546,7 @@ vector<pair<string, string>> Graph::maxDiameterSourceDestPairs(int &d) {
                 maxDiameterPairs.emplace_back(source, destination);
             }
         }
-    }
+    }*/
 
     return maxDiameterPairs;
 }
@@ -570,7 +567,7 @@ void Graph::dfsArt(int v, int index, list<int>& res, Airline::AirlineH airlines)
                 vertexSet[v]->low = min(vertexSet[v]->low, vertexSet[w]->low);
 
                 if (vertexSet[w]->low >= vertexSet[v]->num && std::find(res.begin(),res.end(),v) == res.end()) {
-                    if(index == 1 && count > 1)
+                    if(index == 2 && count > 1)
                         res.push_back(1);
                     else if (index != 2 && std::find(res.begin(),res.end(),v) == res.end())
                         res.push_back(v);
@@ -585,7 +582,7 @@ void Graph::dfsArt(int v, int index, list<int>& res, Airline::AirlineH airlines)
 list<int> Graph::articulationPoints(const Airline::AirlineH& airlines) {
     list<int> res;
 
-    for(int i = 0; i < size; i++){
+    for(int i = 0; i < getNumVertex(); i++){
         vertexSet[i]->setVisited(false);
         vertexSet[i]->art = false;
         vertexSet[i]->num = 0;
@@ -594,7 +591,7 @@ list<int> Graph::articulationPoints(const Airline::AirlineH& airlines) {
 
     int index = 1;
 
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < getNumVertex(); i++)
         if (vertexSet[i]->num == 0)
             dfsArt(i, index,res, airlines);
 

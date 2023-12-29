@@ -66,24 +66,96 @@ bool Graph::addFlight(const int &src, const int &dest, const Airline &airline, d
 bool Graph::addAirport(const int &src, const Airport &airport) {
     if(!findVertex(src))
         return false;
-    vertexSet[src]->airport = std::move(airport);
+    vertexSet[src]->airport = airport;
     return true;
 }
 
-double Graph::distance(double lat1, double lon1, double lat2, double lon2) {
-    double dLat = (lat2 - lat1) * M_PI / 180.0;
-    double dLon = (lon2 - lon1) * M_PI / 180.0;
+double Graph::haversineDistanceGeneric(double lat1, double lon1, double lat2, double lon2){
+    constexpr double M_PI_180 = 0.017453292519943295; // Precomputed value of PI / 180
 
-    // convert to radians
-    lat1 = (lat1) * M_PI / 180.0;
-    lat2 = (lat2) * M_PI / 180.0;
+    double dLat = (lat2 - lat1) * M_PI_180;
+    double dLon = (lon2 - lon1) * M_PI_180;
 
-    // apply formula
-    double a = pow(sin(dLat / 2), 2) + pow(sin(dLon / 2), 2) * cos(lat1) * cos(lat2);
-    double rad = 6371;
-    double c = 2 * asin(sqrt(a));
+    lat1 *= M_PI_180;
+    lat2 *= M_PI_180;
+
+    double a = std::sin(dLat / 2) * std::sin(dLat / 2) +
+               std::sin(dLon / 2) * std::sin(dLon / 2) * std::cos(lat1) * std::cos(lat2);
+
+    double rad = 6371; // Earth's radius in kilometers
+    double c = 2 * std::asin(std::sqrt(a));
     return rad * c;
 }
+
+// Function to compute distance using the Haversine formula
+double Graph::haversineDistance(double lat1, double lon1, double lat2, double lon2) {
+    constexpr double M_PI_180 = 0.017453292519943295; // Precomputed value of PI / 180
+
+    double dLat = (lat2 - lat1) * M_PI_180;
+    double dLon = (lon2 - lon1) * M_PI_180;
+
+    lat1 *= M_PI_180;
+    lat2 *= M_PI_180;
+
+    __m128d sin_dLat_dLon, cos_lat1, cos_lat2;
+
+    sin_dLat_dLon = _mm_set_pd(sin(dLat / 2), sin(dLon / 2));
+    cos_lat1 = _mm_set1_pd(cos(lat1));
+    cos_lat2 = _mm_set1_pd(cos(lat2));
+
+    __m128d cos_dLat = _mm_mul_pd(cos_lat1, cos_lat2);
+    __m128d sin_dLat_sqr = _mm_mul_pd(sin_dLat_dLon, sin_dLat_dLon);
+    __m128d a = _mm_add_pd(sin_dLat_sqr, cos_dLat);
+
+    alignas(16) double a_arr[2];
+    _mm_store_pd(a_arr, a);
+
+    double rad = 6371; // Earth's radius in kilometers
+    double c = 2 * asin(sqrt(a_arr[0])); // Square root for first element only
+
+    return rad * c;
+}
+
+// Function to compute distance using Haversine formula in parallel
+double Graph::parallelHaversineDistance_(double lat1, double lon1, double lat2, double lon2) {
+    constexpr int numThreads = 6; // Maximum number of threads (cores)
+    std::vector<std::thread> threads;
+    std::vector<double> results(numThreads, 0.0);
+    std::mutex mutex;
+
+    // Split the workload across threads
+    double latDiff = (lat2 - lat1) / numThreads;
+    double lonDiff = (lon2 - lon1) / numThreads;
+
+    threads.reserve(numThreads);
+    for (int i = 0; i < numThreads; ++i) {
+        threads.emplace_back([&results, &mutex, lat1, lon1, latDiff, lonDiff, i]() {
+            double localLat1 = lat1 + latDiff * i;
+            double localLon1 = lon1 + lonDiff * i;
+            double localLat2 = localLat1 + latDiff;
+            double localLon2 = localLon1 + lonDiff;
+
+            double result = haversineDistance(localLat1, localLon1, localLat2, localLon2);
+
+            std::lock_guard<std::mutex> lock(mutex);
+            results[i] = result;
+        });
+    }
+
+    // Wait for threads to finish
+    for (auto& thread : threads) {
+        thread.join();
+    }
+
+    // Calculate total distance from all segments
+    double totalDistance = 0.0;
+    for (const auto& result : results) {
+        totalDistance += result;
+    }
+
+    return totalDistance;
+}
+
 
 
 int Graph::nrFlights(int src, int dest, Airline::AirlineH airlines){
@@ -261,55 +333,6 @@ void Graph::findPaths(vector<vector<int>>& paths,vector<int>& path, int v){
 }
 
 
-Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
-
-    if(!findVertex(src) || !findVertex(dest))
-        return {};
-
-    //node id and node value(distance)
-    MinHeap<int, double> minHeap(getNumVertex(), -1);
-
-    for(int i = 0; i < getNumVertex(); i++){
-        vertexSet[i]->distance = INT_MAX;
-        vertexSet[i]->setVisited(false);
-        vertexSet[i]->parents.clear();
-        minHeap.insert(i, INT_MAX);
-    }
-
-    vertexSet[src]->distance = 0;
-    vertexSet[src]->parents.push_back(src);
-
-    minHeap.decreaseKey(src, 0);
-
-    while(!minHeap.empty()){
-
-        auto u = minHeap.extractMin();
-        vertexSet[src]->setVisited(true);
-
-        for(const auto &e : vertexSet[u]->getAdj()){
-
-            if (!airlines.empty() && airlines.find(e.airline) == airlines.end()) continue;
-
-            auto v = e.getDest()->getId();
-            double w = e.getWeight();
-
-            if(!vertexSet[v]->isVisited() && vertexSet[u]->distance + w < vertexSet[v]->distance){
-
-                vertexSet[v]->distance = vertexSet[u]->distance + w;
-
-                auto p = vertexSet[u]->parents;
-                if (find(p.begin(), p.end(), v) == p.end()) p.push_back(v);
-
-                vertexSet[v]->parents = p;
-                minHeap.decreaseKey(v, vertexSet[v]->distance);
-
-            }
-        }
-    }
-
-    return vertexSet[dest];
-}
-
 Vertex *Graph::dijkstraFib(int src, int dest, Airline::AirlineH airlines) {
     if(!findVertex(src) || !findVertex(dest))
         return {};
@@ -363,8 +386,109 @@ Vertex *Graph::dijkstraFib(int src, int dest, Airline::AirlineH airlines) {
     return vertexSet[dest];
 }
 
+Vertex *Graph::dijkstra(int src, int dest, Airline::AirlineH airlines) {
 
-double Graph::bfsDiameter(int v) {
+    if(!findVertex(src) || !findVertex(dest))
+        return {};
+
+    //node id and node value(distance)
+    MinHeap<int, double> minHeap(getNumVertex(), -1);
+
+    for(int i = 0; i < getNumVertex(); i++){
+        vertexSet[i]->distance = INT_MAX;
+        vertexSet[i]->setVisited(false);
+        vertexSet[i]->parents.clear();
+        minHeap.insert(i, INT_MAX);
+    }
+
+    vertexSet[src]->distance = 0;
+    vertexSet[src]->parents.push_back(src);
+
+    minHeap.decreaseKey(src, 0);
+
+    while(!minHeap.empty()){
+
+        auto u = minHeap.extractMin();
+        vertexSet[src]->setVisited(true);
+
+        for(const auto &e : vertexSet[u]->getAdj()){
+
+            if (!airlines.empty() && airlines.find(e.airline) == airlines.end()) continue;
+
+            auto v = e.getDest()->getId();
+            double w = e.getWeight();
+
+            if(!vertexSet[v]->isVisited() && vertexSet[u]->distance + w < vertexSet[v]->distance){
+
+                vertexSet[v]->distance = vertexSet[u]->distance + w;
+
+                auto p = vertexSet[u]->parents;
+                if (find(p.begin(), p.end(), v) == p.end()) p.push_back(v);
+
+                vertexSet[v]->parents = p;
+                minHeap.decreaseKey(v, vertexSet[v]->distance);
+
+            }
+        }
+    }
+
+    return vertexSet[dest];
+}
+
+Vertex* Graph::aStar(int src, int dest, Airline::AirlineH airlines) {
+    //src and dest are prev verified
+
+    // MinHeap with additional priority based on heuristic (Haversine distance)
+    MinHeap<int, double> minHeap(getNumVertex(), -1);
+
+    for (int i = 0; i < getNumVertex(); i++) {
+        vertexSet[i]->distance = INT_MAX;
+        vertexSet[i]->setVisited(false);
+        vertexSet[i]->parents.clear();
+        minHeap.insert(i, INT_MAX);
+    }
+
+    vertexSet[src]->distance = 0;
+    vertexSet[src]->parents.push_back(src);
+
+    minHeap.decreaseKey(src, 0);
+
+    while (!minHeap.empty()) {
+        auto u = minHeap.extractMin();
+        vertexSet[u]->setVisited(true);
+
+        for (const auto &e : vertexSet[u]->getAdj()) {
+            if (!airlines.empty() && airlines.find(e.airline) == airlines.end())
+                continue;
+
+            auto v = e.getDest()->getId();
+            double w = e.getWeight();
+
+            if (!vertexSet[v]->isVisited() && vertexSet[u]->distance + w < vertexSet[v]->distance) {
+                double newDistance = vertexSet[u]->distance + w;
+                double heuristic = haversineDistance(vertexSet[v]->getAirport().getLatitude(),
+                                                     vertexSet[v]->getAirport().getLongitude(),
+                                                     vertexSet[dest]->getAirport().getLatitude(),
+                                                     vertexSet[dest]->getAirport().getLongitude());
+
+
+                vertexSet[v]->distance = newDistance;
+
+                auto p = vertexSet[u]->parents;
+                if (find(p.begin(), p.end(), v) == p.end()) p.push_back(v);
+                vertexSet[v]->parents = p;
+
+                double priority = newDistance + heuristic;
+                minHeap.decreaseKey(v, priority);
+
+            }
+        }
+    }
+
+    return vertexSet[dest];
+}
+
+int Graph::bfsDiameter(int v) {
     for(int i = 0; i < getNumVertex(); i++){
         vertexSet[i]->setVisited(false);
         vertexSet[i]->distance = -1.0;
@@ -374,7 +498,7 @@ double Graph::bfsDiameter(int v) {
     q.push(v);
     vertexSet[v]->setVisited(true);
     vertexSet[v]->distance = 0.0;
-    double max = 0;
+    int max = 0;
 
     while(!q.empty()){
         int u = q.front(); q.pop();
@@ -386,7 +510,7 @@ double Graph::bfsDiameter(int v) {
                 q.push(w);
                 vertexSet[w]->setVisited(true);
                 vertexSet[w]->distance = vertexSet[u]->distance + 1;
-                if (vertexSet[w]->distance > max) max = vertexSet[w]->distance;
+                if (vertexSet[w]->distance > max) max = (int)vertexSet[w]->distance;
             }
         }
     }
@@ -394,16 +518,40 @@ double Graph::bfsDiameter(int v) {
 }
 
 
-double Graph::diameter() {
+int Graph::diameter() {
     vertexSet[0]->setVisited(true);
-    double max = bfsDiameter(0);
+    int max = bfsDiameter(0);
     for(int i = 0; i < getNumVertex(); i++)
         if (!vertexSet[i]->isVisited()){
             vertexSet[i]->setVisited(true);
-            double diameter = bfsDiameter(i);
+            int diameter = bfsDiameter(i);
             if (diameter > max) max = diameter;
         }
     return max;
+}
+
+vector<pair<string, string>> Graph::maxDiameterSourceDestPairs(int &d) {
+    d = diameter(); // Calculate the maximum diameter
+
+    vector<pair<string, string>> maxDiameterPairs;
+
+    for (int i = 0; i < getNumVertex(); ++i) {
+        bfsPath(i, Airline::AirlineH()); // Run BFS from each vertex
+
+        vector<vector<int>> paths;
+        vector<int> path;
+        findPaths(paths, path, i); // Find all paths from the current vertex
+
+        for (const auto& p : paths) {
+            if (vertexSet[p.front()]->distance == d) {
+                string source = vertexSet[i]->getAirport().getCode();
+                string destination = vertexSet[p.back()]->getAirport().getCode();
+                maxDiameterPairs.emplace_back(source, destination);
+            }
+        }
+    }
+
+    return maxDiameterPairs;
 }
 
 //TODO check for all cases

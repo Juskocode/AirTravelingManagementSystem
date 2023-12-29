@@ -67,7 +67,7 @@ void Parser::createAirports() {
     string currentLine, code, name, city, country, x;
     double latitude, longitude;
     int i = 0;
-    in.open("../TrainingDataSet/airport.csv");
+    in.open("../data/airports.csv");
     getline(in, currentLine);
 
     while (getline(in,currentLine)) {
@@ -96,7 +96,7 @@ void Parser::createAirports() {
 void Parser::createAirlines() {
     ifstream in;
     string code, name, callSign, country, line;
-    in.open("../TrainingDataSet/airline.csv");
+    in.open("../data/airlines.csv");
     getline(in, line);
     while(getline(in, line)){
         istringstream is(line);
@@ -134,7 +134,7 @@ void Parser::processEdges(const std::vector<std::string>& lines) {
 }
 
 void Parser::createGraph() {
-    std::ifstream in("../data/flight.csv");
+    std::ifstream in("../data/flights.csv");
     std::string line;
     std::vector<std::string> allLines;
     std::vector<std::thread> threads;
@@ -173,7 +173,7 @@ void Parser::createGraph() {
 void Parser::createGraphGeneric(){
     ifstream in;
     string source, target, airline, line;
-    in.open("../TrainingDataSet/Edges.csv");
+    in.open("../data/flights.csv");
     getline(in, line);
     while(getline(in, line)){
         istringstream is(line);

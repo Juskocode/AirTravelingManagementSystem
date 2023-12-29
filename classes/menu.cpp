@@ -326,19 +326,26 @@ void Menu::info(){
         }
         else if (option == "6"){
             int d = 0;
-            cout << "\n Diâmetro da rede: ";
-            vector<pair<string, string>> v = utilities->getGraph().maxDiameterSourceDestPairs(d);//src, dest with max trip
 
-            printf(BOLD FG_CYAN"%d\n" RESET_COLOR, d);
-            /*
-            for(const auto &p : v){
-                string source = p.first;
-                string dst = p.second;
+            auto start = std::chrono::steady_clock::now();
+            vector<Flight> v = utilities->getGraph().diameterFlights(d);//src, dest with max trip
+
+            auto end = std::chrono::steady_clock::now();
+
+            // Calculate the duration in milliseconds
+            auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+            // Output the duration
+            std::cout << "CreateGraph execution time: " << duration.count() << " milliseconds" << std::endl;
+
+
+            for(const auto &f : v){
+                string source = utilities->getGraph().getVertexSet()[f.source]->getAirport().getCode();
+                string dst = utilities->getGraph().getVertexSet()[f.destination]->getAirport().getCode();
                 printf(BOLD FG_GREEN" %s" RESET_COLOR " : " BOLD FG_GREEN"%s \n" RESET_COLOR, source.c_str(), dst.c_str());
             }
-            cout << v.size() << endl;
-             */
-
+            cout << "\n Diâmetro da rede: ";
+            printf(BOLD FG_CYAN"%d\n" RESET_COLOR, d);
         }
 
         else if (option == "0") {

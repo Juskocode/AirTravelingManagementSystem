@@ -1,6 +1,0 @@
-/snap/clion/259/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/snap/clion/259/bin/ninja/linux/x64/ninja -G Ninja -S /home/freitas/CLionProjects/AirTravelingManagementSystemG17 -B /home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug
--- Could NOT find Doxygen (missing: DOXYGEN_EXECUTABLE) 
-Doxygen needs to be installed to generate the documentation.
--- Configuring done (0.0s)
--- Generating done (0.0s)
--- Build files have been written to: /home/freitas/CLionProjects/AirTravelingManagementSystemG17/cmake-build-debug

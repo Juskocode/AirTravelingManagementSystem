@@ -53,7 +53,7 @@ vector<string> Utils::localAirports(double latitude, double longitude, double ra
     for (const auto& node : graph.getVertexSet()){
         latitude1 = node->getAirport().getLatitude();
         longitude1 = node->getAirport().getLongitude();
-        if (Graph::distance(latitude,longitude,latitude1,longitude1) <= radius)
+        if (Graph::haversineDistanceGeneric(latitude,longitude,latitude1,longitude1) <= radius)
             localAirports.push_back(node->getAirport().getCode());
     }
     return localAirports;

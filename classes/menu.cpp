@@ -266,6 +266,8 @@ void Menu::processOperation() {
         printf(BOLD FG_GREEN"\n===============================================================\n" RESET_COLOR);
         int nrPath = 0;
         double distance;
+
+        auto start = std::chrono::steady_clock::now();
         auto flightPath = utilities->processDistance(distance,src,dest,airlines);
 
         for (const auto& pair : flightPath) {
@@ -273,6 +275,14 @@ void Menu::processOperation() {
             string target = pair.second;
             utilities->getGraph().printPathsByDistance(nrPath,map[source], map[target],airlines);
         }
+
+        auto end = std::chrono::steady_clock::now();
+
+        // Calculate the duration in milliseconds
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+        // Output the duration
+        std::cout << "CreateGraph execution time: " << duration.count() << " milliseconds" << std::endl;
 
         if (nrPath != 0) cout << " A distância mínima é " << distance << " km\n\n";
     }
@@ -315,8 +325,20 @@ void Menu::info(){
             airlines.clear();
         }
         else if (option == "6"){
+            int d = 0;
             cout << "\n Diâmetro da rede: ";
-            printf(BOLD FG_CYAN"%.0f\n" RESET_COLOR, utilities->getGraph().diameter());
+            vector<pair<string, string>> v = utilities->getGraph().maxDiameterSourceDestPairs(d);//src, dest with max trip
+
+            printf(BOLD FG_CYAN"%.0d\n" RESET_COLOR, d);
+
+
+            for(const auto &p : v){
+                string source = p.first;
+                string dst = p.second;
+                printf(BOLD FG_GREEN" %s" RESET_COLOR " : " BOLD FG_GREEN"%s \n" RESET_COLOR, source.c_str(), dst.c_str());
+            }
+            cout << v.size() << endl;
+
         }
 
         else if (option == "0") {

@@ -43,7 +43,7 @@ public:
         int operator()(const Airline &b) const {
             string c = b.getCode();
             int v = 0;
-            int primeMultiplier = 131; // Change to a larger prime number
+            int primeMultiplier = 443; // Closest prime power of two
             for (const char &i : c)
                 v = primeMultiplier * v + i;
             return v;
@@ -64,7 +64,7 @@ public:
      * @brief Gets the airline code.
      * @return The airline code.
      */
-    string getCode() const;
+    [[nodiscard]] string getCode() const;
 
     /**
      * @brief Gets the name of the airline.

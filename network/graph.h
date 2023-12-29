@@ -10,10 +10,13 @@
 #include <iostream>
 #include <stack>
 #include <cmath>
+#include <thread>
+#include <mutex>
 #include <set>
 #include <algorithm>
 #include <climits>
 #include <utility>
+#include <immintrin.h>
 #include "../classes/airport.h"
 #include "../classes/airline.h"
 #include "../classes/Fibtree.h"
@@ -45,7 +48,7 @@ class Vertex {
     bool processing{};       // auxiliary field
     int num = 0;             // to use in articulation points
     int low{};               // to use in articulation points
-    bool art;                // to use in articulation points
+    bool art{};                // to use in articulation points
     double distance{};
     vector<int> parents; //to use in bfsPath
 
@@ -78,15 +81,32 @@ class Graph {
 public:
 
     explicit Graph(int vertexes);
+    //[[nodiscard]] is used to indicate that the return value of a function should not be ignored.
+    // it aids the compiler by saying hey this return value should not be ignored
+    // in this case it helps to write a more robust code by ensuring that important
+    // return values are not accidentally overlooked.
     [[nodiscard]] bool findVertex(const int &in) const;
 
     bool addFlight(const int &src, const int &dest, const Airline &airline, double w);
     bool addAirport(const int &src, const Airport &airport);
 
     [[nodiscard]] int getNumVertex() const;
-    static double distance(double lat1, double lon1, double lat2, double lon2);
-
     [[nodiscard]] vector<Vertex * > getVertexSet() const;
+
+
+    /**
+     * Calculates the distance between two airports given the latitude and longitude, using haversine formula\n \n
+     *
+     * @param lat1 - latitude of airport 1
+     * @param lon1 - longitude of airport 1
+     * @param lat2 - latitude of airport 2
+     * @param lon2 - longitude of airport 2
+     * @return distance between the two airports
+     */
+    static double haversineDistanceGeneric(double lat1, double lon1, double lat2, double lon2);
+
+    static double parallelHaversineDistance_(double lat1, double lon1, double lat2, double lon2);
+    static double haversineDistance(double lat1, double lon1, double lat2, double lon2);
 
     /**
      * Calculates the minimum number of flights between source airport and target airport using airlines \n \n
@@ -254,6 +274,24 @@ public:
 
     Vertex* dijkstraFib(int src, int dest, Airline::AirlineH airlines);
 
+    /**
+     * Calculates the minimum flown distance between source airport and target airport using airlines \n \n
+     * <b>Complexity\n</b>
+     * <pre>
+
+     *      <b>O(|E|)</b>,  E is the number of Edges, best case(where the heuristic is ideal for the given problem)
+     *      <b>O(|E|log(|V|)</b>, V -> number of nodes and E is the number of Edges, worst case(the heuristic is less informative)
+     * </pre>
+     * @note This A* implementation uses the Haversine formula as the heuristic for estimating distances between vertices
+     * @note based on their geographical coordinates.
+     * @note It aims to efficiently find the shortest path in the airway network by considering
+     * @note both the actual distance traveled and the estimated distance to the destination.
+     * @param src - source node / node of source airport
+     * @param dest - target node
+     * @param airlines - unordered set of airlines to use (if empty, use all airlines)
+     * @return minimum flown distance between source airport and target airport using airlines
+     */
+    Vertex* aStar(int src, int dest, Airline::AirlineH airlines);
 
     /**
      * Calculates the max distance between connected nodes\n\n
@@ -264,7 +302,7 @@ public:
      * @param v - source node
      * @return the diameter of a connected component
      */
-    double bfsDiameter(int v);
+    int bfsDiameter(int v);
 
     /**
      * Calculates the diameter using a bfs.\n\n
@@ -274,7 +312,18 @@ public:
      * </pre>
      * @return diameter between all connected components.
      */
-    double diameter();
+    int diameter();
+
+    /**
+     * Computes the pairs (source, destination) with the max diameter\n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V|+|E|)</b>, V -> number of nodes, E -> number of edges
+     * </pre>
+     *
+     * @return the pairs whose diameter is the max diameter of the graph
+     */
+    vector<pair<string, string>> maxDiameterSourceDestPairs(int &d);
 
     /**
      * Finds the nodes that are articulation points and inserts them in res\n\n

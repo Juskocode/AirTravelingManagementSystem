@@ -73,6 +73,13 @@ public:
 
 };
 
+class Flight{
+public:
+    //!@brief used only for max trip source and destination pairs functionality
+    int source;
+    int destination;
+};
+
 class Graph {
 
     vector<Vertex *> vertexSet;    // vertex set
@@ -302,28 +309,22 @@ public:
      * @param v - source node
      * @return the diameter of a connected component
      */
-    int bfsDiameter(int v);
+
+    vector<Flight> farthestPath(int v, int &diameter);
+
 
     /**
-     * Calculates the diameter using a bfs.\n\n
+     * Computes the maximum trip and corresponding pair of source-destination airports
+     * (or pairs, if more than one),
+     * that is, the flight trip(s) with the greatest number of stops in between them; .\n\n
      * <b>Complexity\n</b>
      * <pre>
      *      <b>O(|V|+|E|)</b>, V -> number of nodes, E -> number of edges
      * </pre>
      * @return diameter between all connected components.
      */
-    int diameter();
+    vector<Flight> diameterFlights(int &diameter);
 
-    /**
-     * Computes the pairs (source, destination) with the max diameter\n\n
-     * <b>Complexity\n</b>
-     * <pre>
-     *      <b>O(|V|+|E|)</b>, V -> number of nodes, E -> number of edges
-     * </pre>
-     *
-     * @return the pairs whose diameter is the max diameter of the graph
-     */
-    vector<pair<string, string>> maxDiameterSourceDestPairs(int &d);
 
     /**
      * Finds the nodes that are articulation points and inserts them in res\n\n

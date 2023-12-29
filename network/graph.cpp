@@ -1,6 +1,7 @@
 #include "graph.h"
 
 #include <utility>
+#include <queue>
 #include "../classes/Parser.h"
 
 /**
@@ -485,8 +486,9 @@ Vertex* Graph::aStar(int src, int dest, Airline::AirlineH airlines) {
     return vertexSet[dest];
 }
 
-int Graph::bfsDiameter(int v) {
-    for(int i = 0; i < getNumVertex(); i++){
+
+vector<Flight> Graph::farthestPath(int v, int &diameter) {
+    for (int i = 0; i < getNumVertex(); i++) {
         vertexSet[i]->setVisited(false);
         vertexSet[i]->distance = -1.0;
     }
@@ -494,61 +496,55 @@ int Graph::bfsDiameter(int v) {
     queue<int> q;
     q.push(v);
     vertexSet[v]->setVisited(true);
-    vertexSet[v]->distance = 0.0;
-    int max = 0;
+    vertexSet[v]->distance = 0;
+    unordered_map<int, vector<int>> parentMap;
+    parentMap[v] = vector<int>();
 
-    while(!q.empty()){
-        int u = q.front(); q.pop();
-        for (const auto& e: vertexSet[u]->getAdj()){
+    int farthest = v;
 
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
+
+        for (const auto& e : vertexSet[u]->getAdj()) {
             int w = e.dest->getId();
 
-            if (!vertexSet[w]->isVisited()){
+            if (!vertexSet[w]->isVisited()) {
                 q.push(w);
                 vertexSet[w]->setVisited(true);
                 vertexSet[w]->distance = vertexSet[u]->distance + 1;
-                if (vertexSet[w]->distance > max) max = (int)vertexSet[w]->distance;
+                parentMap[w] = parentMap[u];
+                parentMap[w].push_back(u);
+
+                if (vertexSet[w]->distance > vertexSet[farthest]->distance) {
+                    farthest = w;
+                }
             }
         }
     }
-    return max;
-}
+    diameter = vertexSet[farthest]->distance;
 
-
-int Graph::diameter() {
-    vertexSet[0]->setVisited(true);
-    int max = bfsDiameter(0);
-    for(int i = 0; i < getNumVertex(); i++)
-        if (!vertexSet[i]->isVisited()){
-            vertexSet[i]->setVisited(true);
-            int diameter = bfsDiameter(i);
-            if (diameter > max) max = diameter;
-        }
-    return max;
-}
-
-vector<pair<string, string>> Graph::maxDiameterSourceDestPairs(int &d) {
-    d = diameter(); // Calculate the maximum diameter
-
-    vector<pair<string, string>> maxDiameterPairs;
-    /*
-    for (int i = 0; i < getNumVertex(); ++i) {
-        bfsPath(i, Airline::AirlineH()); // Run BFS from each vertex
-
-        vector<vector<int>> paths;
-        vector<int> path;
-        findPaths(paths, path, i); // Find all paths from the current vertex
-
-        for (const auto& p : paths) {
-            if (vertexSet[p.front()]->distance == d) {
-                string source = vertexSet[i]->getAirport().getCode();
-                string destination = vertexSet[p.back()]->getAirport().getCode();
-                maxDiameterPairs.emplace_back(source, destination);
+    vector<Flight> farthestPaths;
+    for (const auto& parent : parentMap) {
+        if (parent.first == farthest) {
+            for (int i = 0; i < parent.second.size(); ++i) {
+                Flight f{};
+                f.source = parent.second[i];
+                f.destination = parent.first;
+                farthestPaths.push_back(f);
             }
         }
-    }*/
+    }
 
-    return maxDiameterPairs;
+    return farthestPaths;
+}
+
+vector<Flight> Graph::diameterFlights(int &diameter) {
+    int startVertex = 0; // You can choose any starting vertex here
+    vector<Flight> farthestFromStart = farthestPath(startVertex, diameter);
+    int farthestVertex = farthestPath(farthestFromStart[0].source, diameter)[0].destination;
+
+    return farthestPath(farthestVertex, diameter);
 }
 
 //TODO check for all cases

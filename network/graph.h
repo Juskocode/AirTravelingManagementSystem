@@ -44,6 +44,7 @@ class Vertex {
     int id;
     Airport airport = Airport(""); // content
     list<Edge > adj;    // list of outgoing edges
+    int maxDepth{};     // mark the node max depth
     bool visited{};          // auxiliary field
     bool processing{};       // auxiliary field
     int num = 0;             // to use in articulation points
@@ -51,6 +52,7 @@ class Vertex {
     bool art{};                // to use in articulation points
     double distance{};
     vector<int> parents; //to use in bfsPath
+    vector<int> maxTripDestinations;
 
     /*!
      * @note Auxiliary function to add an outgoing edge to a vertex (this),
@@ -309,8 +311,19 @@ public:
      * @param v - source node
      * @return the diameter of a connected component
      */
+    int diameterFlights();
 
-    vector<Flight> farthestPath(int v, int &diameter);
+
+    /**
+     * Performs a bfs in the src node to calculate the max depth nodes \n\n
+     * <b>Complexity\n</b>
+     * <pre>
+     *      <b>O(|V|+|E|)</b>, V -> number of nodes, E -> number of edges
+     * </pre>
+     * @param v - source node
+     * @return a vector contain the highest level nodes of the bfs
+     */
+    vector<int> bfsHighestLevel(int src, int &level);
 
 
     /**
@@ -323,7 +336,7 @@ public:
      * </pre>
      * @return diameter between all connected components.
      */
-    vector<Flight> diameterFlights(int &diameter);
+    vector<Flight> maxTripSourceDestinationPairs(int diameter);
 
 
     /**

@@ -275,8 +275,6 @@ Airport::CityH2 Graph::targetsFromAirport(int i){
     return ans;
 }
 
-
-
 void Graph::bfsPath(int src, Airline::AirlineH airlines){
 
     if(!findVertex(src))
@@ -487,64 +485,120 @@ Vertex* Graph::aStar(int src, int dest, Airline::AirlineH airlines) {
 }
 
 
-vector<Flight> Graph::farthestPath(int v, int &diameter) {
+vector<int> Graph::bfsHighestLevel(int v, int &level){
+
+    vector<int> lca;
+
     for (int i = 0; i < getNumVertex(); i++) {
         vertexSet[i]->setVisited(false);
         vertexSet[i]->distance = -1.0;
     }
-
+    vertexSet[v]->setVisited(true);
     queue<int> q;
     q.push(v);
-    vertexSet[v]->setVisited(true);
-    vertexSet[v]->distance = 0;
-    unordered_map<int, vector<int>> parentMap;
-    parentMap[v] = vector<int>();
-
-    int farthest = v;
 
     while (!q.empty()) {
-        int u = q.front();
-        q.pop();
+        lca.clear();
+        int levelSize = (int)q.size();
+        level++;
 
-        for (const auto& e : vertexSet[u]->getAdj()) {
-            int w = e.dest->getId();
+        for(int i = 0; i < levelSize; i++){
+            int u = q.front();q.pop();
 
-            if (!vertexSet[w]->isVisited()) {
-                q.push(w);
-                vertexSet[w]->setVisited(true);
-                vertexSet[w]->distance = vertexSet[u]->distance + 1;
-                parentMap[w] = parentMap[u];
-                parentMap[w].push_back(u);
+            lca.push_back(u);
 
-                if (vertexSet[w]->distance > vertexSet[farthest]->distance) {
-                    farthest = w;
+            for(const auto &e : vertexSet[u]->getAdj()){
+                int w = e.getDest()->getId();
+
+                if(!vertexSet[w]->isVisited()){
+                    q.push(w);
+                    vertexSet[w]->setVisited(true);
                 }
             }
         }
     }
-    diameter = vertexSet[farthest]->distance;
 
-    vector<Flight> farthestPaths;
-    for (const auto& parent : parentMap) {
-        if (parent.first == farthest) {
-            for (int i = 0; i < parent.second.size(); ++i) {
-                Flight f{};
-                f.source = parent.second[i];
-                f.destination = parent.first;
-                farthestPaths.push_back(f);
+    return lca;
+}
+
+vector<Flight> Graph::maxTripSourceDestinationPairs(int diameter) {
+
+    vector<Flight> v;
+
+    for(int src = 0; src < getNumVertex(); src++){
+        int level = -1;
+
+        vector<int> possibleDestinations = bfsHighestLevel(src, level);
+        //TODO check unique pairs insertion
+        if(diameter == level){
+            for(const auto & dest : possibleDestinations)
+                v.emplace_back(src, dest);
+        }
+    }
+    return v;
+}
+
+int Graph::diameterFlights() {
+
+    int startNode = 0;
+    int endNode = 0;
+    int maxDistance = 0;
+
+    // First BFS: Find farthest node from an arbitrary node
+    queue<pair<int, int>> q1;
+    vector<bool> visited(getNumVertex(), false);
+    q1.push({startNode, 0});
+
+    while (!q1.empty()) {
+        int u = q1.front().first;
+        int depth = q1.front().second;
+        q1.pop();
+
+        if (!visited[u]) {
+            visited[u] = true;
+            if (depth > maxDistance) {
+                maxDistance = depth;
+                endNode = u; // Update endNode when a greater depth is encountered
+            }
+
+            for (const auto &e : vertexSet[u]->getAdj()) {
+                int w = e.getDest()->getId();
+
+                if (!visited[w]) {
+                    q1.push({w, depth + 1});
+                }
             }
         }
     }
 
-    return farthestPaths;
-}
+    // Second BFS: Find farthest node from the farthest node found in the first BFS
+    fill(visited.begin(), visited.end(), false);
+    q1.push({endNode, 0});
+    maxDistance = 0;
 
-vector<Flight> Graph::diameterFlights(int &diameter) {
-    int startVertex = 0; // You can choose any starting vertex here
-    vector<Flight> farthestFromStart = farthestPath(startVertex, diameter);
-    int farthestVertex = farthestPath(farthestFromStart[0].source, diameter)[0].destination;
+    while (!q1.empty()) {
+        int u = q1.front().first;
+        int depth = q1.front().second;
+        q1.pop();
 
-    return farthestPath(farthestVertex, diameter);
+        if (!visited[u]) {
+            visited[u] = true;
+            if (depth > maxDistance) {
+                maxDistance = depth;
+                startNode = u; // Update startNode when a greater depth is encountered
+            }
+
+            for (const auto &e : vertexSet[u]->getAdj()) {
+                int w = e.getDest()->getId();
+
+                if (!visited[w]) {
+                    q1.push({w, depth + 1});
+                }
+            }
+        }
+    }
+
+    return maxDistance;
 }
 
 //TODO check for all cases
@@ -638,3 +692,4 @@ void Graph::printPathsByDistance(int& nrPath, int start, int end, const Airline:
     printPath(v->parents, airlines);
 
 }
+

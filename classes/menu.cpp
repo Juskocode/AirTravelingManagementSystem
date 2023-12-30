@@ -267,6 +267,7 @@ void Menu::processOperation() {
         int nrPath = 0;
         double distance;
 
+
         auto start = std::chrono::steady_clock::now();
         auto flightPath = utilities->processDistance(distance,src,dest,airlines);
 
@@ -325,10 +326,19 @@ void Menu::info(){
             airlines.clear();
         }
         else if (option == "6"){
-            int d = 0;
+            /*
+            vector<pair<int, int>> v1 = utilities->getGraph().maxTripPairs(airlines);
 
+            for(const auto &f : v1){
+                string source = utilities->getGraph().getVertexSet()[f.first]->getAirport().getCode();
+                string dst = utilities->getGraph().getVertexSet()[f.second]->getAirport().getCode();
+                printf(BOLD FG_GREEN" %s" RESET_COLOR " : " BOLD FG_GREEN"%s \n" RESET_COLOR, source.c_str(), dst.c_str());
+            }
+         */
             auto start = std::chrono::steady_clock::now();
-            vector<Flight> v = utilities->getGraph().diameterFlights(d);//src, dest with max trip
+            int diameter = utilities->getGraph().diameterFlights();//src, dest with max trip
+
+            vector<Flight> v = utilities->getGraph().maxTripSourceDestinationPairs(diameter);
 
             auto end = std::chrono::steady_clock::now();
 
@@ -344,8 +354,9 @@ void Menu::info(){
                 string dst = utilities->getGraph().getVertexSet()[f.destination]->getAirport().getCode();
                 printf(BOLD FG_GREEN" %s" RESET_COLOR " : " BOLD FG_GREEN"%s \n" RESET_COLOR, source.c_str(), dst.c_str());
             }
+
             cout << "\n Diâmetro da rede: ";
-            printf(BOLD FG_CYAN"%d\n" RESET_COLOR, d);
+            printf(BOLD FG_CYAN"%d\n" RESET_COLOR, diameter);
         }
 
         else if (option == "0") {

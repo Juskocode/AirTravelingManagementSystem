@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AirTravelManagementSystem: /home/freitas/CLionProjects/AirTravelingManagementSystem/classes/Parser.h Source File</title>
+<title>AirTravelManagementSystem: /home/freitas/CLionProjects/AirTravelingManagementSystem17/classes/Parser.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -102,9 +102,9 @@ $(function() {
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
 <div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="class_parser.html#a035d6d93086c383836e7bbc96ec09cb6">   41</a></span>&#160;    <a class="code" href="class_airport.html#a6dd201c0707b5cc8a6b7a793a2b0c81f">Airport::AirportH</a> <a class="code" href="class_parser.html#a035d6d93086c383836e7bbc96ec09cb6">airports</a>;</div>
 <div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="class_parser.html#a1c4fe715049e6e43a7161d5cf17ebc3d">   42</a></span>&#160;    <a class="code" href="class_airline.html#a35cd733dfa4fc18b32c507abae5d8234">Airline::AirlineH</a> <a class="code" href="class_parser.html#a1c4fe715049e6e43a7161d5cf17ebc3d">airlines</a>;</div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_parser.html#a8b1195c3b8b89b6cb4b75a9aaee0efdf">   43</a></span>&#160;    <a class="code" href="class_graph.html">Graph</a> graph = <a class="code" href="class_graph.html">Graph</a>(3019);</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_parser.html#a8b1195c3b8b89b6cb4b75a9aaee0efdf">   43</a></span>&#160;    <a class="code" href="class_graph.html">Graph</a> graph = <a class="code" href="class_graph.html">Graph</a>(0);</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="class_parser.html#a01b806f5ddaf2d320bd44e6229d05933">   45</a></span>&#160;    unordered_map&lt;string, int&gt; <a class="code" href="class_parser.html#a01b806f5ddaf2d320bd44e6229d05933">idAirports</a>;</div>
+<div class="line"><a name="l00045"></a><span class="lineno"><a class="line" href="class_parser.html#a01b806f5ddaf2d320bd44e6229d05933">   45</a></span>&#160;    unordered_map&lt;string, int&gt; <a class="code" href="class_parser.html#a01b806f5ddaf2d320bd44e6229d05933">idAirports</a>;<span class="comment">//graph</span></div>
 <div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_parser.html#aab7e9ccc4b6577f2518d085b59670e21">   46</a></span>&#160;    unordered_set&lt;string&gt; <a class="code" href="class_parser.html#aab7e9ccc4b6577f2518d085b59670e21">countries</a>;</div>
 <div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="class_parser.html#a3b2cd8b2dd41c32812bf61cff93359c7">   47</a></span>&#160;    unordered_set&lt;string&gt; <a class="code" href="class_parser.html#a3b2cd8b2dd41c32812bf61cff93359c7">cities</a>;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160; </div>
@@ -117,18 +117,23 @@ $(function() {
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">void</span> createAirlines();</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">void</span> createGraph();</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordtype">void</span> createGraphGeneric();</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;};</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">void</span> createGraph();</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//AIRBUSMANAGEMENTSYSTEM_PARSER_H</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">void</span> processEdges(<span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; lines);</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;};</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="preprocessor">#endif </span><span class="comment">//AIRBUSMANAGEMENTSYSTEM_PARSER_H</span></div>
 <div class="ttc" id="aairline_8h_html"><div class="ttname"><a href="airline_8h.html">airline.h</a></div><div class="ttdoc">Contains the Airline class that represents airline information and its hash structure.</div></div>
 <div class="ttc" id="aairport_8h_html"><div class="ttname"><a href="airport_8h.html">airport.h</a></div><div class="ttdoc">Contains the Airport class that represents airport information and related hash structures.</div></div>
 <div class="ttc" id="aclass_airline_html_a35cd733dfa4fc18b32c507abae5d8234"><div class="ttname"><a href="class_airline.html#a35cd733dfa4fc18b32c507abae5d8234">Airline::AirlineH</a></div><div class="ttdeci">unordered_set&lt; Airline, Airline::AirlineHash, Airline::AirlineHash &gt; AirlineH</div><div class="ttdoc">Defines an unordered set of Airline objects using the custom hash and equality function.</div><div class="ttdef"><b>Definition:</b> airline.h:84</div></div>
 <div class="ttc" id="aclass_airport_html_a345f6287d52c4aa61e97469978554536"><div class="ttname"><a href="class_airport.html#a345f6287d52c4aa61e97469978554536">Airport::CityH</a></div><div class="ttdeci">unordered_map&lt; pair&lt; string, string &gt;, vector&lt; string &gt;, Airport::CityHash, Airport::CityHash &gt; CityH</div><div class="ttdoc">Defines an unordered map of pairs representing city name and city code to a vector of strings (possib...</div><div class="ttdef"><b>Definition:</b> airport.h:138</div></div>
 <div class="ttc" id="aclass_airport_html_a6dd201c0707b5cc8a6b7a793a2b0c81f"><div class="ttname"><a href="class_airport.html#a6dd201c0707b5cc8a6b7a793a2b0c81f">Airport::AirportH</a></div><div class="ttdeci">unordered_set&lt; Airport, Airport::AirportHash, Airport::AirportHash &gt; AirportH</div><div class="ttdoc">Defines an unordered set of Airport objects using the custom hash and equality function.</div><div class="ttdef"><b>Definition:</b> airport.h:143</div></div>
-<div class="ttc" id="aclass_graph_html"><div class="ttname"><a href="class_graph.html">Graph</a></div><div class="ttdef"><b>Definition:</b> graph.h:73</div></div>
+<div class="ttc" id="aclass_graph_html"><div class="ttname"><a href="class_graph.html">Graph</a></div><div class="ttdef"><b>Definition:</b> graph.h:85</div></div>
 <div class="ttc" id="aclass_parser_html"><div class="ttname"><a href="class_parser.html">Parser</a></div><div class="ttdef"><b>Definition:</b> Parser.h:19</div></div>
 <div class="ttc" id="aclass_parser_html_a01b806f5ddaf2d320bd44e6229d05933"><div class="ttname"><a href="class_parser.html#a01b806f5ddaf2d320bd44e6229d05933">Parser::idAirports</a></div><div class="ttdeci">unordered_map&lt; string, int &gt; idAirports</div><div class="ttdef"><b>Definition:</b> Parser.h:45</div></div>
 <div class="ttc" id="aclass_parser_html_a035d6d93086c383836e7bbc96ec09cb6"><div class="ttname"><a href="class_parser.html#a035d6d93086c383836e7bbc96ec09cb6">Parser::airports</a></div><div class="ttdeci">Airport::AirportH airports</div><div class="ttdef"><b>Definition:</b> Parser.h:41</div></div>

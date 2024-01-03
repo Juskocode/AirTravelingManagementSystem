@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AirTravelManagementSystem: /home/freitas/CLionProjects/AirTravelingManagementSystem/classes/Parser.cpp File Reference</title>
+<title>AirTravelManagementSystem: /home/freitas/CLionProjects/AirTravelingManagementSystem17/classes/Parser.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -68,13 +68,17 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Parser.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="_parser_8h_source.html">Parser.h</a>&quot;</code><br />
 <code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;thread&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;mutex&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -84,6 +88,11 @@ Functions</h2></td></tr>
 <tr class="memitem:a158ef47863d1731cc88934461efb6071"><td class="memTemplParams" colspan="2">template&lt;typename A , typename B &gt; </td></tr>
 <tr class="memitem:a158ef47863d1731cc88934461efb6071"><td class="memTemplItemLeft" align="right" valign="top">multimap&lt; B, A &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_parser_8cpp.html#a158ef47863d1731cc88934461efb6071">flip_map</a> (const map&lt; A, B &gt; &amp;src)</td></tr>
 <tr class="separator:a158ef47863d1731cc88934461efb6071"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ad5e0dbd36f0d71fce9b00b7f991b2f38"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_parser_8cpp.html#ad5e0dbd36f0d71fce9b00b7f991b2f38">mtx</a></td></tr>
+<tr class="separator:ad5e0dbd36f0d71fce9b00b7f991b2f38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a158ef47863d1731cc88934461efb6071"></a>
@@ -142,6 +151,21 @@ template&lt;typename A , typename B &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>pair where key is the value(B) and value is the key(A) </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="ad5e0dbd36f0d71fce9b00b7f991b2f38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5e0dbd36f0d71fce9b00b7f991b2f38">&#9670;&nbsp;</a></span>mtx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex mtx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>

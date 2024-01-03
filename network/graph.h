@@ -332,7 +332,7 @@ public:
      * that is, the flight trip(s) with the greatest number of stops in between them; .\n\n
      * <b>Complexity\n</b>
      * <pre>
-     *      <b>O(|V|+|E|)</b>, V -> number of nodes, E -> number of edges
+     *      <b>O(V * (|V|+|E|))</b>, V -> number of nodes, E -> number of edges
      * </pre>
      * @return diameter between all connected components.
      */

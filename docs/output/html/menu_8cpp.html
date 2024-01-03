@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AirTravelManagementSystem: /home/freitas/CLionProjects/AirTravelingManagementSystem/classes/menu.cpp File Reference</title>
+<title>AirTravelManagementSystem: /home/freitas/CLionProjects/AirTravelingManagementSystem17/classes/menu.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,12 +67,308 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
 <div class="title">menu.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="menu_8h_source.html">menu.h</a>&quot;</code><br />
-</div></div><!-- contents -->
+<code>#include &lt;ranges&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a9b32d0a26f9909c5b63ccd474f56420e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#a9b32d0a26f9909c5b63ccd474f56420e">FG_BLACK</a>&#160;&#160;&#160;&quot;\033[30m&quot;</td></tr>
+<tr class="separator:a9b32d0a26f9909c5b63ccd474f56420e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dc5215d084174df6f00a9267cec2f17"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#a1dc5215d084174df6f00a9267cec2f17">FG_RED</a>&#160;&#160;&#160;&quot;\033[31m&quot;</td></tr>
+<tr class="separator:a1dc5215d084174df6f00a9267cec2f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0af1e03653ace4d21aebf3b2e03a6535"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#a0af1e03653ace4d21aebf3b2e03a6535">FG_GREEN</a>&#160;&#160;&#160;&quot;\033[32m&quot;</td></tr>
+<tr class="separator:a0af1e03653ace4d21aebf3b2e03a6535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a266aa539aa271da1b1f711d2413b1bfa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#a266aa539aa271da1b1f711d2413b1bfa">FG_YELLOW</a>&#160;&#160;&#160;&quot;\033[33m&quot;</td></tr>
+<tr class="separator:a266aa539aa271da1b1f711d2413b1bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e411f6bd6ac8d6c2bd23d866c097e91"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#a4e411f6bd6ac8d6c2bd23d866c097e91">FG_BLUE</a>&#160;&#160;&#160;&quot;\033[34m&quot;</td></tr>
+<tr class="separator:a4e411f6bd6ac8d6c2bd23d866c097e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacf8f7d7b2a3f4ba0d0a131fcd1f1933"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#aacf8f7d7b2a3f4ba0d0a131fcd1f1933">FG_MAGENTA</a>&#160;&#160;&#160;&quot;\033[35m&quot;</td></tr>
+<tr class="separator:aacf8f7d7b2a3f4ba0d0a131fcd1f1933"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb40e6e076755308612ed6e18a34dbeb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#afb40e6e076755308612ed6e18a34dbeb">FG_CYAN</a>&#160;&#160;&#160;&quot;\033[36m&quot;</td></tr>
+<tr class="separator:afb40e6e076755308612ed6e18a34dbeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fbb956b9e769a1020c2eff1f6743857"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#a7fbb956b9e769a1020c2eff1f6743857">FG_WHITE</a>&#160;&#160;&#160;&quot;\033[37m&quot;</td></tr>
+<tr class="separator:a7fbb956b9e769a1020c2eff1f6743857"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e5ebbe291d95cf1b8f1661252722fe0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#a0e5ebbe291d95cf1b8f1661252722fe0">BG_BLACK</a>&#160;&#160;&#160;&quot;\033[40m&quot;</td></tr>
+<tr class="separator:a0e5ebbe291d95cf1b8f1661252722fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac317d04c219b630f9c36b0241d9d4be7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#ac317d04c219b630f9c36b0241d9d4be7">BG_RED</a>&#160;&#160;&#160;&quot;\033[41m&quot;</td></tr>
+<tr class="separator:ac317d04c219b630f9c36b0241d9d4be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac351fb4567ed6655a5b39769cc5dfd04"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#ac351fb4567ed6655a5b39769cc5dfd04">BG_GREEN</a>&#160;&#160;&#160;&quot;\033[42m&quot;</td></tr>
+<tr class="separator:ac351fb4567ed6655a5b39769cc5dfd04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab31fe3e74b1137650d30ede5c9b86218"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#ab31fe3e74b1137650d30ede5c9b86218">BG_YELLOW</a>&#160;&#160;&#160;&quot;\033[43m&quot;</td></tr>
+<tr class="separator:ab31fe3e74b1137650d30ede5c9b86218"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9afd14c731aa8c62d9471913c1b23b9f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#a9afd14c731aa8c62d9471913c1b23b9f">BG_BLUE</a>&#160;&#160;&#160;&quot;\033[44m&quot;</td></tr>
+<tr class="separator:a9afd14c731aa8c62d9471913c1b23b9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac08aa3f07e012f1b0edafa632d5300ba"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#ac08aa3f07e012f1b0edafa632d5300ba">BG_MAGENTA</a>&#160;&#160;&#160;&quot;\033[45m&quot;</td></tr>
+<tr class="separator:ac08aa3f07e012f1b0edafa632d5300ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21ef237e1c4d69656729da4b34c31d8b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#a21ef237e1c4d69656729da4b34c31d8b">BG_CYAN</a>&#160;&#160;&#160;&quot;\033[46m&quot;</td></tr>
+<tr class="separator:a21ef237e1c4d69656729da4b34c31d8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6beded3f171517df3902c52f79f6fea2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#a6beded3f171517df3902c52f79f6fea2">BG_WHITE</a>&#160;&#160;&#160;&quot;\033[47m&quot;</td></tr>
+<tr class="separator:a6beded3f171517df3902c52f79f6fea2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26cdbb1a00213c810caccf21cd33a631"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#a26cdbb1a00213c810caccf21cd33a631">BOLD</a>&#160;&#160;&#160;&quot;\033[1m&quot;</td></tr>
+<tr class="separator:a26cdbb1a00213c810caccf21cd33a631"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7c3b975e5552a122f836b02fa138502"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="menu_8cpp.html#ad7c3b975e5552a122f836b02fa138502">RESET_COLOR</a>&#160;&#160;&#160;&quot;\033[0m&quot;</td></tr>
+<tr class="separator:ad7c3b975e5552a122f836b02fa138502"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="a0e5ebbe291d95cf1b8f1661252722fe0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e5ebbe291d95cf1b8f1661252722fe0">&#9670;&nbsp;</a></span>BG_BLACK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BG_BLACK&#160;&#160;&#160;&quot;\033[40m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9afd14c731aa8c62d9471913c1b23b9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9afd14c731aa8c62d9471913c1b23b9f">&#9670;&nbsp;</a></span>BG_BLUE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BG_BLUE&#160;&#160;&#160;&quot;\033[44m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a21ef237e1c4d69656729da4b34c31d8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21ef237e1c4d69656729da4b34c31d8b">&#9670;&nbsp;</a></span>BG_CYAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BG_CYAN&#160;&#160;&#160;&quot;\033[46m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac351fb4567ed6655a5b39769cc5dfd04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac351fb4567ed6655a5b39769cc5dfd04">&#9670;&nbsp;</a></span>BG_GREEN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BG_GREEN&#160;&#160;&#160;&quot;\033[42m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac08aa3f07e012f1b0edafa632d5300ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac08aa3f07e012f1b0edafa632d5300ba">&#9670;&nbsp;</a></span>BG_MAGENTA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BG_MAGENTA&#160;&#160;&#160;&quot;\033[45m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac317d04c219b630f9c36b0241d9d4be7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac317d04c219b630f9c36b0241d9d4be7">&#9670;&nbsp;</a></span>BG_RED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BG_RED&#160;&#160;&#160;&quot;\033[41m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6beded3f171517df3902c52f79f6fea2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6beded3f171517df3902c52f79f6fea2">&#9670;&nbsp;</a></span>BG_WHITE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BG_WHITE&#160;&#160;&#160;&quot;\033[47m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab31fe3e74b1137650d30ede5c9b86218"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab31fe3e74b1137650d30ede5c9b86218">&#9670;&nbsp;</a></span>BG_YELLOW</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BG_YELLOW&#160;&#160;&#160;&quot;\033[43m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a26cdbb1a00213c810caccf21cd33a631"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26cdbb1a00213c810caccf21cd33a631">&#9670;&nbsp;</a></span>BOLD</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define BOLD&#160;&#160;&#160;&quot;\033[1m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9b32d0a26f9909c5b63ccd474f56420e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b32d0a26f9909c5b63ccd474f56420e">&#9670;&nbsp;</a></span>FG_BLACK</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FG_BLACK&#160;&#160;&#160;&quot;\033[30m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4e411f6bd6ac8d6c2bd23d866c097e91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e411f6bd6ac8d6c2bd23d866c097e91">&#9670;&nbsp;</a></span>FG_BLUE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FG_BLUE&#160;&#160;&#160;&quot;\033[34m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afb40e6e076755308612ed6e18a34dbeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb40e6e076755308612ed6e18a34dbeb">&#9670;&nbsp;</a></span>FG_CYAN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FG_CYAN&#160;&#160;&#160;&quot;\033[36m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0af1e03653ace4d21aebf3b2e03a6535"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0af1e03653ace4d21aebf3b2e03a6535">&#9670;&nbsp;</a></span>FG_GREEN</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FG_GREEN&#160;&#160;&#160;&quot;\033[32m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aacf8f7d7b2a3f4ba0d0a131fcd1f1933"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacf8f7d7b2a3f4ba0d0a131fcd1f1933">&#9670;&nbsp;</a></span>FG_MAGENTA</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FG_MAGENTA&#160;&#160;&#160;&quot;\033[35m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1dc5215d084174df6f00a9267cec2f17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1dc5215d084174df6f00a9267cec2f17">&#9670;&nbsp;</a></span>FG_RED</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FG_RED&#160;&#160;&#160;&quot;\033[31m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7fbb956b9e769a1020c2eff1f6743857"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fbb956b9e769a1020c2eff1f6743857">&#9670;&nbsp;</a></span>FG_WHITE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FG_WHITE&#160;&#160;&#160;&quot;\033[37m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a266aa539aa271da1b1f711d2413b1bfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a266aa539aa271da1b1f711d2413b1bfa">&#9670;&nbsp;</a></span>FG_YELLOW</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define FG_YELLOW&#160;&#160;&#160;&quot;\033[33m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad7c3b975e5552a122f836b02fa138502"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7c3b975e5552a122f836b02fa138502">&#9670;&nbsp;</a></span>RESET_COLOR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define RESET_COLOR&#160;&#160;&#160;&quot;\033[0m&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1

@@ -111,7 +111,7 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a035d6d93086c383836e7bbc96ec09cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1c4fe715049e6e43a7161d5cf17ebc3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_airline.html#a35cd733dfa4fc18b32c507abae5d8234">Airline::AirlineH</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_parser.html#a1c4fe715049e6e43a7161d5cf17ebc3d">airlines</a></td></tr>
 <tr class="separator:a1c4fe715049e6e43a7161d5cf17ebc3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b1195c3b8b89b6cb4b75a9aaee0efdf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_graph.html">Graph</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_parser.html#a8b1195c3b8b89b6cb4b75a9aaee0efdf">graph</a> = <a class="el" href="class_graph.html">Graph</a>(3019)</td></tr>
+<tr class="memitem:a8b1195c3b8b89b6cb4b75a9aaee0efdf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_graph.html">Graph</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_parser.html#a8b1195c3b8b89b6cb4b75a9aaee0efdf">graph</a> = <a class="el" href="class_graph.html">Graph</a>(0)</td></tr>
 <tr class="separator:a8b1195c3b8b89b6cb4b75a9aaee0efdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a01b806f5ddaf2d320bd44e6229d05933"><td class="memItemLeft" align="right" valign="top">unordered_map&lt; string, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_parser.html#a01b806f5ddaf2d320bd44e6229d05933">idAirports</a></td></tr>
 <tr class="separator:a01b806f5ddaf2d320bd44e6229d05933"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,8 +130,12 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:a5c77c4cf4e7fe772a948adad0f03010f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a089b01e2b77dabc420932326380a5976"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_parser.html#a089b01e2b77dabc420932326380a5976">createAirlines</a> ()</td></tr>
 <tr class="separator:a089b01e2b77dabc420932326380a5976"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af151a0ff87cebbf56fa86ede3c4dc8ce"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_parser.html#af151a0ff87cebbf56fa86ede3c4dc8ce">createGraphGeneric</a> ()</td></tr>
+<tr class="separator:af151a0ff87cebbf56fa86ede3c4dc8ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f0d9d0f87b4c7a7872e5d6e5f4591bb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_parser.html#a3f0d9d0f87b4c7a7872e5d6e5f4591bb">createGraph</a> ()</td></tr>
 <tr class="separator:a3f0d9d0f87b4c7a7872e5d6e5f4591bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5ca7426139e0ce0aba7642c0f7cdeb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_parser.html#aa5ca7426139e0ce0aba7642c0f7cdeb6">processEdges</a> (const std::vector&lt; std::string &gt; &amp;lines)</td></tr>
+<tr class="separator:aa5ca7426139e0ce0aba7642c0f7cdeb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a12234f6cd36b61af4b50c94a179422c1"></a>
@@ -282,6 +286,31 @@ Private Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<a id="af151a0ff87cebbf56fa86ede3c4dc8ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af151a0ff87cebbf56fa86ede3c4dc8ce">&#9670;&nbsp;</a></span>createGraphGeneric()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Parser::createGraphGeneric </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 <p>Reads flights.csv file and stores the airports information in graphs about the flights (airport of departure/arrival and distance between them)<br  />
 <br  />
 <b>Complexity<br  />
@@ -371,6 +400,32 @@ Private Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa5ca7426139e0ce0aba7642c0f7cdeb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5ca7426139e0ce0aba7642c0f7cdeb6">&#9670;&nbsp;</a></span>processEdges()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Parser::processEdges </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>lines</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -467,7 +522,7 @@ Private Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_graph.html">Graph</a> Parser::graph = <a class="el" href="class_graph.html">Graph</a>(3019)</td>
+          <td class="memname"><a class="el" href="class_graph.html">Graph</a> Parser::graph = <a class="el" href="class_graph.html">Graph</a>(0)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -489,8 +544,8 @@ Private Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/freitas/CLionProjects/AirTravelingManagementSystem/classes/<a class="el" href="_parser_8h_source.html">Parser.h</a></li>
-<li>/home/freitas/CLionProjects/AirTravelingManagementSystem/classes/<a class="el" href="_parser_8cpp.html">Parser.cpp</a></li>
+<li>/home/freitas/CLionProjects/AirTravelingManagementSystem17/classes/<a class="el" href="_parser_8h_source.html">Parser.h</a></li>
+<li>/home/freitas/CLionProjects/AirTravelingManagementSystem17/classes/<a class="el" href="_parser_8cpp.html">Parser.cpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

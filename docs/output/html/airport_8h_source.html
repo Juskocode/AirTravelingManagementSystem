@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>AirTravelManagementSystem: /home/freitas/CLionProjects/AirTravelingManagementSystem/classes/airport.h Source File</title>
+<title>AirTravelManagementSystem: /home/freitas/CLionProjects/AirTravelingManagementSystem17/classes/airport.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -86,23 +86,23 @@ $(function() {
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="class_airport.html">Airport</a>(<span class="keywordtype">string</span> code, <span class="keywordtype">string</span> name, <span class="keywordtype">string</span> city, <span class="keywordtype">string</span> country, <span class="keywordtype">double</span> latitude, <span class="keywordtype">double</span> longitude);</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">string</span> getCode() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    [[nodiscard]] <span class="keywordtype">string</span> getCode() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">string</span> getName() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    [[nodiscard]] <span class="keywordtype">string</span> getName() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">string</span> getCity() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    [[nodiscard]] <span class="keywordtype">string</span> getCity() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">string</span> getCountry() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    [[nodiscard]] <span class="keywordtype">string</span> getCountry() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">double</span> getLatitude() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    [[nodiscard]] <span class="keywordtype">double</span> getLatitude() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">double</span> getLongitude() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    [[nodiscard]] <span class="keywordtype">double</span> getLongitude() <span class="keyword">const</span>;</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
 <div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="struct_airport_1_1_airport_hash.html">   78</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="struct_airport_1_1_airport_hash.html">AirportHash</a> {</div>
 <div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="struct_airport_1_1_airport_hash.html#a952056e57cd4f71a550b9d768bd8e44a">   84</a></span>&#160;        <span class="keywordtype">int</span> <a class="code" href="struct_airport_1_1_airport_hash.html#a952056e57cd4f71a550b9d768bd8e44a">operator()</a>(<span class="keyword">const</span> <a class="code" href="class_airport.html">Airport</a> &amp;b)<span class="keyword"> const </span>{</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordtype">string</span> c = b.<a class="code" href="class_airport.html#ad1369e1d47c87e205f1718b853a66d54">getCode</a>();</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordtype">int</span> v = 0;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">char</span> i : c) v = 131 * v + i;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">for</span> (<span class="keywordtype">char</span> i : c) v = 3019 * v + i;</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="keywordflow">return</span> v;</div>
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        }</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
